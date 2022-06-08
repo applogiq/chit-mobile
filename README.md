@@ -1,5 +1,5 @@
 # chit-mobile
-This is a [React Native](https://reactnative.dev/) project bootstrapped with [`npx react-native init MyTestApp`](https://github.com/expo/create-react-native-app).
+This is a [React Native](https://reactnative.dev/) project bootstrapped with [`npx react-native init chitmobile`](https://github.com/expo/create-react-native-app).
 
 
 
