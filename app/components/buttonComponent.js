@@ -6,18 +6,18 @@ import {Text,StyleSheet,TouchableOpacity,useWindowDimensions,ActivityIndicator} 
 /**************************************** Import components ***********************************************************/
 
 
-const Button =({enabled,onpressparam,title,type,loading,disabled})=>{
+const Button =({enabled,onpressparam,title,type,loading,disabled,parentstyles})=>{
 
     const { height, width } = useWindowDimensions();
     //Get height,width of screen by this hook
 
-  const font = useWindowDimensions().fontScale*10;
+  const font = useWindowDimensions().fontScale*12;
   //Get fontscale from and use it to resize fonts
 
-  //check the param typr from parent set the height,width variables accordingly
+  //check the param type from parent set the height,width variables accordingly
        if(type==="large"){
-           var w = width*(91.5/100)
-          var h = height*(6.9/100)
+           var w = width*(94.5/100)
+          var h = height*(7.9/100)
 
        }   else if(type==="medium"){
          var w = width*(70.1/100)
@@ -36,7 +36,7 @@ const Button =({enabled,onpressparam,title,type,loading,disabled})=>{
   } 
     return(
 
-        <TouchableOpacity disabled={disabled} style={[styles.container,{backgroundColor:enabled?"#D5BA8F":"#E3D2B7",width:w,height:h}]} onPress={onpressparam}>
+        <TouchableOpacity disabled={disabled} style={[styles.container,{backgroundColor:enabled?"#D5BA8F":"#E3D2B7",width:w,height:h},parentstyles]} onPress={onpressparam}>
   {loading?    <ActivityIndicator size="small" color="white" />:<Text style={[styles.title,{fontSize:font}]} >{title}</Text>}   
 
      
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     container:{
     alignSelf:"center",borderRadius:6,alignItems:"center",justifyContent:"center"
     },
-    title:{color:"#FFFFFF",fontWeight:"700",fontFamily:"SourceSansPro-ExtraLight",lineHeight:21}
+    title:{color:"#FFFFFF",fontWeight:"600",fontFamily:"SourceSansPro-SemiBold",lineHeight:21}
 
 })
 export default Button;
