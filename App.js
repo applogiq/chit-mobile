@@ -10,17 +10,18 @@
 //Redux store provider is configured here
 //Please put all needed fonts files in android/app/src/main/assets/fonts
 /**************************************** Import Packages ***********************************************************/
-import React,{useState} from 'react';
+import React from 'react';
 import {
 
 
-  Text,
-Image,
+
   View,
 } from 'react-native';
 
 /**************************************** Import Components ***********************************************************/
-import LoginScreen from './app/screens/loginScreen';
+
+import ProfileScreen from './app/screens/profileScreen';
+import ChangePassword from './app/screens/changePassword';
 
 
 
@@ -29,11 +30,13 @@ const App =() => {
 
 
   return (
-<View style={{flex:1}}>
+  
 
-<LoginScreen></LoginScreen>
+<ChangePassword></ChangePassword>
 
-</View>
+
+
+
   );
 };
 

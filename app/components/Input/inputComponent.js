@@ -4,12 +4,12 @@
  //<InputField showicon={false} parentCallback={parentCallback1} title={"userpass"} value={val1} placeholder={"password"} ></InputField>
 /**************************************** Import Packages ***********************************************************/
 import React,{useState} from "react";
-import {Text,View,StyleSheet,TextInput,useWindowDimensions,Image,Pressable} from "react-native";
-import { IMAGES } from "../common/images";
+import {Text,View,StyleSheet,TextInput,useWindowDimensions,Image,Pressable,TouchableOpacity} from "react-native";
+import { IMAGES } from "../../common/images";
 /**************************************** Import components ***********************************************************/
 
 
-const InputField =({parentCallback,placeholder,title,value,showicon,errormessage,maxchars,parentstyles})=>{
+const InputField =({parentCallback,placeholder,title,value,showicon,errormessage,maxchars,parentstyles,loading,inputtype})=>{
     const { height, width } = useWindowDimensions();
     const [pressed,setPressed] = useState( showicon ? false : true)
     //Get height,width of screen by this hook
@@ -30,14 +30,15 @@ const    onchange = (value) => {
     return(
         <View style={[styles.container,{height:h,width:w},parentstyles]}>
             <Text  style={[styles.title,{textTransform:"capitalize",fontSize:font*9}]}>{title}</Text>
-<TextInput maxLength={maxchars} defaultValue={value}  secureTextEntry={!pressed} value={value} style={styles.input} placeholder={placeholder} onChangeText={(value)=>onchange(value)}></TextInput>
+<TextInput keyboardType={inputtype} editable={!loading} maxLength={maxchars} defaultValue={value}  secureTextEntry={!pressed} value={value} style={styles.input} placeholder={placeholder} onChangeText={(value)=>onchange(value)}></TextInput>
 {showicon?   <View style={{position:"absolute",marginTop:height*(6.5/100),marginLeft:width*(85/100)}}>
     <Pressable onPress={iconpress}>
     <Image style={[styles.eyeicon]} source={pressed ? IMAGES.eye_open : IMAGES.eye_closed}></Image>
     </Pressable>
     </View>:null}
  
-   <Text style={[styles.errormessage,{fontSize:font*10}]}>{errormessage}</Text>
+   <Text style={[styles.errormessage,{fontSize:font*8}]}>{errormessage}</Text>
+   
 
         </View>
     )
