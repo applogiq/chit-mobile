@@ -17,11 +17,10 @@ import {
 
   View,
 } from 'react-native';
-
+import { Provider } from 'react-redux';
+import store from './app/redux/store';
 /**************************************** Import Components ***********************************************************/
-
-import ProfileScreen from './app/screens/profileScreen';
-import ChangePassword from './app/screens/changePassword';
+import YourChitCardSlider from './app/components/YourchitsCard/yourchitsCard';
 
 
 
@@ -32,8 +31,10 @@ const App =() => {
   return (
   
 
-<ChangePassword></ChangePassword>
 
+    <Provider store={store}>
+<YourChitCardSlider></YourChitCardSlider>
+  </Provider>
 
 
 

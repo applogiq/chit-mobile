@@ -7,7 +7,8 @@ import Button from "../../components/Button/buttonComponent";
 import InputField from "../../components/Input/inputComponent";
 import { IMAGES } from "../../common/images";
 import ModalComponent from "../../components/Modal/modalComponent";
-
+import { LoginUser } from "../../redux/actions";
+import { connect, useSelector } from 'react-redux';
 /**************************************** Import common files ***********************************************************/
 import { isEmpty, isValidEmail, isValidPassword } from '../../common/validator';
 
@@ -65,10 +66,20 @@ const LoginScreen =(props)=>{
       };
     
       const onloginPress=()=>{
-if(doLoginValidation()){
-    const userData = { email_id: useridentity, password: userpassword };
-    console.log(userData)
-    setLoading(true)
+if(doLoginValidation()) {
+  setLoading(true)
+  props.LoginUser({
+    "email_id":"venkat.testing.qbace@mail.com", "password": "1"
+}).then(response => { console.log(response)
+  setModaltext(JSON.stringify(response))
+  setModalvisible(!modalVisible)
+  setLoading(false)
+}
+
+)
+
+
+ 
   
    
 }
@@ -123,4 +134,12 @@ const styles = StyleSheet.create({
     titleContainer:{},
    
 })
-export default LoginScreen;
+const mapStateToProps = state => ({
+  // loginResponse: state.Login.storeLoginResponse,
+  // loginError: state.Login.error,
+  // preLoader: state.login.loading,
+});
+const mapDispatchToProps = dispatch => ({
+  LoginUser: data => dispatch(LoginUser(data)),
+});
+export default  connect(mapStateToProps, mapDispatchToProps) (LoginScreen);

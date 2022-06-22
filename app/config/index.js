@@ -1,5 +1,5 @@
 const environmentList = [
-    'https://staging-api.qbace.in/', //local       = 0
+    'https://reqres.in/', //local       = 0
     'https://staging-api.qbace.in/', // develop    = 1
     ''  //production  = 2
   

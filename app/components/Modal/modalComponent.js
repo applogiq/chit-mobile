@@ -62,7 +62,7 @@ justifyContent:"center",alignItems:"center"
         textAlign: "center",
         color:"rgba(65, 39, 15, 0.8)",fontWeight:"700",fontFamily:"SourceSansPro-SemiBold",lineHeight:21,marginBottom:5
       },
-      icon:{height:15,width:15,marginLeft:160,marginTop:10},
+      icon:{height:15,width:15,marginLeft:"80%",marginTop:"10%"},
       textCenter:{alignItems:"center",justifyContent:"center",flex:1}
 })
 export default ModalComponent;
