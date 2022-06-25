@@ -1,6 +1,6 @@
 /**************************************** Import Packages ***********************************************************/
 import React,{useState} from "react";
-import {Text,View,StyleSheet,useWindowDimensions,Image,TouchableOpacity} from "react-native";
+import {Text,View,StyleSheet,useWindowDimensions,Image,TouchableOpacity,Pressable} from "react-native";
 /**************************************** Import components ***********************************************************/
 import { IMAGES } from "../../common/images";
 import InputField from "../../components/Input/inputComponent";
@@ -8,7 +8,7 @@ import Button from "../../components/Button/buttonComponent";
 import OTPTextView from 'react-native-otp-textinput';
 import { isValidPassword } from "../../common/validator";
 
-const ChangePassword =()=>{
+const ChangePassword =(props)=>{
     const { height, width } = useWindowDimensions();
    
     const[loading,setLoading] = useState(false)
@@ -33,7 +33,7 @@ const ChangePassword =()=>{
         if(oldpassword !==""){
             if(newpassword === confirmpassword ){
                 if(isValidPassword(newpassword)){
-                    console.log("called")
+                    props.navigation.navigate('ProfileScreen')
                     setOldpassword("")
                     setNewpassword("")
                     setConfirmpassword("")
@@ -58,7 +58,10 @@ const ChangePassword =()=>{
     return(
         <View style={styles.container}>
             <View style={styles.headerContainer}>
+                
+                <Pressable style={{height:20,width:20,alignItems:"flex-start",justifyContent:"center"}} onPress={()=>props.navigation.navigate('ProfileScreen')}>
 <Image resizeMode="stretch" style={[styles.backIcon,{height:height*(2/100),width:width*(2/100)}]} source={IMAGES.back_icon}  ></Image>
+</Pressable>
 <Text style={[styles.headerText,{fontSize:font*15}]}>Change password</Text>
             </View>
 

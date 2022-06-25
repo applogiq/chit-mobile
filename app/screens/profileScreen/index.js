@@ -5,7 +5,7 @@ import {Text,View,StyleSheet,useWindowDimensions,Image,TouchableOpacity} from "r
 /**************************************** Import components ***********************************************************/
 
 
-const ProfileScreen =()=>{
+const ProfileScreen =(props)=>{
     const font = useWindowDimensions().fontScale
     const { height, width } = useWindowDimensions();
     return(
@@ -70,11 +70,13 @@ Security
     </Text>
 <View style={styles.detailsCard}>
 <View style={styles.row}>
-    <TouchableOpacity>
+   
     <Text style={[styles.title,{fontSize:font*9}]} >Change password</Text>
-    </TouchableOpacity>
+
     <View style={styles.cardItems}>
+    <TouchableOpacity onPress={()=>props.navigation.navigate('ChangePassword')}>
     <Text  style={[styles.title,{fontSize:font*10,color:"black",textDecorationLine:"underline"}]} >change</Text>
+  </TouchableOpacity>
     </View>
 </View>
 
@@ -85,7 +87,7 @@ Security
   
 <View style={styles.detailsCard}>
 <View style={styles.row}>
-    <TouchableOpacity>
+    <TouchableOpacity  onPress={()=>props.navigation.navigate('LoginScreen')}>
     <Text style={[styles.logout,{fontSize:font*10}]} >Logout</Text>
     </TouchableOpacity>
 

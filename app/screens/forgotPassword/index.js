@@ -9,7 +9,7 @@ import Button from "../../components/Button/buttonComponent";
 import OTPTextView from 'react-native-otp-textinput';
 import { isValidPassword } from "../../common/validator";
 
-const ForgotPassword =()=>{
+const ForgotPassword =(props)=>{
     const { height, width } = useWindowDimensions();
     const [screen,setScreen] =  useState("initial")
     const[loading,setLoading] = useState(false)
@@ -38,7 +38,7 @@ const ForgotPassword =()=>{
     const handleInputpassword = (childData) =>{setResetpassword(childData)} 
     const handleInputconfirmpassword = (childData) =>{setResetcpassword(childData)} 
     const  ongetOtp =()=>{
-        console.log("mobile number",userphone)
+      
         setScreen("otp")
     }
     const  onChangepassword =()=>{
@@ -48,6 +48,7 @@ const ForgotPassword =()=>{
     const  onresetpassword =()=>{
      if(resetcpassword === resetpassword){
         if(isValidPassword(resetpassword)){
+            props.navigation.navigate("LoginScreen")
             setScreen("initial")
             setUserphone("")
             setUserotp("")

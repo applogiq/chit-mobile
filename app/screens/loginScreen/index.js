@@ -34,7 +34,17 @@ const LoginScreen =(props)=>{
     const handleInputidentity = (childData) =>{setUseridentity(childData)} 
     const handleInputpassword = (childData) =>{setUserpassword(childData)} 
     //callback to be send to child
+    const resetStates =()=>{
+      setUseridentity("")
+      setUserpassword("")
+      setIdentityerror("")
 
+   
+      setLoading(false)
+      setDisabled(true)
+  
+      setModalvisible(false)
+  }
   
 
     const doLoginValidation = () => {
@@ -68,18 +78,19 @@ const LoginScreen =(props)=>{
       const onloginPress=()=>{
 if(doLoginValidation()) {
   setLoading(true)
-  props.LoginUser({
-    "email_id":"venkat.testing.qbace@mail.com", "password": "1"
-}).then(response => { console.log(response)
-  setModaltext(JSON.stringify(response))
-  setModalvisible(!modalVisible)
-  setLoading(false)
-}
-
-)
-
-
+//   props.LoginUser({
+//     "email_id":"venkat.testing.qbace@mail.com", "password": "1"
+// }).then(response => { console.log(response)
+//   setModaltext(JSON.stringify(response))
+//   setModalvisible(!modalVisible)
  
+// }
+
+// )
+
+props.navigation.navigate('HomeScreen')
+setLoading(false)
+resetStates() 
   
    
 }
@@ -87,17 +98,7 @@ if(doLoginValidation()) {
     const handleModal =()=>{
         setModalvisible(!modalVisible)
     }
-    const resetStates =()=>{
-        setUseridentity("")
-        setUserpassword("")
-        setIdentityerror("")
-        setPassworderroruseState("")
-     
-        setLoading(false)
-        setDisabled(true)
-    
-        setModalvisible(false)
-    }
+
     return(
         <ScrollView style={[styles.container,]}>
             <View style={{height:height,width:width,}}>
@@ -111,7 +112,7 @@ if(doLoginValidation()) {
         <InputField loading={loading} parentCallback={handleInputpassword} placeholder={""} title={"password"} value={userpassword} showicon={true} errormessage={passworderror} maxchars={10}></InputField>
        </View>
        <View style={{alignSelf:"flex-end",marginTop:height*(1/100)}}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=>props.navigation.navigate('ForgotPassword')}>
         <Text style={[styles.forgotText,{fontSize:font*8,lineHeight:font*10}]}>Forgot Password?</Text>
         </TouchableOpacity>
        </View>
