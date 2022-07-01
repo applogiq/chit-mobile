@@ -11,6 +11,7 @@ import { isValidPassword } from "../../common/validator";
 
 const ForgotPassword =(props)=>{
     const { height, width } = useWindowDimensions();
+    //for responsiveness
     const [screen,setScreen] =  useState("initial")
     const[loading,setLoading] = useState(false)
     const[disabled,setDisabled] = useState(true)

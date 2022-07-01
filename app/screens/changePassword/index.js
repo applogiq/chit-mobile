@@ -10,7 +10,7 @@ import { isValidPassword } from "../../common/validator";
 
 const ChangePassword =(props)=>{
     const { height, width } = useWindowDimensions();
-   
+   //For responsiveness
     const[loading,setLoading] = useState(false)
     const[disabled,setDisabled] = useState(true)
     const[oldpassword,setOldpassword]=useState("")
@@ -21,8 +21,7 @@ const ChangePassword =(props)=>{
     const font = useWindowDimensions().fontScale
 
   
-    
-    //Get fontscale from and use it to resize fonts
+    //Get fontscale  and use it to resize fonts
    
     const handleInputnewpassword = (childData) =>{setNewpassword(childData)} 
     const handleInputoldpassword = (childData) =>{setOldpassword(childData)} 
@@ -59,7 +58,7 @@ const ChangePassword =(props)=>{
         <View style={styles.container}>
             <View style={styles.headerContainer}>
                 
-                <Pressable style={{height:20,width:20,alignItems:"flex-start",justifyContent:"center"}} onPress={()=>props.navigation.navigate('ProfileScreen')}>
+                <Pressable style={{height:height*(2/100),width:height*(2/100),alignItems:"flex-start",justifyContent:"center"}} onPress={()=>props.navigation.navigate('HomeScreen')}>
 <Image resizeMode="stretch" style={[styles.backIcon,{height:height*(2/100),width:width*(2/100)}]} source={IMAGES.back_icon}  ></Image>
 </Pressable>
 <Text style={[styles.headerText,{fontSize:font*15}]}>Change password</Text>

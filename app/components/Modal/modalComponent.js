@@ -1,4 +1,4 @@
-
+   //A small customizable modal alert component
 /**************************************** Import Packages ***********************************************************/
 import React from "react";
 import {Text,View,StyleSheet,Modal,Pressable,useWindowDimensions,Image} from "react-native";
@@ -8,6 +8,7 @@ import {IMAGES} from '../../common/images'
 
 const ModalComponent =({modalVisible,onmodalPress,textData})=>{
     const { height, width } = useWindowDimensions();
+       //For responsiveness
     return(
         <Modal
         animationType="none"

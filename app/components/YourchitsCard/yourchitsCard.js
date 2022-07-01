@@ -1,7 +1,8 @@
-//This is an boilerplate file
+//A card slider componenet
 /**************************************** Import Packages ***********************************************************/
 import React from "react";
-import {Text,View,StyleSheet,useWindowDimensions,Button,FlatList} from "react-native";
+import {Text,View,StyleSheet,useWindowDimensions,Button,FlatList,TouchableOpacity} from "react-native";
+
 /**************************************** Import components ***********************************************************/
 const Data = [
     {id:1},
@@ -9,33 +10,32 @@ const Data = [
     {id:3},
     {id:4}
 ]
-
+//change this to real data
 const YourchitsCard =()=>{
     const { height, width } = useWindowDimensions();
+    //for responsiveness
     const font = useWindowDimensions().fontScale
     //Get fontscale from and use it to resize fonts
     return(
-        <View style={[styles.container,{height:height*(20/100),width:width*(70/100)}]}>
-<View style={{flex:1,flexDirection:"row",flexWrap:"wrap",alignContent:"space-between"}}>
-    <View style={{flexBasis:"50%",flex:1,height:"40%",width:"100%",justifyContent:"space-between"}}>
-        <Text style={{fontFamily:"SourceSansPro-Regular",fontWeight:"400",fontSize:font*10,lineHeight:21,color:"rgba(65, 39, 15, 0.8)"}}>Chit name</Text>
-        <Text style={{fontFamily:"SourceSansPro-SemiBold",fontWeight:"600",fontSize:font*12,lineHeight:21,color:"rgba(65, 39, 15, 0.8)"}}>Premium gold</Text>
+        <View style={[styles.container,{height:height*(20/100),width:width*(70/100),marginBottom:"3%"}]}>
+<View style={styles.innerContainer}>
+    <View style={styles.nameContainer}>
+        <Text style={[{fontSize:font*10},styles.titleOne]}>Chit name</Text>
+        <Text style={[{fontSize:font*12},styles.titleTwo]}>Premium gold</Text>
     </View>
-    <View style={{flexBasis:"50%",flex:1,height:"40%",width:"100%",justifyContent:"space-between",alignItems:"flex-end"}}>
-    <Text style={{fontFamily:"SourceSansPro-Regular",fontWeight:"400",fontSize:font*10,lineHeight:21,color:"rgba(65, 39, 15, 0.8)"}}>Due Bill</Text>
-    <Text style={{fontFamily:"SourceSansPro-SemiBold",fontWeight:"600",fontSize:font*12,lineHeight:21,color:"rgba(65, 39, 15, 0.8)"}}>₹1500</Text>
+    <View style={[styles.nameContainer,{alignItems:"flex-end"}]}>
+    <Text style={[{fontSize:font*10},styles.titleOne]}>Due Bill</Text>
+    <Text style={[{fontSize:font*12},styles.titleTwo]}>₹1500</Text>
     </View>
-    <View style={{flexBasis:"50%",flex:1,height:"40%",width:"100%",justifyContent:"space-between"}}>
-    <Text style={{fontFamily:"SourceSansPro-Regular",fontWeight:"400",fontSize:font*10,lineHeight:21,color:"rgba(65, 39, 15, 0.8)"}}>Upcoming Due</Text>
-    <Text style={{fontFamily:"SourceSansPro-SemiBold",fontWeight:"600",fontSize:font*12,lineHeight:21,color:"rgba(65, 39, 15, 0.8)"}}>May 22,2022</Text>
+    <View style={styles.nameContainer}>
+    <Text style={[{fontSize:font*10},styles.titleOne]}>Upcoming Due</Text>
+    <Text style={[{fontSize:font*12},styles.titleTwo]}>May 22,2022</Text>
     </View>
-    <View style={{flexBasis:"50%",flex:1,height:"40%",width:"100%",justifyContent:"flex-end",alignItems:"flex-end"}}>
-    <Button
-    style={{height:height*(10/100),width:width*(20/100),borderRadius:50}}
-        title="Pay Now"
-        color="rgba(213, 186, 143, 1)"
-        onPress={() => console.log('Button with adjusted color pressed')}
-      />
+    <View style={[styles.nameContainer,{justifyContent:"flex-end",alignItems:"flex-end"}]}>
+ 
+      <TouchableOpacity  style={{ alignItems:"center",justifyContent:"center",height:height*(5/100),width:width*(20/100),borderRadius:5,backgroundColor:"rgba(213, 186, 143, 1)"}}>
+        <Text style={[styles.titleTwo,{color:"white",fontSize:font*11}]}>Pay Now</Text>
+      </TouchableOpacity>
     </View>
   
 </View>
@@ -53,13 +53,16 @@ const styles = StyleSheet.create({
       shadowRadius: 4,
       elevation: 5,padding:15,marginRight:10
     },
- 
+    innerContainer:{flex:1,flexDirection:"row",flexWrap:"wrap",alignContent:"space-between"},
+    nameContainer:{flexBasis:"50%",flex:1,height:"40%",width:"100%",justifyContent:"space-between"},
+    titleOne:{fontFamily:"SourceSansPro-Regular",fontWeight:"400",lineHeight:21,color:"rgba(65, 39, 15, 0.8)"},
+    titleTwo:{fontFamily:"SourceSansPro-SemiBold",fontWeight:"600",lineHeight:21,color:"rgba(65, 39, 15, 0.8)"}
 })
-
+//small seperator itemm for flatlist
 const separatorItem = () => {
     return <View style={styles.separatorView} />;
   };
-
+//mainslider component
 const YourChitCardSlider =()=>{
     return(
         <View>

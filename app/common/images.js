@@ -15,6 +15,7 @@
   transactions: require('../assets/images/transactions.png'),
   profile_color: require('../assets/images/profileColor.png'),
    profile: require('../assets/images/profile.png'),
+   notify: require('../assets/images/notifyIcon.png'),
 
    
   };

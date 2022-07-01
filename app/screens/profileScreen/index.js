@@ -8,6 +8,7 @@ import {Text,View,StyleSheet,useWindowDimensions,Image,TouchableOpacity} from "r
 const ProfileScreen =(props)=>{
     const font = useWindowDimensions().fontScale
     const { height, width } = useWindowDimensions();
+    //for responsiveness
     return(
         <View style={styles.container}>
                  <View style={styles.headerContainer}>

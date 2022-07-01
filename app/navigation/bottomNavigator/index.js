@@ -1,5 +1,8 @@
+//Bottombar component will be nested in stacknavigator
+
+
 import * as React from 'react';
-import {  Dimensions, Image, View, StyleSheet, Text, Platform } from 'react-native';
+import {  Dimensions, Image, View, StyleSheet, Text, Platform,useWindowDimensions } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../../screens/homeScreen';
 import ChitsScreen from '../../screens/chitsScreen';
@@ -9,36 +12,40 @@ import {IMAGES} from "../../common/images"
 
 
 const Tab = createBottomTabNavigator();
-
+//Assign createBottomTabNavigator to a variable to use it simply
 
 const BottomNavigator = () => {
 
+  const { height, width } = useWindowDimensions();
+  //for responsiveness
+    const font = useWindowDimensions().fontScale
+  //for responsive text sizes
 
-
-
-
+//Tab bar elements view component edit this to customize your tab bar
   return (
     <>
       <Tab.Navigator options={{}} screenOptions={({ route }) => ({
         headerShown: false,
         tabBarStyle: {
           shadowOffset: {
-            width: 0,
+            width: 50,
             height: 12,
           },
           shadowColor: 'black',
-          shadowOpacity: 0.58,
-          shadowRadius: 16.0,
-          elevation: 24,
+          shadowOpacity: 1.0,
+          shadowRadius: 56.0,
+          elevation: 10,
           borderTopLeftRadius: 0,
           borderTopRightRadius: 0,
-          backgroundColor: '#fff',
+          backgroundColor: '#F7F6F2',
           position: 'absolute',
           bottom: 0,
-          padding: '4%',
+          padding: '2%',
           width: '100%',
-          height: Platform.OS === 'ios' ? '10%' : '8%',
+          height: Platform.OS === 'ios' ? '10%' : '9%',
           zIndex: 0,
+          borderTopLeftRadius:height*(3/100),
+          borderTopRightRadius:height*(3/100),
         },
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
@@ -47,50 +54,54 @@ const BottomNavigator = () => {
           let title;
           if (route.name === 'Home') {
             return (
-              <>
+             <View style={{alignItems:"center",marginLeft:width*(-8/100)}}>
                 <Image
                   resizeMode={'contain'}
                   source={focused ? IMAGES.home_color : IMAGES.home}
-                  style={styles.icon}
+                  style={{  width: height*(2.5/100),
+                    height: height*(2.5/100),}}
                 />
-                <Text style={[focused ? styles.colorText : styles.text]}>{title ? 'Home' : 'Home'}</Text>
-              </>
+                <Text style={[focused ? styles.colorText : styles.text,{ fontSize:font*8,}]}>{title ? 'Home' : 'Home'}</Text>
+                </View> 
             )
           } else if (route.name === 'Chits') {
             return (
-              <>
+              <View style={{alignItems:"center",marginLeft:width*(-7/100)}}>
                 <Image
                   resizeMode={'contain'}
                   source={focused ? IMAGES.chits_color : IMAGES.chits}
-                  style={[styles.icon, { width: 20 }]}
+                  style={ {width: height*(3/100),
+                  height: height*(3/100),marginTop:height*(0.5/100)}}
                 />
-                <Text style={[focused ? styles.colorText : styles.text]}>{title ? 'Chits' : 'Chits'}</Text>
-              </>
+                <Text style={[focused ? styles.colorText : styles.text,{marginTop:height*(-0.5/100),fontSize:font*8,}]}>{title ? 'Chits' : 'Chits'}</Text>
+           </View>
             )
           }
           else if (route.name === "Transactions") {
             Size = focused ? 30 : 25,
               Type = focused ? 'entypo' : 'feather',
               iconName = focused ? 'heart' : 'heart';
-            return       <>
+            return        <View style={{alignItems:"center",marginLeft:width*(2/100)}}>
             <Image
               resizeMode={'contain'}
               source={focused ? IMAGES.transactions_color : IMAGES.transactions}
-              style={[styles.icon, { width: 20 }]}
+              style={{  width: height*(2.5/100),
+              height: height*(2.5/100),marginTop:height*(1/100)}}
             />
-            <Text style={[focused ? styles.colorText : styles.text]}>{title ? 'Transactions' : 'Transactions'}</Text>
-          </>
+            <Text style={[focused ? styles.colorText : styles.text,{marginTop:height*(-0.5/100),fontSize:font*8,}]}>{title ? 'Transactions' : 'Transactions'}</Text>
+         </View>
           }
           else if (route.name === 'Profile') {
             return (
-              <>
+              <View style={{alignItems:"center",marginLeft:width*(10/100)}}>
                 <Image
                   resizeMode={'contain'}
                   source={focused ? IMAGES.profile_color : IMAGES.profile}
-                  style={styles.icon}
+                  style={{width: height*(2.5/100),
+                  height: height*(2.5/100),marginTop:height*(1/100)}}
                 />
-                <Text style={[focused ? styles.colorText : styles.text]}>{title ? 'Profile' : 'Profile'}</Text>
-              </>
+                <Text style={[focused ? styles.colorText : styles.text,{fontSize:font*8,}]}>{title ? 'Profile' : 'Profile'}</Text>
+            </View>
             )
           }
       
@@ -113,14 +124,11 @@ const BottomNavigator = () => {
 export default BottomNavigator;
 
 const styles = StyleSheet.create({
-  icon: {
-    width: 18,
-    height: 20
-  },
+
   text: {
     fontFamily:"SourceSansPro-Regular",
     fontWeight: '400',
-    fontSize: 12,
+ 
     color: '#576671',
     top: '8%'
   },
