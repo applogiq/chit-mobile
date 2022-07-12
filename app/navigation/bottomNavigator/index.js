@@ -10,18 +10,18 @@ import {
   Platform,
   useWindowDimensions,
 } from 'react-native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../../screens/homeScreen';
 import ChitsScreen from '../../screens/chitsScreen';
 import Transactions from '../../screens/transactionsScreen';
 import ProfileScreen from '../../screens/profileScreen';
-import {IMAGES} from '../../common/images';
+import { IMAGES } from '../../common/images';
 
 const Tab = createBottomTabNavigator();
 //Assign createBottomTabNavigator to a variable to use it simply
 
 const BottomNavigator = () => {
-  const {height, width} = useWindowDimensions();
+  const { height, width } = useWindowDimensions();
   //for responsiveness
   const font = useWindowDimensions().fontScale;
   //for responsive text sizes
@@ -31,7 +31,7 @@ const BottomNavigator = () => {
     <>
       <Tab.Navigator
         options={{}}
-        screenOptions={({route}) => ({
+        screenOptions={({ route }) => ({
           headerShown: false,
           tabBarStyle: {
             shadowOffset: {
@@ -54,7 +54,7 @@ const BottomNavigator = () => {
             borderTopLeftRadius: height * (3 / 100),
             borderTopRightRadius: height * (3 / 100),
           },
-          tabBarIcon: ({focused, color, size}) => {
+          tabBarIcon: ({ focused, color, size }) => {
             let iconName;
             let Type;
             let Size;
@@ -77,7 +77,7 @@ const BottomNavigator = () => {
                   <Text
                     style={[
                       focused ? styles.colorText : styles.text,
-                      {fontSize: font * 8},
+                      { fontSize: font * 12 },
                     ]}>
                     {title ? 'Home' : 'Home'}
                   </Text>
@@ -102,7 +102,7 @@ const BottomNavigator = () => {
                   <Text
                     style={[
                       focused ? styles.colorText : styles.text,
-                      {marginTop: height * (-0.5 / 100), fontSize: font * 8},
+                      { marginTop: height * (-0.5 / 100), fontSize: font * 12 },
                     ]}>
                     {title ? 'Chits' : 'Chits'}
                   </Text>
@@ -114,7 +114,7 @@ const BottomNavigator = () => {
                 (iconName = focused ? 'heart' : 'heart');
               return (
                 <View
-                  style={{alignItems: 'center', marginLeft: width * (2 / 100)}}>
+                  style={{ alignItems: 'center', marginLeft: width * (2 / 100) }}>
                   <Image
                     resizeMode={'contain'}
                     source={
@@ -129,7 +129,7 @@ const BottomNavigator = () => {
                   <Text
                     style={[
                       focused ? styles.colorText : styles.text,
-                      {marginTop: height * (-0.5 / 100), fontSize: font * 8},
+                      { marginTop: height * (-0.5 / 100), fontSize: font * 12 },
                     ]}>
                     {title ? 'Transactions' : 'Transactions'}
                   </Text>
@@ -154,7 +154,7 @@ const BottomNavigator = () => {
                   <Text
                     style={[
                       focused ? styles.colorText : styles.text,
-                      {fontSize: font * 8},
+                      { fontSize: font * 12 },
                     ]}>
                     {title ? 'Profile' : 'Profile'}
                   </Text>
@@ -166,21 +166,21 @@ const BottomNavigator = () => {
           tabBarInactiveTintColor: 'grey',
         })}
         initialRouteName="Home">
-        <Tab.Screen name="Home" component={HomeScreen} options={{title: ''}} />
+        <Tab.Screen name="Home" component={HomeScreen} options={{ title: '' }} />
         <Tab.Screen
           name="Chits"
           component={ChitsScreen}
-          options={{title: ''}}
+          options={{ title: '' }}
         />
         <Tab.Screen
           name="Transactions"
           component={Transactions}
-          options={{title: ''}}
+          options={{ title: '' }}
         />
         <Tab.Screen
           name="Profile"
           component={ProfileScreen}
-          options={{title: ''}}
+          options={{ title: '' }}
         />
       </Tab.Navigator>
     </>

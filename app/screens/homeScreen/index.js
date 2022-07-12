@@ -13,31 +13,31 @@ import {
 } from 'react-native';
 
 /**************************************** Import components ***********************************************************/
-import {IMAGES} from '../../common/images';
+import { IMAGES } from '../../common/images';
 import YourChitCardSlider from '../../components/YourchitsCard/yourchitsCard';
 import MetalsCardSlider from '../../components/Metalscard/meatlsCard';
 
 const HomeScreen = () => {
   const Data = [
-    {id: 1},
-    {id: 2},
-    {id: 3},
-    {id: 4},
-    {id: 5},
-    {id: 6},
-    {id: 7},
-    {id: 8},
+    { id: 1 },
+    { id: 2 },
+    { id: 3 },
+    { id: 4 },
+    { id: 5 },
+    { id: 6 },
+    { id: 7 },
+    { id: 8 },
   ];
   //change this to real data
 
   const font = useWindowDimensions().fontScale;
-  const {height, width} = useWindowDimensions();
+  const { height, width } = useWindowDimensions();
   //For adding responsiveness
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View
         style={{
-          height: height * (20 / 100),
+          height: height * (18 / 100),
           width: width * (100 / 100),
           paddingLeft: 15,
           paddingRight: 15,
@@ -76,9 +76,10 @@ const HomeScreen = () => {
           style={[
             styles.titleText,
             {
-              fontSize: font * 19,
+              fontSize: font * 24,
               lineHeight: font * 21,
-              marginTop: height * (1.5 / 100),
+              marginTop: height * (2.5 / 100),
+              marginBottom: height * (1 / 100),
             },
           ]}>
           Hello Lucifer,
@@ -86,13 +87,13 @@ const HomeScreen = () => {
         <Text
           style={[
             styles.titleText,
-            {fontSize: font * 19, lineHeight: font * 21},
+            { fontSize: font * 24, lineHeight: font * 21 },
           ]}>
           Welcome to Luxury
         </Text>
       </View>
       <View style={{}}>
-        <Text style={[styles.cardTitle, {fontSize: font * 11, marginLeft: 15}]}>
+        <Text style={[styles.cardTitle, { fontSize: font * 15, marginLeft: 15 }]}>
           Your Chits
         </Text>
         <View style={styles.top}>
@@ -100,23 +101,23 @@ const HomeScreen = () => {
         </View>
       </View>
       <View style={styles.top}>
-        <Text style={[styles.cardTitle, {fontSize: font * 11, marginLeft: 15}]}>
+        <Text style={[styles.cardTitle, { fontSize: font * 15, marginLeft: 15 }]}>
           Today's Prices
         </Text>
         <View style={[styles.top]}>
           <MetalsCardSlider></MetalsCardSlider>
         </View>
       </View>
-      <View style={[styles.top, {paddingLeft: 15, paddingRight: 15}]}>
-        <View style={{flexDirection: 'row'}}>
-          <Text style={[styles.cardTitle, {fontSize: font * 11}]}>
+      <View style={[styles.top, { paddingLeft: 15, paddingRight: 15 }]}>
+        <View style={{ flexDirection: 'row' }}>
+          <Text style={[styles.cardTitle, { fontSize: font * 15 }]}>
             Recent Transactions
           </Text>
           <Text
             style={[
               styles.cardTitle,
               {
-                fontSize: font * 9,
+                fontSize: font * 13,
                 marginLeft: width * (41 / 100),
                 color: 'rgba(65, 39, 15, 0.6)',
               },
@@ -127,7 +128,7 @@ const HomeScreen = () => {
         <View
           style={[
             styles.top,
-            {backgroundColor: 'white', borderTopLeftRadius: 5, borderRadius: 5},
+            { backgroundColor: 'white', borderTopLeftRadius: 5, borderRadius: 5 },
           ]}>
           <FlatList
             data={Data}
@@ -142,7 +143,7 @@ const HomeScreen = () => {
             )}
             scrollEnabled={true}
             snapToAlignment="center"
-            renderItem={({item}) => {
+            renderItem={({ item }) => {
               return (
                 <View
                   style={{
@@ -152,10 +153,10 @@ const HomeScreen = () => {
                     paddingRight: '3%',
                     paddingLeft: '3%',
                   }}>
-                  <View style={{flexDirection: 'row'}}>
+                  <View style={{ flexDirection: 'row' }}>
                     <Text
                       style={{
-                        fontSize: font * 10,
+                        fontSize: font * 14,
                         color: 'rgba(65, 39, 15, 0.8)',
                         fontWeight: '600',
                         fontFamily: 'SourceSansPro-SemiBold',
@@ -164,7 +165,7 @@ const HomeScreen = () => {
                     </Text>
                     <Text
                       style={{
-                        fontSize: font * 10,
+                        fontSize: font * 14,
                         color: 'rgba(65, 39, 15, 0.8)',
                         fontWeight: '600',
                         fontFamily: 'SourceSansPro-SemiBold',
@@ -173,10 +174,10 @@ const HomeScreen = () => {
                       ₹1022
                     </Text>
                   </View>
-                  <View style={{flexDirection: 'row', marginTop: '3%'}}>
+                  <View style={{ flexDirection: 'row', marginTop: '3%' }}>
                     <Text
                       style={{
-                        fontSize: font * 8,
+                        fontSize: font * 13,
                         color: 'rgba(65, 39, 15, 0.5)',
                         fontWeight: '600',
                         fontFamily: 'SourceSansPro-SemiBold',
@@ -185,7 +186,7 @@ const HomeScreen = () => {
                     </Text>
                     <Text
                       style={{
-                        fontSize: font * 15,
+                        fontSize: font * 23,
                         color: 'rgba(65, 39, 15, 0.8)',
                         fontWeight: '600',
                         fontFamily: 'SourceSansPro-SemiBold',
@@ -196,7 +197,7 @@ const HomeScreen = () => {
                     </Text>
                     <Text
                       style={{
-                        fontSize: font * 8,
+                        fontSize: font * 13,
                         color: 'rgba(65, 39, 15, 0.5)',
                         fontWeight: '600',
                         fontFamily: 'SourceSansPro-SemiBold',
@@ -217,7 +218,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F7F6F2',
-    paddingTop: 15,
+    paddingTop: 15, marginBottom: "20%"
   },
   titleText: {
     fontFamily: 'Belleza-Regular',
@@ -230,13 +231,13 @@ const styles = StyleSheet.create({
     color: 'rgba(65, 39, 15, 0.6)',
     fontWeight: '600',
   },
-  headerUpper: {flexDirection: 'row', width: '100%', alignItems: 'center'},
+  headerUpper: { flexDirection: 'row', width: '100%', alignItems: 'center' },
   headerNotifi: {
     borderRadius: 5,
     backgroundColor: 'rgba(213, 186, 143, 0.3)',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  top: {marginTop: 10},
+  top: { marginTop: 10 },
 });
 export default HomeScreen;

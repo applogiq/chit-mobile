@@ -1,6 +1,6 @@
 //Login screen of the the application
 /**************************************** Import Packages ***********************************************************/
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Text,
   View,
@@ -13,14 +13,14 @@ import {
 /**************************************** Import components ***********************************************************/
 import Button from '../../components/Button/buttonComponent';
 import InputField from '../../components/Input/inputComponent';
-import {IMAGES} from '../../common/images';
+import { IMAGES } from '../../common/images';
 import ModalComponent from '../../components/Modal/modalComponent';
-import {LoginUser} from '../../redux/actions';
-import {connect, useSelector} from 'react-redux';
+import { LoginUser } from '../../redux/actions';
+import { connect, useSelector } from 'react-redux';
 /**************************************** Import common files ***********************************************************/
-import {isEmpty, isValidEmail, isValidPassword} from '../../utils/validator';
+import { isEmpty, isValidEmail, isValidPassword } from '../../utils/validator';
 
-const image = {uri: ''};
+const image = { uri: '' };
 const LoginScreen = props => {
   const [useridentity, setUseridentity] = useState('');
   const [userpassword, setUserpassword] = useState('');
@@ -32,7 +32,7 @@ const LoginScreen = props => {
 
   const [modalVisible, setModalvisible] = useState(false);
 
-  const {height, width} = useWindowDimensions();
+  const { height, width } = useWindowDimensions();
 
   const font = useWindowDimensions().fontScale;
   //Get fontscale from and use it to resize fonts
@@ -105,7 +105,7 @@ const LoginScreen = props => {
 
   return (
     <ScrollView style={[styles.container]}>
-      <View style={{height: height, width: width}}>
+      <View style={{ height: height, width: width }}>
         <ImageBackground
           source={IMAGES.login_background}
           resizeMode="cover"
@@ -119,23 +119,23 @@ const LoginScreen = props => {
             },
           ]}>
           <View
-            style={[styles.titleContainer, {marginTop: height * (35 / 100)}]}>
+            style={[styles.titleContainer, { marginTop: height * (35 / 100) }]}>
             <Text
               style={[
                 styles.titleText,
-                {fontSize: font * 19, lineHeight: font * 21},
+                { fontSize: font * 24, lineHeight: font * 21 },
               ]}>
               Hello,
             </Text>
             <Text
               style={[
                 styles.titleText,
-                {fontSize: font * 19, lineHeight: font * 21},
+                { fontSize: font * 24, lineHeight: font * 21, marginTop: "3%" },
               ]}>
               Welcome to Luxury
             </Text>
           </View>
-          <View style={{marginTop: height * (5 / 100)}}>
+          <View style={{ marginTop: height * (5 / 100) }}>
             <InputField
               loading={loading}
               parentCallback={handleInputidentity}
@@ -152,15 +152,15 @@ const LoginScreen = props => {
               value={userpassword}
               showicon={true}
               errormessage={passworderror}
-              maxchars={10}></InputField>
+              maxchars={15}></InputField>
           </View>
-          <View style={{alignSelf: 'flex-end', marginTop: height * (1 / 100)}}>
+          <View style={{ alignSelf: 'flex-end', marginTop: height * (1 / 100) }}>
             <TouchableOpacity
               onPress={() => props.navigation.navigate('ForgotPassword')}>
               <Text
                 style={[
                   styles.forgotText,
-                  {fontSize: font * 8, lineHeight: font * 10},
+                  { fontSize: font * 11, lineHeight: font * 10 },
                 ]}>
                 Forgot Password?
               </Text>
@@ -173,7 +173,7 @@ const LoginScreen = props => {
             type={'large'}
             loading={loading}
             disabled={disabled}
-            parentstyles={{marginTop: height * (4 / 100)}}></Button>
+            parentstyles={{ marginTop: height * (4 / 100) }}></Button>
         </ImageBackground>
       </View>
       <ModalComponent

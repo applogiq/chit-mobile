@@ -3,7 +3,7 @@
 //basic usage const handleInput = (childData) =>{setValue(childData)}
 //<InputField showicon={false} parentCallback={parentCallback1} title={"userpass"} value={val1} placeholder={"password"} ></InputField>
 /**************************************** Import Packages ***********************************************************/
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Text,
   View,
@@ -14,7 +14,7 @@ import {
   Pressable,
   TouchableOpacity,
 } from 'react-native';
-import {IMAGES} from '../../common/images';
+import { IMAGES } from '../../common/images';
 /**************************************** Import components ***********************************************************/
 
 const InputField = ({
@@ -29,7 +29,7 @@ const InputField = ({
   loading,
   inputtype,
 }) => {
-  const {height, width} = useWindowDimensions();
+  const { height, width } = useWindowDimensions();
   const [pressed, setPressed] = useState(showicon ? false : true);
   //Get height,width of screen by this hook
   var w = '100%';
@@ -46,11 +46,11 @@ const InputField = ({
     setPressed(!pressed);
   };
   return (
-    <View style={[styles.container, {height: h, width: w}, parentstyles]}>
+    <View style={[styles.container, { height: h, width: w }, parentstyles]}>
       <Text
         style={[
           styles.title,
-          {textTransform: 'capitalize', fontSize: font * 9},
+          { textTransform: 'capitalize', fontSize: font * 12 },
         ]}>
         {title}
       </Text>
@@ -68,7 +68,7 @@ const InputField = ({
         <View
           style={{
             position: 'absolute',
-            marginTop: height * (6.5 / 100),
+            marginTop: height * (5.5 / 100),
             marginLeft: width * (85 / 100),
           }}>
           <Pressable onPress={iconpress}>
@@ -79,7 +79,7 @@ const InputField = ({
         </View>
       ) : null}
 
-      <Text style={[styles.errormessage, {fontSize: font * 8}]}>
+      <Text style={[styles.errormessage, { fontSize: font * 10 }]}>
         {errormessage}
       </Text>
     </View>
@@ -97,8 +97,8 @@ const styles = StyleSheet.create({
     lineHeight: 21,
     marginBottom: 5,
   },
-  input: {backgroundColor: 'white', width: '100%', borderRadius: 6},
-  eyeicon: {height: 15, width: 22},
+  input: { backgroundColor: 'white', width: '100%', borderRadius: 6 },
+  eyeicon: { height: 15, width: 22 },
   errormessage: {
     color: 'red',
     fontFamily: 'SourceSansPro-Light',

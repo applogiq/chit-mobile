@@ -4,9 +4,9 @@ import {
   LOGIN_USERS_SUCCESS,
   LOGIN_USERS_FAILURE,
 } from '../types/loginTypes';
-import {postLoginRequestData} from '../../api/create';
+import { postLoginRequestData } from '../../api/create';
 
-import {setAsyncValue} from '../../utills/asyncHelper';
+import { setAsyncValue } from '../../utils/asyncHelper';
 
 export const LoginUsersRequest = () => ({
   type: LOGIN_USERS_REQUEST,

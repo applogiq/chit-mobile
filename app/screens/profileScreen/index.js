@@ -12,12 +12,12 @@ import {
 
 const ProfileScreen = props => {
   const font = useWindowDimensions().fontScale;
-  const {height, width} = useWindowDimensions();
+  const { height, width } = useWindowDimensions();
   //for responsiveness
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <Text style={[styles.headerText, {fontSize: font * 17}]}>Profile</Text>
+        <Text style={[styles.headerText, { fontSize: font * 21 }]}>Profile</Text>
       </View>
       <View
         style={{
@@ -33,78 +33,78 @@ const ProfileScreen = props => {
           }}
           style={styles.image}></Image>
       </View>
-      <View style={{height: '30%'}}>
-        <Text style={[styles.tableTitles, {fontSize: font * 12}]}>
+      <View style={{ height: '30%' }}>
+        <Text style={[styles.tableTitles, { fontSize: font * 16 }]}>
           Basic Info
         </Text>
         <View style={styles.detailsCard}>
           <View style={styles.row}>
-            <Text style={[styles.title, {fontSize: font * 9}]}>Name</Text>
+            <Text style={[styles.title, { fontSize: font * 13 }]}>Name</Text>
             <View style={styles.cardItems}>
               <Text
-                style={[styles.title, {fontSize: font * 10, color: 'black'}]}>
+                style={[styles.title, { fontSize: font * 14, color: 'black' }]}>
                 Montana joe
               </Text>
             </View>
           </View>
           <View style={styles.row}>
-            <Text style={[styles.title, {fontSize: font * 9}]}>
+            <Text style={[styles.title, { fontSize: font * 13 }]}>
               Email address
             </Text>
             <View style={styles.cardItems}>
               <Text
-                style={[styles.title, {fontSize: font * 10, color: 'black'}]}>
+                style={[styles.title, { fontSize: font * 14, color: 'black' }]}>
                 Montanajoe@gmail.com
               </Text>
             </View>
           </View>
           <View style={styles.row}>
-            <Text style={[styles.title, {fontSize: font * 9}]}>
+            <Text style={[styles.title, { fontSize: font * 13 }]}>
               Mobile number
             </Text>
             <View style={styles.cardItems}>
               <Text
-                style={[styles.title, {fontSize: font * 10, color: 'black'}]}>
+                style={[styles.title, { fontSize: font * 14, color: 'black' }]}>
                 9387654372
               </Text>
             </View>
           </View>
           <View style={styles.row}>
-            <Text style={[styles.title, {fontSize: font * 9}]}>Country</Text>
+            <Text style={[styles.title, { fontSize: font * 13 }]}>Country</Text>
             <View style={styles.cardItems}>
               <Text
-                style={[styles.title, {fontSize: font * 10, color: 'black'}]}>
+                style={[styles.title, { fontSize: font * 14, color: 'black' }]}>
                 India
               </Text>
             </View>
           </View>
           <View style={styles.row}>
-            <Text style={[styles.title, {fontSize: font * 9}]}>State</Text>
+            <Text style={[styles.title, { fontSize: font * 13 }]}>State</Text>
             <View style={styles.cardItems}>
               <Text
-                style={[styles.title, {fontSize: font * 10, color: 'black'}]}>
+                style={[styles.title, { fontSize: font * 14, color: 'black' }]}>
                 Tamilnadu
               </Text>
             </View>
           </View>
           <View style={styles.row}>
-            <Text style={[styles.title, {fontSize: font * 9}]}>City</Text>
+            <Text style={[styles.title, { fontSize: font * 13 }]}>City</Text>
             <View style={styles.cardItems}>
               <Text
-                style={[styles.title, {fontSize: font * 10, color: 'black'}]}>
+                style={[styles.title, { fontSize: font * 14, color: 'black' }]}>
                 Tiruppur
               </Text>
             </View>
           </View>
         </View>
       </View>
-      <View style={{height: '10%', marginTop: '3%'}}>
-        <Text style={[styles.tableTitles, {fontSize: font * 12}]}>
+      <View style={{ height: '10%', marginTop: '3%' }}>
+        <Text style={[styles.tableTitles, { fontSize: font * 16 }]}>
           Security
         </Text>
         <View style={styles.detailsCard}>
           <View style={styles.row}>
-            <Text style={[styles.title, {fontSize: font * 9}]}>
+            <Text style={[styles.title, { fontSize: font * 13 }]}>
               Change password
             </Text>
 
@@ -115,7 +115,7 @@ const ProfileScreen = props => {
                   style={[
                     styles.title,
                     {
-                      fontSize: font * 10,
+                      fontSize: font * 14,
                       color: 'black',
                       textDecorationLine: 'underline',
                     },
@@ -127,12 +127,12 @@ const ProfileScreen = props => {
           </View>
         </View>
       </View>
-      <View style={{height: '10%', marginTop: '12%'}}>
+      <View style={{ height: '10%', marginTop: '12%' }}>
         <View style={styles.detailsCard}>
           <View style={styles.row}>
             <TouchableOpacity
               onPress={() => props.navigation.navigate('LoginScreen')}>
-              <Text style={[styles.logout, {fontSize: font * 10}]}>Logout</Text>
+              <Text style={[styles.logout, { fontSize: font * 14 }]}>Logout</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -147,14 +147,14 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 15,
   },
-  headerContainer: {flexDirection: 'row', alignItems: 'center', marginTop: 40},
+  headerContainer: { flexDirection: 'row', alignItems: 'center', marginTop: 40 },
 
   headerText: {
     fontFamily: 'SourceSansPro-SemiBold',
     color: '#9D6939',
     fontWeight: '600',
   },
-  image: {height: 120, width: 120, borderRadius: 100, resizeMode: 'contain'},
+  image: { height: 120, width: 120, borderRadius: 100, resizeMode: 'contain' },
   tableTitles: {
     fontFamily: 'SourceSansPro-SemiBold',
     fontWeight: '600',
@@ -177,8 +177,8 @@ const styles = StyleSheet.create({
     lineHeight: 21,
     color: 'rgba(65, 39, 15, 0.6)',
   },
-  row: {flexDirection: 'row'},
-  cardItems: {flexDirection: 'row', justifyContent: 'flex-end', flex: 1},
+  row: { flexDirection: 'row' },
+  cardItems: { flexDirection: 'row', justifyContent: 'flex-end', flex: 1 },
   logout: {
     color: 'rgba(65, 39, 15, 0.8)',
     fontFamily: 'SourceSansPro-SemiBold',

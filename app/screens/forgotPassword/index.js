@@ -1,5 +1,5 @@
 /**************************************** Import Packages ***********************************************************/
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Text,
   View,
@@ -9,14 +9,14 @@ import {
   TouchableOpacity,
 } from 'react-native';
 /**************************************** Import components ***********************************************************/
-import {IMAGES} from '../../common/images';
+import { IMAGES } from '../../common/images';
 import InputField from '../../components/Input/inputComponent';
 import Button from '../../components/Button/buttonComponent';
 import OTPTextView from 'react-native-otp-textinput';
-import {isValidPassword} from '../../utils/validator';
+import { isValidPassword } from '../../utils/validator';
 
 const ForgotPassword = props => {
-  const {height, width} = useWindowDimensions();
+  const { height, width } = useWindowDimensions();
   //for responsiveness
   const [screen, setScreen] = useState('initial');
   const [loading, setLoading] = useState(false);
@@ -53,6 +53,7 @@ const ForgotPassword = props => {
     setResetcpassword(childData);
   };
   const ongetOtp = () => {
+
     setScreen('otp');
   };
   const onChangepassword = () => {
@@ -77,32 +78,36 @@ const ForgotPassword = props => {
       setReseterror("Passwords don't match");
     }
   };
-
+  const OnBackpress = () => {
+    props.navigation.navigate('LoginScreen');
+  }
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <Image
-          resizeMode="stretch"
-          style={[
-            styles.backIcon,
-            {height: height * (2 / 100), width: width * (2 / 100)},
-          ]}
-          source={IMAGES.back_icon}></Image>
-        <Text style={[styles.headerText, {fontSize: font * 15}]}>
+        <TouchableOpacity onPress={() => OnBackpress()}>
+          <Image
+            resizeMode="stretch"
+            style={[
+              styles.backIcon,
+              { height: height * (2 / 100), width: width * (2 / 100) },
+            ]}
+            source={IMAGES.back_icon}></Image>
+        </TouchableOpacity>
+        <Text style={[styles.headerText, { fontSize: font * 19 }]}>
           {screen == 'initial'
             ? 'Forgot Password'
             : screen == 'otp'
-            ? 'Forgot Password'
-            : 'Reset Password'}
+              ? 'Forgot Password'
+              : 'Reset Password'}
         </Text>
       </View>
       <View style={styles.subTextcontainer}>
-        <Text style={[styles.subText, {fontSize: font * 9}]}>
+        <Text style={[styles.subText, { fontSize: font * 12 }]}>
           {screen == 'initial'
             ? descriptionone
             : screen == 'otp'
-            ? descriptiontwo
-            : descriptionthree}
+              ? descriptiontwo
+              : descriptionthree}
         </Text>
       </View>
       {screen == 'otp' ? (
@@ -124,7 +129,7 @@ const ForgotPassword = props => {
         </View>
       ) : null}
       {screen == 'initial' ? (
-        <View style={{marginTop: height * (1 / 100)}}>
+        <View style={{ marginTop: height * (1 / 100) }}>
           <InputField
             loading={loading}
             parentCallback={handleInputphone}
@@ -138,7 +143,7 @@ const ForgotPassword = props => {
       ) : null}
 
       {screen == 'reset password' ? (
-        <View style={{marginTop: height * (1 / 100)}}>
+        <View style={{ marginTop: height * (1 / 100) }}>
           <InputField
             parentCallback={handleInputpassword}
             placeholder={''}
@@ -153,7 +158,7 @@ const ForgotPassword = props => {
         </View>
       ) : null}
 
-      <View style={{marginTop: height * (1 / 100)}}>
+      <View style={{ marginTop: height * (1 / 100) }}>
         {screen == 'initial' ? (
           <Button
             enabled={userphone.length == 10 ? true : false}
@@ -162,7 +167,7 @@ const ForgotPassword = props => {
             type={'large'}
             loading={loading}
             disabled={disabled}
-            parentstyles={{marginTop: height * (4 / 100)}}></Button>
+            parentstyles={{ marginTop: height * (4 / 100) }}></Button>
         ) : screen == 'otp' ? (
           <Button
             enabled={userotp.length == 6 ? true : false}
@@ -171,7 +176,7 @@ const ForgotPassword = props => {
             type={'large'}
             loading={otploading}
             disabled={otpdisabled}
-            parentstyles={{marginTop: height * (4 / 100)}}></Button>
+            parentstyles={{ marginTop: height * (4 / 100) }}></Button>
         ) : (
           <Button
             enabled={
@@ -184,7 +189,7 @@ const ForgotPassword = props => {
             type={'large'}
             loading={resetloading}
             disabled={resetdisabled}
-            parentstyles={{marginTop: height * (4 / 100)}}></Button>
+            parentstyles={{ marginTop: height * (4 / 100) }}></Button>
         )}
       </View>
     </View>
@@ -197,7 +202,7 @@ const styles = StyleSheet.create({
     paddingLeft: 11,
     paddingRight: 11,
   },
-  headerContainer: {flexDirection: 'row', alignItems: 'center', marginTop: 40},
+  headerContainer: { flexDirection: 'row', alignItems: 'center', marginTop: 40 },
   backIcon: {},
   headerText: {
     fontFamily: 'SourceSansPro-SemiBold',
@@ -205,7 +210,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginLeft: '5%',
   },
-  subTextcontainer: {marginTop: '4%'},
+  subTextcontainer: { marginTop: '4%' },
   subText: {
     fontFamily: 'SourceSansPro-SemiBold',
     color: 'rgba(65, 39, 15, 0.8)',
