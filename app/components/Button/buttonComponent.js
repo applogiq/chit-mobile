@@ -21,10 +21,10 @@ const Button = ({
   disabled,
   parentstyles,
 }) => {
-  const {height, width} = useWindowDimensions();
+  const { height, width } = useWindowDimensions();
   //Get height,width of screen by this hook
 
-  const font = useWindowDimensions().fontScale * 12;
+  const font = useWindowDimensions().fontScale * 16;
   //Get fontscale from device and use it to resize fonts
 
   //check the param type from parent set the height,width variables accordingly
@@ -70,7 +70,7 @@ const Button = ({
             parentstyles,
           ]}
           onPress={onpressparam}>
-          <Text style={[styles.title, {fontSize: font}]}>{title}</Text>
+          <Text style={[styles.title, { fontSize: font }]}>{title}</Text>
         </TouchableOpacity>
       )}
     </View>

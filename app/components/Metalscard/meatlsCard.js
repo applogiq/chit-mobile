@@ -10,17 +10,17 @@ import {
   FlatList,
 } from 'react-native';
 /**************************************** Import components ***********************************************************/
-import {IMAGES} from '../../common/images';
+import { IMAGES } from '../../common/images';
 
 const Data = [
-  {id: 1, src: IMAGES.gold_metal, metalName: 'Gold', weight: '8 Grams'},
-  {id: 2, src: IMAGES.silver_metal, metalName: 'Silver', weight: '8 Grams'},
-  {id: 3, src: IMAGES.diamond_metal, metalName: 'Diamond', weight: '1 Carat'},
-  {id: 4, src: IMAGES.gold_metal, metalName: 'Gold', weight: '8 Grams'},
+  { id: 1, src: IMAGES.gold_metal, metalName: 'Gold', weight: '8 Grams' },
+  { id: 2, src: IMAGES.silver_metal, metalName: 'Silver', weight: '8 Grams' },
+  { id: 3, src: IMAGES.diamond_metal, metalName: 'Diamond', weight: '1 Carat' },
+  { id: 4, src: IMAGES.gold_metal, metalName: 'Gold', weight: '8 Grams' },
 ];
 //Change this to to real time data
-const MetalsCard = ({item}) => {
-  const {height, width} = useWindowDimensions();
+const MetalsCard = ({ item }) => {
+  const { height, width } = useWindowDimensions();
   //Get window size for responsiveness
   const font = useWindowDimensions().fontScale;
   //Get fontscale from and use it to resize fonts
@@ -35,18 +35,18 @@ const MetalsCard = ({item}) => {
           marginBottom: '3%',
         },
       ]}>
-      <Text style={[styles.metalName, {fontSize: font * 9}]}>
+      <Text style={[styles.metalName, { fontSize: font * 13 }]}>
         {item.metalName}
       </Text>
       <Image style={styles.image} source={item.src}></Image>
-      <Text style={[styles.metalName, {fontSize: font * 9, marginTop: '-12%'}]}>
+      <Text style={[styles.metalName, { fontSize: font * 13, marginTop: '-12%' }]}>
         {item.weight}
       </Text>
       <Text
         style={[
           styles.metalName,
           {
-            fontSize: font * 12,
+            fontSize: font * 16,
             color: 'rgba(65, 39, 15, 0.8)',
             fontWeight: '600',
             fontFamily: 'SourceSansPro-SemiBold',
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     paddingBottom: '4%',
     justifyContent: 'space-between',
   },
-  image: {height: '55%', width: '75%', resizeMode: 'contain', marginTop: '-5%'},
+  image: { height: '55%', width: '75%', resizeMode: 'contain', marginTop: '-5%' },
   metalName: {
     fontFamily: 'SourceSansPro-Regular',
     fontWeight: '400',
@@ -97,12 +97,12 @@ const MetalsCardSlider = () => {
         data={Data}
         keyExtractor={item => item.id}
         horizontal
-        style={{backgroundColor: '#F7F6F2'}}
+        style={{ backgroundColor: '#F7F6F2' }}
         scrollEnabled={true}
         snapToAlignment="center"
         ItemSeparatorComponent={separatorItem}
         showsHorizontalScrollIndicator={false}
-        renderItem={({item}) => {
+        renderItem={({ item }) => {
           return <MetalsCard item={item}></MetalsCard>;
         }}></FlatList>
     </View>
