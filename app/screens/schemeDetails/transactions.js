@@ -4,7 +4,7 @@ import React from 'react';
 import { Text, View, StyleSheet, FlatList, useWindowDimensions } from 'react-native';
 /**************************************** Import components ***********************************************************/
 
-const SchemeTransactions = () => {
+const SchemeTransactions = ({ hidetitle }) => {
     const Data = [
         { id: 1 },
         { id: 2 },
@@ -20,7 +20,8 @@ const SchemeTransactions = () => {
     const { height, width } = useWindowDimensions();
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Transactions</Text>
+            {hidetitle ? <View></View> : <Text style={styles.title}>Transactions</Text>}
+
 
             <FlatList
                 data={Data}
@@ -30,7 +31,7 @@ const SchemeTransactions = () => {
                         style={{
                             height: 0.5,
                             backgroundColor: 'grey',
-                            width: '100%',
+                            width: '100%', marginLeft: "-5%"
                         }}></View>
                 )}
                 scrollEnabled={true}
@@ -41,9 +42,9 @@ const SchemeTransactions = () => {
                             style={{
                                 height: height * (10 / 100),
                                 width: '100%',
-                                paddingTop: '4%',
+                                paddingTop: '2%',
                                 paddingRight: '3%',
-                                paddingLeft: '3%',
+                                paddingLeft: '1%',
                             }}>
                             <View style={{ flexDirection: 'row' }}>
                                 <Text
@@ -61,7 +62,7 @@ const SchemeTransactions = () => {
                                         color: 'rgba(65, 39, 15, 0.8)',
                                         fontWeight: '600',
                                         fontFamily: 'SourceSansPro-SemiBold',
-                                        marginLeft: width * (55 / 100),
+                                        marginLeft: width * (50 / 100),
                                     }}>
                                     ₹1022
                                 </Text>

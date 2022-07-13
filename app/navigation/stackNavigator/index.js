@@ -20,12 +20,13 @@ const MainStackNavigator = props => {
         headerShown: false,
       }}
       headerShown={false}>
-
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
+
+      <Stack.Screen name="HomeScreen" component={BottomNavigator} />
 
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
       <Stack.Screen name="ChangePassword" component={ChangePassword} />
-      <Stack.Screen name="HomeScreen" component={BottomNavigator} />
+
       <Stack.Screen name="Schemedetails" component={SchemeDetails} />
 
       <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
