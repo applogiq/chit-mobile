@@ -15,4 +15,8 @@ export const IMAGES = {
   profile_color: require('../assets/images/profileColor.png'),
   profile: require('../assets/images/profile.png'),
   notify: require('../assets/images/notifyIcon.png'),
+  filter: require('../assets/images/filterIcon.png'),
+  calendar: require('../assets/images/calendarIcon.png'),
+  chev_left: require('../assets/images/chev_left.png'),
+  chev_right: require('../assets/images/chev_right.png'),
 };

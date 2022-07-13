@@ -33,7 +33,7 @@ const ProfileScreen = props => {
           }}
           style={styles.image}></Image>
       </View>
-      <View style={{ height: '30%' }}>
+      <View style={{ height: '40%' }}>
         <Text style={[styles.tableTitles, { fontSize: font * 16 }]}>
           Basic Info
         </Text>
@@ -98,7 +98,7 @@ const ProfileScreen = props => {
           </View>
         </View>
       </View>
-      <View style={{ height: '10%', marginTop: '3%' }}>
+      <View style={{ height: '7.5%', marginTop: '3%' }}>
         <Text style={[styles.tableTitles, { fontSize: font * 16 }]}>
           Security
         </Text>
@@ -127,7 +127,7 @@ const ProfileScreen = props => {
           </View>
         </View>
       </View>
-      <View style={{ height: '10%', marginTop: '12%' }}>
+      <View style={{ height: '7.5%', marginTop: '12%' }}>
         <View style={styles.detailsCard}>
           <View style={styles.row}>
             <TouchableOpacity
@@ -147,14 +147,14 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 15,
   },
-  headerContainer: { flexDirection: 'row', alignItems: 'center', marginTop: 40 },
+  headerContainer: { flexDirection: 'row', alignItems: 'center', marginTop: "4%" },
 
   headerText: {
     fontFamily: 'SourceSansPro-SemiBold',
     color: '#9D6939',
     fontWeight: '600',
   },
-  image: { height: 120, width: 120, borderRadius: 100, resizeMode: 'contain' },
+  image: { height: "65%", width: "30%", borderRadius: 100, resizeMode: 'contain' },
   tableTitles: {
     fontFamily: 'SourceSansPro-SemiBold',
     fontWeight: '600',

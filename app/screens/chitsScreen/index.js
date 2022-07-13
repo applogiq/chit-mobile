@@ -22,7 +22,7 @@ const ChitsScreen = props => {
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.headerText, { fontSize: font * 19 }]}>Chits</Text>
+      <Text style={[styles.headerText, { fontSize: font * 21 }]}>Chits</Text>
       <View style={{ marginTop: height * (2 / 100), marginBottom: height * (2 / 100) }}>
         <TopBar screenName={screen} onClick={onPress} ></TopBar>
       </View>
