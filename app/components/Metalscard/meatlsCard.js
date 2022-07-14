@@ -16,7 +16,7 @@ const Data = [
   { id: 1, src: IMAGES.gold_metal, metalName: 'Gold', weight: '8 Grams' },
   { id: 2, src: IMAGES.silver_metal, metalName: 'Silver', weight: '8 Grams' },
   { id: 3, src: IMAGES.diamond_metal, metalName: 'Diamond', weight: '1 Carat' },
-  { id: 4, src: IMAGES.gold_metal, metalName: 'Gold', weight: '8 Grams' },
+
 ];
 //Change this to to real time data
 const MetalsCard = ({ item }) => {
@@ -31,8 +31,8 @@ const MetalsCard = ({ item }) => {
         styles.container,
         {
           height: height * (21 / 100),
-          width: width * (30 / 100),
-          marginBottom: '3%',
+          width: width * (27 / 100),
+          marginBottom: '3%', marginLeft: width * (4 / 100),
         },
       ]}>
       <Text style={[styles.metalName, { fontSize: font * 13 }]}>
@@ -62,18 +62,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: 'rgba(255, 255, 255, 1)',
     shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+
     shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 10,
-    marginRight: 10,
+
+    elevation: 5,
+
     alignItems: 'center',
     paddingTop: '5%',
     paddingBottom: '4%',
     justifyContent: 'space-between',
+
   },
   image: { height: '55%', width: '75%', resizeMode: 'contain', marginTop: '-5%' },
   metalName: {
@@ -92,12 +90,12 @@ const separatorItem = () => {
 //Mainslider componenet
 const MetalsCardSlider = () => {
   return (
-    <View>
+    <View style={{ paddingLeft: "-4%", }} >
       <FlatList
         data={Data}
         keyExtractor={item => item.id}
         horizontal
-        style={{ backgroundColor: '#F7F6F2' }}
+        style={{ backgroundColor: '#F7F6F2', }}
         scrollEnabled={true}
         snapToAlignment="center"
         ItemSeparatorComponent={separatorItem}

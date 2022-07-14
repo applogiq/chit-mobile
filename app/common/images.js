@@ -19,4 +19,5 @@ export const IMAGES = {
   calendar: require('../assets/images/calendarIcon.png'),
   chev_left: require('../assets/images/chev_left.png'),
   chev_right: require('../assets/images/chev_right.png'),
+  diamond_metal: require('../assets/images/diamondMetal.png'),
 };

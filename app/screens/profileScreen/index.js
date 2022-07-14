@@ -1,19 +1,42 @@
 /**************************************** Import Packages ***********************************************************/
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   View,
   StyleSheet,
   useWindowDimensions,
   Image,
-  TouchableOpacity,
+  TouchableOpacity, Modal, Pressable
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 /**************************************** Import components ***********************************************************/
+import { LogoutUser } from '../../redux/actions';
+import { connect, useSelector } from 'react-redux';
 
 const ProfileScreen = props => {
+  const [modalVisible, setModalVisible] = useState(false)
+  const [userDetails, setUserDetails] = useState({ "name": "-" })
   const font = useWindowDimensions().fontScale;
   const { height, width } = useWindowDimensions();
   //for responsiveness
+  useEffect(() => {
+    AsyncStorage.getItem('@loggedUser').then(result => {
+
+      const loggedUser = JSON.parse(result);
+
+      setUserDetails(loggedUser)
+    });
+  }, [])
+  const onLogout = () => {
+    setModalVisible(!modalVisible)
+
+  }
+  const handleLogout = () => {
+    props.LogoutUser({ "email_id": userDetails?.email_id }).then(response => {
+      setModalVisible(!modalVisible)
+      props.navigation.navigate('LoginScreen')
+    })
+  }
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -43,7 +66,7 @@ const ProfileScreen = props => {
             <View style={styles.cardItems}>
               <Text
                 style={[styles.title, { fontSize: font * 14, color: 'black' }]}>
-                Montana joe
+                {userDetails.name}
               </Text>
             </View>
           </View>
@@ -54,7 +77,7 @@ const ProfileScreen = props => {
             <View style={styles.cardItems}>
               <Text
                 style={[styles.title, { fontSize: font * 14, color: 'black' }]}>
-                Montanajoe@gmail.com
+                {userDetails?.email_id}
               </Text>
             </View>
           </View>
@@ -65,7 +88,7 @@ const ProfileScreen = props => {
             <View style={styles.cardItems}>
               <Text
                 style={[styles.title, { fontSize: font * 14, color: 'black' }]}>
-                9387654372
+                {userDetails?.mobile_number}
               </Text>
             </View>
           </View>
@@ -74,7 +97,7 @@ const ProfileScreen = props => {
             <View style={styles.cardItems}>
               <Text
                 style={[styles.title, { fontSize: font * 14, color: 'black' }]}>
-                India
+                {userDetails?.country}
               </Text>
             </View>
           </View>
@@ -83,7 +106,7 @@ const ProfileScreen = props => {
             <View style={styles.cardItems}>
               <Text
                 style={[styles.title, { fontSize: font * 14, color: 'black' }]}>
-                Tamilnadu
+                {userDetails?.state}
               </Text>
             </View>
           </View>
@@ -92,7 +115,7 @@ const ProfileScreen = props => {
             <View style={styles.cardItems}>
               <Text
                 style={[styles.title, { fontSize: font * 14, color: 'black' }]}>
-                Tiruppur
+                {userDetails?.city}
               </Text>
             </View>
           </View>
@@ -131,12 +154,41 @@ const ProfileScreen = props => {
         <View style={styles.detailsCard}>
           <View style={styles.row}>
             <TouchableOpacity
-              onPress={() => props.navigation.navigate('LoginScreen')}>
+              onPress={() => onLogout()}>
               <Text style={[styles.logout, { fontSize: font * 14 }]}>Logout</Text>
             </TouchableOpacity>
           </View>
         </View>
       </View>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Are you sure want to logout?</Text>
+            <View style={{ flexDirection: "row" }} >
+              <Pressable
+                style={[styles.button, styles.buttonClose, { marginRight: "5%" }]}
+                onPress={() => setModalVisible(!modalVisible)}
+              >
+                <Text style={styles.textStyle}>Cancel</Text>
+              </Pressable>
+              <Pressable
+                style={[styles.button, styles.buttonClose, { marginLeft: "5%" }]}
+                onPress={() => handleLogout()}
+              >
+                <Text style={styles.textStyle}>Logout</Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -183,5 +235,54 @@ const styles = StyleSheet.create({
     color: 'rgba(65, 39, 15, 0.8)',
     fontFamily: 'SourceSansPro-SemiBold',
   },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  modalView: {
+    margin: 30,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 15,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "rgba(157, 105, 57, 1)",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
+    fontFamily: 'SourceSansPro-SemiBold',
+  }
 });
-export default ProfileScreen;
+
+const mapStateToProps = state => ({
+
+});
+const mapDispatchToProps = dispatch => ({
+  LogoutUser: data => dispatch(LogoutUser(data)),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileScreen);

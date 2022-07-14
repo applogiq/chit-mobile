@@ -9,6 +9,7 @@ import {
   ImageBackground,
   ScrollView,
   TouchableOpacity,
+  Modal, ActivityIndicator
 } from 'react-native';
 /**************************************** Import components ***********************************************************/
 import Button from '../../components/Button/buttonComponent';
@@ -22,12 +23,15 @@ import { isEmpty, isValidEmail, isValidPassword } from '../../utils/validator';
 
 const image = { uri: '' };
 const LoginScreen = props => {
+
   const [useridentity, setUseridentity] = useState('');
   const [userpassword, setUserpassword] = useState('');
   const [identityerror, setIdentityerror] = useState('');
   const [passworderror, setPassworderror] = useState('');
   const [modaltext, setModaltext] = useState('');
   const [loading, setLoading] = useState(false);
+  const [loader, setLoader] = useState(false);
+
   const [disabled, setDisabled] = useState(true);
 
   const [modalVisible, setModalvisible] = useState(false);
@@ -53,6 +57,7 @@ const LoginScreen = props => {
     setDisabled(true);
 
     setModalvisible(false);
+    setLoader(false)
   };
 
   const doLoginValidation = () => {
@@ -82,22 +87,39 @@ const LoginScreen = props => {
   };
 
   const onloginPress = () => {
+
     if (doLoginValidation()) {
-      setLoading(true);
-      //   props.LoginUser({
-      //     "email_id":"venkat.testing.qbace@mail.com", "password": "1"
-      // }).then(response => { console.log(response)
-      //   setModaltext(JSON.stringify(response))
-      //   setModalvisible(!modalVisible)
+      setLoading(true)
+      setLoader(true)
+      props.LoginUser(
 
-      // }
+        {
+          "email_id": useridentity,
+          "password": userpassword
+        }
+      ).then(response => {
 
-      // )
 
-      props.navigation.navigate('HomeScreen');
-      setLoading(false);
+        if (response.message == "user logged in") {
+
+          props.navigation.navigate('HomeScreen');
+
+        } else {
+          setModaltext("Please enter valid login credentials")
+          setModalvisible(!modalVisible)
+        }
+
+
+      }
+
+      )
+
+
+
+
       resetStates();
     }
+
   };
   const handleModal = () => {
     setModalvisible(!modalVisible);
@@ -143,7 +165,7 @@ const LoginScreen = props => {
               title={'Email Address or Phone number'}
               value={useridentity}
               errormessage={identityerror}
-              maxchars={25}></InputField>
+              maxchars={35}></InputField>
             <InputField
               loading={loading}
               parentCallback={handleInputpassword}
@@ -180,6 +202,21 @@ const LoginScreen = props => {
         textData={modaltext}
         modalVisible={modalVisible}
         onmodalPress={handleModal}></ModalComponent>
+      <Modal
+        animationType="none"
+        transparent={true}
+        visible={loader}
+        onRequestClose={() => {
+
+          setLoader(!loader);
+        }}
+        style={styles.loader}>
+        <View style={styles.loadContainer}>
+          <ActivityIndicator size="large" color="rgba(213, 186, 143, 1)" />
+        </View>
+
+      </Modal>
+
     </ScrollView>
   );
 };
@@ -198,11 +235,11 @@ const styles = StyleSheet.create({
     color: 'rgba(65, 39, 15, 0.8)',
   },
   titleContainer: {},
+  loader: { flex: 1, alignItems: "center", justifyContent: "center" },
+  loadContainer: { alignItems: "center", justifyContent: "center", flex: 1 }
 });
 const mapStateToProps = state => ({
-  // loginResponse: state.Login.storeLoginResponse,
-  // loginError: state.Login.error,
-  // preLoader: state.login.loading,
+
 });
 const mapDispatchToProps = dispatch => ({
   LoginUser: data => dispatch(LoginUser(data)),

@@ -1,6 +1,6 @@
 //This is the homescreen
 /**************************************** Import Packages ***********************************************************/
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   View,
@@ -11,13 +11,20 @@ import {
   FlatList,
   ScrollView,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { useDispatch, useSelector, connect } from 'react-redux';
+import { getMetals } from '../../redux/actions';
 
 /**************************************** Import components ***********************************************************/
 import { IMAGES } from '../../common/images';
 import YourChitCardSlider from '../../components/YourchitsCard/yourchitsCard';
 import MetalsCardSlider from '../../components/Metalscard/meatlsCard';
 
+
 const HomeScreen = () => {
+  const dispatch = useDispatch()
+  const [userDetails, setUserDetails] = useState("")
   const Data = [
     { id: 1 },
     { id: 2 },
@@ -33,6 +40,23 @@ const HomeScreen = () => {
   const font = useWindowDimensions().fontScale;
   const { height, width } = useWindowDimensions();
   //For adding responsiveness
+  useEffect(() => {
+    AsyncStorage.getItem('@loggedUser').then(result => {
+
+      const loggedUser = JSON.parse(result);
+
+      setUserDetails(loggedUser)
+    });
+  }, [])
+  useEffect(() => {
+
+    dispatch(getMetals()).then((resp) => {
+      console.log(resp, "///////////////////////////////")
+    })
+
+
+  }, [])
+
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View
@@ -82,7 +106,7 @@ const HomeScreen = () => {
               marginBottom: height * (1 / 100),
             },
           ]}>
-          Hello Lucifer,
+          Hello {userDetails?.name},
         </Text>
         <Text
           style={[
@@ -240,4 +264,6 @@ const styles = StyleSheet.create({
   },
   top: { marginTop: 10 },
 });
+
+
 export default HomeScreen;
