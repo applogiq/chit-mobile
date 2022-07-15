@@ -15,6 +15,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { useDispatch, useSelector, connect } from 'react-redux';
 import { getMetals } from '../../redux/actions';
+import { getYourchits } from '../../redux/actions';
+import { getRecenttransactions } from '../../redux/actions';
+
 
 /**************************************** Import components ***********************************************************/
 import { IMAGES } from '../../common/images';
@@ -24,6 +27,11 @@ import MetalsCardSlider from '../../components/Metalscard/meatlsCard';
 
 const HomeScreen = () => {
   const dispatch = useDispatch()
+  const [goldPrice, setgoldPrice] = useState(0)
+  const [silverPrice, setsilverPrice] = useState(0)
+  const [diamondPrice, setdiamondPrice] = useState(0)
+  const [yourChitsdata, setyourChitsdata] = useState([])
+  const [recentTransactions, setrecentTransactions] = useState([])
   const [userDetails, setUserDetails] = useState("")
   const Data = [
     { id: 1 },
@@ -40,22 +48,46 @@ const HomeScreen = () => {
   const font = useWindowDimensions().fontScale;
   const { height, width } = useWindowDimensions();
   //For adding responsiveness
+
   useEffect(() => {
-    AsyncStorage.getItem('@loggedUser').then(result => {
 
-      const loggedUser = JSON.parse(result);
-
-      setUserDetails(loggedUser)
-    });
+    setMetals()
+    setYourchits()
   }, [])
-  useEffect(() => {
+
+  const setMetals = () => {
 
     dispatch(getMetals()).then((resp) => {
-      console.log(resp, "///////////////////////////////")
+      resp?.records.map((item) => {
+
+        if (item.name == "Gold" || item.name == "gold") {
+          setgoldPrice(item.price)
+        } else if (item.name == "Diamond" || item.name == "diamond") {
+          setdiamondPrice(item.price)
+        } else if (item.name == "Silver" || item.name == "silver") {
+          setsilverPrice(item.price)
+        }
+      })
     })
+  }
+  const setYourchits = async () => {
 
+    await AsyncStorage.getItem('@loggedUser').then(result => {
 
-  }, [])
+      const loggedUser = JSON.parse(result);
+      setUserDetails(loggedUser)
+      dispatch(getYourchits(loggedUser.id)).then((resp) => {
+
+        setyourChitsdata(resp.records)
+      })
+      dispatch(getRecenttransactions(loggedUser.id)).then((resp) => {
+        setrecentTransactions(resp.records)
+
+      })
+
+    });
+
+  }
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -121,7 +153,7 @@ const HomeScreen = () => {
           Your Chits
         </Text>
         <View style={styles.top}>
-          <YourChitCardSlider></YourChitCardSlider>
+          <YourChitCardSlider data={yourChitsdata}></YourChitCardSlider>
         </View>
       </View>
       <View style={styles.top}>
@@ -129,7 +161,7 @@ const HomeScreen = () => {
           Today's Prices
         </Text>
         <View style={[styles.top]}>
-          <MetalsCardSlider></MetalsCardSlider>
+          <MetalsCardSlider gold={goldPrice} silver={silverPrice} diamond={diamondPrice} ></MetalsCardSlider>
         </View>
       </View>
       <View style={[styles.top, { paddingLeft: 15, paddingRight: 15 }]}>
@@ -155,8 +187,8 @@ const HomeScreen = () => {
             { backgroundColor: 'white', borderTopLeftRadius: 5, borderRadius: 5 },
           ]}>
           <FlatList
-            data={Data}
-            keyExtractor={item => item.id}
+            data={recentTransactions}
+            keyExtractor={item => item}
             ItemSeparatorComponent={() => (
               <View
                 style={{
@@ -168,6 +200,8 @@ const HomeScreen = () => {
             scrollEnabled={true}
             snapToAlignment="center"
             renderItem={({ item }) => {
+
+              console.log(item, "<<<<<<<<<<<<<<<<<<<<<")
               return (
                 <View
                   style={{
@@ -185,7 +219,7 @@ const HomeScreen = () => {
                         fontWeight: '600',
                         fontFamily: 'SourceSansPro-SemiBold',
                       }}>
-                      13 may 2022
+                      {item.created_at.substring(0, 10)}
                     </Text>
                     <Text
                       style={{
@@ -195,7 +229,7 @@ const HomeScreen = () => {
                         fontFamily: 'SourceSansPro-SemiBold',
                         marginLeft: width * (55 / 100),
                       }}>
-                      ₹1022
+                      ₹{item?.amount}
                     </Text>
                   </View>
                   <View style={{ flexDirection: 'row', marginTop: '3%' }}>
@@ -206,7 +240,7 @@ const HomeScreen = () => {
                         fontWeight: '600',
                         fontFamily: 'SourceSansPro-SemiBold',
                       }}>
-                      Golden Harvest
+                      {item?.scheme_name}
                     </Text>
                     <Text
                       style={{
@@ -227,7 +261,7 @@ const HomeScreen = () => {
                         fontFamily: 'SourceSansPro-SemiBold',
                         marginLeft: width * (1 / 100),
                       }}>
-                      ₹1022
+                      {item?.group_code}
                     </Text>
                   </View>
                 </View>

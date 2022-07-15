@@ -15,15 +15,16 @@ import ChitInfoForm from './infoForm';
 import SchemeTransactions from './transactions';
 
 
-const SchemeDetails = props => {
-
+const SchemeDetails = ({ navigation, route }) => {
+    const { item } = route.params;
     const font = useWindowDimensions().fontScale;
     const { height, width } = useWindowDimensions();
     //for responsiveness
 
     const OnBackpress = () => {
-        props.navigation.navigate('Chits');
+        navigation.navigate('Chits');
     }
+    console.log("route params", item)
     return (
         <View style={{ flex: 1 }}>
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false} >

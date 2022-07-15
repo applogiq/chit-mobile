@@ -12,12 +12,7 @@ import {
 /**************************************** Import components ***********************************************************/
 import { IMAGES } from '../../common/images';
 
-const Data = [
-  { id: 1, src: IMAGES.gold_metal, metalName: 'Gold', weight: '8 Grams' },
-  { id: 2, src: IMAGES.silver_metal, metalName: 'Silver', weight: '8 Grams' },
-  { id: 3, src: IMAGES.diamond_metal, metalName: 'Diamond', weight: '1 Carat' },
 
-];
 //Change this to to real time data
 const MetalsCard = ({ item }) => {
   const { height, width } = useWindowDimensions();
@@ -52,7 +47,7 @@ const MetalsCard = ({ item }) => {
             fontFamily: 'SourceSansPro-SemiBold',
           },
         ]}>
-        ₹520
+        {item.price}
       </Text>
     </View>
   );
@@ -88,7 +83,14 @@ const separatorItem = () => {
   return <View style={styles.separatorView} />;
 };
 //Mainslider componenet
-const MetalsCardSlider = () => {
+const MetalsCardSlider = ({ gold, silver, diamond }) => {
+  console.log(gold, silver, diamond, "{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{")
+  const Data = [
+    { id: 1, src: IMAGES.gold_metal, metalName: 'Gold', weight: '8 Grams', price: gold },
+    { id: 2, src: IMAGES.silver_metal, metalName: 'Silver', weight: '8 Grams', price: silver },
+    { id: 3, src: IMAGES.diamond_metal, metalName: 'Diamond', weight: '1 Carat', price: diamond },
+
+  ];
   return (
     <View style={{ paddingLeft: "-4%", }} >
       <FlatList
@@ -101,7 +103,7 @@ const MetalsCardSlider = () => {
         ItemSeparatorComponent={separatorItem}
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => {
-          return <MetalsCard item={item}></MetalsCard>;
+          return <MetalsCard gold={gold} silver={silver} diamond={diamond} item={item}></MetalsCard>;
         }}></FlatList>
     </View>
   );

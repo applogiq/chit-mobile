@@ -1,6 +1,6 @@
 //Login screen of the the application
 /**************************************** Import Packages ***********************************************************/
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   View,
@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   Modal, ActivityIndicator
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 /**************************************** Import components ***********************************************************/
 import Button from '../../components/Button/buttonComponent';
 import InputField from '../../components/Input/inputComponent';
@@ -124,7 +125,17 @@ const LoginScreen = props => {
   const handleModal = () => {
     setModalvisible(!modalVisible);
   };
+  useEffect(() => {
+    AsyncStorage.getItem('@token').then(result => {
 
+      const loggedUser = JSON.parse(result);
+      if (loggedUser.token.access_token != undefined || loggedUser.token.access_token != null) {
+        props.navigation.navigate('HomeScreen')
+      }
+
+
+    });
+  }, [])
   return (
     <ScrollView style={[styles.container]}>
       <View style={{ height: height, width: width }}>

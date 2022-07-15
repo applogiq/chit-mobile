@@ -11,16 +11,18 @@ const Data = [
     { id: 4 }
 ]
 //change this to real data
-const MychitsCard = ({ screenName, onpress }) => {
+const MychitsCard = ({ screenName, onpress, data }) => {
     const { height, width } = useWindowDimensions();
     //for responsiveness
     const font = useWindowDimensions().fontScale
     //Get fontscale from and use it to resize fonts
+
     const OnClick = () => {
 
         onpress()
 
     }
+    const pendingMonths = data?.total_month - data?.paid_month
     return (
         <View style={[styles.container, { height: height * (25 / 100), width: width * (92 / 100), marginBottom: "3%" }]}>
             {screenName == "My Chits" ? <View style={styles.innerContainer}>
@@ -32,16 +34,16 @@ const MychitsCard = ({ screenName, onpress }) => {
                     <View style={styles.flexB}>
                         <Text style={[styles.textOne, { alignSelf: "flex-end", }]}>
                             Total amount</Text>
-                        <Text style={[styles.textTwo, { alignSelf: "flex-end", }]}>₹150000</Text>
+                        <Text style={[styles.textTwo, { alignSelf: "flex-end", }]}>₹{data?.total_amount}</Text>
                     </View>
                     <View style={[styles.flexB, { alignContent: "flex-end" }]}>
 
                         <Text style={[styles.textOne]}>Months Pending</Text>
-                        <Text style={[styles.textTwo]}>7</Text>
+                        <Text style={[styles.textTwo]}>{pendingMonths}</Text>
                     </View>
                     <View style={[styles.flexB, { alignContent: "flex-end" }]}>
                         <Text style={[styles.textOne, { alignSelf: "flex-end", }]}>Due Bill</Text>
-                        <Text style={[styles.textTwo, { alignSelf: "flex-end", }]}>₹1500.00</Text>
+                        <Text style={[styles.textTwo, { alignSelf: "flex-end", }]}>₹{data?.monthly_installment}</Text>
                     </View>
                 </View>
                 <View style={styles.buttonContainer}>
@@ -108,11 +110,12 @@ const separatorItem = () => {
     return <View style={styles.separatorView} />;
 };
 //mainslider component
-const MyChitCardSlider = ({ screen, onButton }) => {
+const MyChitCardSlider = ({ screen, onButton, yourchitsdata }) => {
+
     return (
         <View>
-            <FlatList data={Data}
-                keyExtractor={(item) => item.id}
+            <FlatList data={yourchitsdata}
+                keyExtractor={(item) => item}
 
 
                 scrollEnabled={true}
@@ -122,7 +125,7 @@ const MyChitCardSlider = ({ screen, onButton }) => {
                 showsHorizontalScrollIndicator={false}
                 renderItem={({ item }) => {
 
-                    return <MychitsCard screenName={screen} onpress={onButton}></MychitsCard>
+                    return <MychitsCard data={item} screenName={screen} onpress={onButton} yourchitsdata={yourchitsdata} ></MychitsCard>
                 }}
 
 

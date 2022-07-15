@@ -11,11 +11,19 @@ const Data = [
   { id: 4 }
 ]
 //change this to real data
-const YourchitsCard = () => {
+const YourchitsCard = ({ data }) => {
+  console.log(data, "urchitscardsss")
   const { height, width } = useWindowDimensions();
   //for responsiveness
   const font = useWindowDimensions().fontScale
   //Get fontscale from and use it to resize fonts
+
+  const nextDue = data.due_date.substring(0, 10)
+
+
+  // const newdate = new Date(data.due_date)
+
+
   return (
     <View style={[styles.container, { height: height * (20 / 100), width: width * (70 / 100), marginBottom: "3%" }]}>
       <View style={styles.innerContainer}>
@@ -25,11 +33,11 @@ const YourchitsCard = () => {
         </View>
         <View style={[styles.nameContainer, { alignItems: "flex-end" }]}>
           <Text style={[{ fontSize: font * 14 }, styles.titleOne]}>Due Bill</Text>
-          <Text style={[{ fontSize: font * 16 }, styles.titleTwo]}>₹1500</Text>
+          <Text style={[{ fontSize: font * 16 }, styles.titleTwo]}>₹{data.monthly_installment}</Text>
         </View>
         <View style={styles.nameContainer}>
           <Text style={[{ fontSize: font * 14 }, styles.titleOne]}>Upcoming Due</Text>
-          <Text style={[{ fontSize: font * 16 }, styles.titleTwo]}>May 22,2022</Text>
+          <Text style={[{ fontSize: font * 16 }, styles.titleTwo]}>{nextDue}</Text>
         </View>
         <View style={[styles.nameContainer, { justifyContent: "flex-end", alignItems: "flex-end" }]}>
 
@@ -63,11 +71,12 @@ const separatorItem = () => {
   return <View style={styles.separatorView} />;
 };
 //mainslider component
-const YourChitCardSlider = () => {
+const YourChitCardSlider = ({ data }) => {
+
   return (
     <View>
-      <FlatList data={Data}
-        keyExtractor={(item) => item.id}
+      <FlatList data={data}
+        keyExtractor={(item) => item}
         horizontal
 
         scrollEnabled={true}
@@ -77,7 +86,7 @@ const YourChitCardSlider = () => {
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => {
 
-          return <YourchitsCard></YourchitsCard>
+          return <YourchitsCard data={item}></YourchitsCard>
         }}
 
 

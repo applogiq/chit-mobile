@@ -69,13 +69,13 @@ const CalendarComponent = ({ start, end, setdates, handlemodal }) => {
                         maxDate={new Date(2050, 6, 3)}
                         weekdays={
                             [
-                                'Mon',
-                                'Tue',
-                                'Wed',
-                                'Thur',
-                                'Fri',
-                                'Sat',
-                                'Sun'
+                                'M',
+                                'T',
+                                'W',
+                                'T',
+                                'F',
+                                'S',
+                                'S'
                             ]}
                         months={[
                             'January',

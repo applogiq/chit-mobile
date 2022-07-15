@@ -251,3 +251,59 @@ export const getListByApi = async (requestUrl, params) => {
       errorHandler(error);
     });
 };
+
+
+
+export const getReq = (async (requestUrl) => {
+  const fcm = await token();
+
+  return fetch(`${hostConfig.API_URL}${requestUrl}`, {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${fcm}`,
+
+    },
+
+  }).then((response) => { return responseStatusHandler(response) })
+    .then((result) => {
+      if (!result.error) {
+        return result.json()
+      } else {
+        return result
+      }
+    }
+    )
+    .catch((error) => {
+      errorHandler(error);
+    });
+
+});
+
+export const getReqparam = (async (requestUrl, params) => {
+  const fcm = await token();
+
+  return fetch(`${hostConfig.API_URL}${requestUrl}${params}`, {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${fcm}`,
+
+    },
+
+  }).then((response) => { return responseStatusHandler(response) })
+    .then((result) => {
+      if (!result.error) {
+        return result.json()
+      } else {
+        return result
+      }
+    }
+    )
+    .catch((error) => {
+      errorHandler(error);
+    });
+
+});
