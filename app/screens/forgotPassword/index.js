@@ -8,14 +8,17 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
+import { useDispatch, useSelector, connect } from 'react-redux';
 /**************************************** Import components ***********************************************************/
 import { IMAGES } from '../../common/images';
+import { PostOtp } from '../../redux/actions';
 import InputField from '../../components/Input/inputComponent';
 import Button from '../../components/Button/buttonComponent';
 import OTPTextView from 'react-native-otp-textinput';
 import { isValidPassword } from '../../utils/validator';
 
 const ForgotPassword = props => {
+  const dispatch = useDispatch()
   const { height, width } = useWindowDimensions();
   //for responsiveness
   const [screen, setScreen] = useState('initial');
@@ -53,8 +56,14 @@ const ForgotPassword = props => {
     setResetcpassword(childData);
   };
   const ongetOtp = () => {
+    dispatch(PostOtp({
+      "user_id": "11",
+      "mobile_number": "7604988997"
+    })).then((resp) => {
+      console.log(resp, "otp uscscscscssc")
+      setScreen('otp');
+    })
 
-    setScreen('otp');
   };
   const onChangepassword = () => {
     setScreen('reset password');

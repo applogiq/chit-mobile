@@ -4,7 +4,7 @@ import React from 'react';
 import { Text, View, StyleSheet, FlatList, useWindowDimensions } from 'react-native';
 /**************************************** Import components ***********************************************************/
 
-const SchemeTransactions = ({ hidetitle }) => {
+const SchemeTransactions = ({ hidetitle, data }) => {
     const Data = [
         { id: 1 },
         { id: 2 },
@@ -24,7 +24,7 @@ const SchemeTransactions = ({ hidetitle }) => {
 
 
             <FlatList
-                data={Data}
+                data={data}
                 keyExtractor={item => item.id}
                 ItemSeparatorComponent={() => (
                     <View
@@ -37,6 +37,8 @@ const SchemeTransactions = ({ hidetitle }) => {
                 scrollEnabled={true}
                 snapToAlignment="center"
                 renderItem={({ item }) => {
+
+                    const date = item?.created_at.substring(0, 10)
                     return (
                         <View
                             style={{
@@ -54,7 +56,7 @@ const SchemeTransactions = ({ hidetitle }) => {
                                         fontWeight: '600',
                                         fontFamily: 'SourceSansPro-SemiBold',
                                     }}>
-                                    13 may 2022
+                                    {date}
                                 </Text>
                                 <Text
                                     style={{
@@ -64,7 +66,7 @@ const SchemeTransactions = ({ hidetitle }) => {
                                         fontFamily: 'SourceSansPro-SemiBold',
                                         marginLeft: width * (50 / 100),
                                     }}>
-                                    ₹1022
+                                    ₹{item?.amount}
                                 </Text>
                             </View>
                             <View style={{ flexDirection: 'row', marginTop: '3%' }}>
@@ -75,7 +77,7 @@ const SchemeTransactions = ({ hidetitle }) => {
                                         fontWeight: '600',
                                         fontFamily: 'SourceSansPro-SemiBold',
                                     }}>
-                                    Golden Harvest
+                                    {item?.scheme_name}
                                 </Text>
                                 <Text
                                     style={{
@@ -96,7 +98,7 @@ const SchemeTransactions = ({ hidetitle }) => {
                                         fontFamily: 'SourceSansPro-SemiBold',
                                         marginLeft: width * (1 / 100),
                                     }}>
-                                    GAV0210
+                                    {item?.group_code}
                                 </Text>
                             </View>
                         </View>

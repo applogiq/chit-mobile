@@ -1,5 +1,5 @@
 const environmentList = [
-  'http://192.168.29.236:5000/', //local       = 0
+  'http://192.168.29.234:5000/', //local       = 0
   'https://staging-api.in/', // develop    = 1
   '', //production  = 2
 

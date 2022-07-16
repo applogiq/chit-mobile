@@ -307,3 +307,55 @@ export const getReqparam = (async (requestUrl, params) => {
     });
 
 });
+export const getschemeTransactions = (async (requestUrl, userparams, schemeparams) => {
+  const fcm = await token();
+
+  return fetch(`${hostConfig.API_URL}${requestUrl}${userparams}/${schemeparams}`, {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${fcm}`,
+
+    },
+
+  }).then((response) => { return responseStatusHandler(response) })
+    .then((result) => {
+      if (!result.error) {
+        return result.json()
+      } else {
+        return result
+      }
+    }
+    )
+    .catch((error) => {
+      errorHandler(error);
+    });
+
+});
+export const postJoinChitApi = async (requestUrl, params) => {
+  const fcm = await token();
+  return fetch(`${hostConfig.API_URL}${requestUrl}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${fcm}`,
+
+    },
+    body: JSON.stringify(params),
+  })
+    .then(async response => {
+      const data = responseStatusHandler(response);
+      return data;
+    })
+
+    .then(result => {
+      if (!result.error) return result.json();
+      else return result;
+    })
+
+    .catch(err => {
+      errorHandler(err);
+    });
+};
