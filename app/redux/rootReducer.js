@@ -11,6 +11,9 @@ import schemeTransactionsReducer from './reducers/schemetransactionsReducer';
 import newchitsReducer from './reducers/newchitsReducer';
 import joinchitReducer from './reducers/joinchitReducer';
 import postotpReducer from './reducers/postotpReducer';
+import filterTransactionsReducer from './reducers/filtertransactionsReducer';
+import changePasswordReducer from './reducers/chageReducer';
+import verifyReducer from './reducers/verifyotpReducer';
 
 const rootReducer = combineReducers({
   login: loginReducer,
@@ -21,7 +24,11 @@ const rootReducer = combineReducers({
   schemetransactions: schemeTransactionsReducer,
   newchits: newchitsReducer,
   joinchit: joinchitReducer,
-  postotp: postotpReducer
+  postotp: postotpReducer,
+  filtertransactions: filterTransactionsReducer,
+  chanepassword: changePasswordReducer,
+  verifyotp: verifyReducer
+
 });
 
 export default rootReducer;

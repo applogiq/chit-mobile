@@ -3,6 +3,8 @@
 import { getReq } from './action';
 import { getReqparam } from './action';
 import { getschemeTransactions } from './action';
+import { FilterTransactions } from './action';
+
 import { URL_CONSTANTS } from './urls';
 
 export const getMetalsData = (params) =>
@@ -18,3 +20,5 @@ export const getRecentTransactions = (params) =>
 
 export const getSchemeTransactions = (userparams, schemeparams) =>
     getschemeTransactions(URL_CONSTANTS.schemeTransactions, userparams, schemeparams);
+export const getFilterTransactions = (userparams, startdate, enddate) =>
+    FilterTransactions(URL_CONSTANTS.filterTransactions, userparams, startdate, enddate);
