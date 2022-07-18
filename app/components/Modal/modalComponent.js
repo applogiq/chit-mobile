@@ -12,10 +12,10 @@ import {
 } from 'react-native';
 /**************************************** Import components ***********************************************************/
 
-import {IMAGES} from '../../common/images';
+import { IMAGES } from '../../common/images';
 
-const ModalComponent = ({modalVisible, onmodalPress, textData}) => {
-  const {height, width} = useWindowDimensions();
+const ModalComponent = ({ modalVisible, onmodalPress, textData }) => {
+  const { height, width } = useWindowDimensions();
   //For responsiveness
   return (
     <Modal
@@ -31,7 +31,7 @@ const ModalComponent = ({modalVisible, onmodalPress, textData}) => {
           style={[
             styles.modalView,
             ,
-            {height: height * (20 / 100), width: width * (50 / 100)},
+            { height: height * (20 / 100), width: width * (50 / 100) },
           ]}>
           <Pressable onPress={onmodalPress}>
             <Image style={styles.icon} source={IMAGES.close_icon}></Image>
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     lineHeight: 21,
     marginBottom: 5,
   },
-  icon: {height: 15, width: 15, marginLeft: '80%', marginTop: '10%'},
-  textCenter: {alignItems: 'center', justifyContent: 'center', flex: 1},
+  icon: { height: 15, width: 15, marginLeft: '80%', marginTop: '10%' },
+  textCenter: { alignItems: 'center', justifyContent: 'center', flex: 1, marginTop: "-8%" },
 });
 export default ModalComponent;

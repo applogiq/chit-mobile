@@ -2,7 +2,8 @@
 /**************************************** Import Packages ***********************************************************/
 import React from "react";
 import { Text, View, StyleSheet, useWindowDimensions, Button, FlatList, TouchableOpacity } from "react-native";
-
+import { JoinChit } from "../../redux/actions";
+import { useDispatch, useSelector, connect } from 'react-redux';
 /**************************************** Import components ***********************************************************/
 const Data = [
     { id: 1 },
@@ -11,16 +12,31 @@ const Data = [
     { id: 4 }
 ]
 //change this to real data
-const MychitsCard = ({ screenName, onpress }) => {
+const MychitsCard = ({ screenName, onpress, data, userdata, handlemodal }) => {
+    const dispatch = useDispatch()
     const { height, width } = useWindowDimensions();
     //for responsiveness
     const font = useWindowDimensions().fontScale
     //Get fontscale from and use it to resize fonts
+
     const OnClick = () => {
 
-        onpress()
+        onpress(data)
 
     }
+    const onJoin = () => {
+        dispatch(JoinChit({
+            "email_id": userdata?.email_id,
+            "scheme_id": data?.id
+        })).then((resp) => {
+            if (resp?.message == "success") {
+                handlemodal()
+            }
+
+        })
+    }
+
+    const pendingMonths = data?.total_month - data?.paid_month
     return (
         <View style={[styles.container, { height: height * (25 / 100), width: width * (92 / 100), marginBottom: "3%" }]}>
             {screenName == "My Chits" ? <View style={styles.innerContainer}>
@@ -32,16 +48,16 @@ const MychitsCard = ({ screenName, onpress }) => {
                     <View style={styles.flexB}>
                         <Text style={[styles.textOne, { alignSelf: "flex-end", }]}>
                             Total amount</Text>
-                        <Text style={[styles.textTwo, { alignSelf: "flex-end", }]}>₹150000</Text>
+                        <Text style={[styles.textTwo, { alignSelf: "flex-end", }]}>₹{data?.total_amount}</Text>
                     </View>
                     <View style={[styles.flexB, { alignContent: "flex-end" }]}>
 
                         <Text style={[styles.textOne]}>Months Pending</Text>
-                        <Text style={[styles.textTwo]}>7</Text>
+                        <Text style={[styles.textTwo]}>{pendingMonths}</Text>
                     </View>
                     <View style={[styles.flexB, { alignContent: "flex-end" }]}>
                         <Text style={[styles.textOne, { alignSelf: "flex-end", }]}>Due Bill</Text>
-                        <Text style={[styles.textTwo, { alignSelf: "flex-end", }]}>₹1500.00</Text>
+                        <Text style={[styles.textTwo, { alignSelf: "flex-end", }]}>₹{data?.monthly_installment}</Text>
                     </View>
                 </View>
                 <View style={styles.buttonContainer}>
@@ -54,25 +70,25 @@ const MychitsCard = ({ screenName, onpress }) => {
                 <View style={styles.boxSeperator}>
                     <View style={styles.flexB}>
                         <Text style={styles.textOne}>Chit name</Text>
-                        <Text style={styles.textTwo}>Premium Gold</Text>
+                        <Text style={styles.textTwo}>{data?.name}</Text>
                     </View>
                     <View style={styles.flexB}>
                         <Text style={[styles.textOne, { alignSelf: "flex-end", }]}>
                             Total amount</Text>
-                        <Text style={[styles.textTwo, { alignSelf: "flex-end", }]}>₹150000</Text>
+                        <Text style={[styles.textTwo, { alignSelf: "flex-end", }]}>₹{data?.total_amount}</Text>
                     </View>
                     <View style={[styles.flexB, { alignContent: "flex-end" }]}>
 
                         <Text style={[styles.textOne]}>Total Months</Text>
-                        <Text style={[styles.textTwo]}>15</Text>
+                        <Text style={[styles.textTwo]}>{data?.total_month}</Text>
                     </View>
                     <View style={[styles.flexB, { alignContent: "flex-end" }]}>
                         <Text style={[styles.textOne, { alignSelf: "flex-end", }]}>Monthly Installment</Text>
-                        <Text style={[styles.textTwo, { alignSelf: "flex-end", }]}>₹2500.00</Text>
+                        <Text style={[styles.textTwo, { alignSelf: "flex-end", }]}>₹{data?.monthly_installment}</Text>
                     </View>
                 </View>
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.buttonView}>
+                    <TouchableOpacity onPress={() => onJoin()} style={styles.buttonView}>
                         <Text style={styles.buttonTitle}>Join Now</Text>
                     </TouchableOpacity>
                 </View>
@@ -108,10 +124,11 @@ const separatorItem = () => {
     return <View style={styles.separatorView} />;
 };
 //mainslider component
-const MyChitCardSlider = ({ screen, onButton }) => {
+const MyChitCardSlider = ({ screen, onButton, yourchitsdata, newchitsdata, userdata, handlemodal }) => {
+    const data = screen === "My Chits" ? yourchitsdata : screen === "New Plans" ? newchitsdata : null
     return (
         <View>
-            <FlatList data={Data}
+            <FlatList data={data}
                 keyExtractor={(item) => item.id}
 
 
@@ -122,7 +139,7 @@ const MyChitCardSlider = ({ screen, onButton }) => {
                 showsHorizontalScrollIndicator={false}
                 renderItem={({ item }) => {
 
-                    return <MychitsCard screenName={screen} onpress={onButton}></MychitsCard>
+                    return <MychitsCard handlemodal={handlemodal} userdata={userdata} data={item} screenName={screen} onpress={onButton} yourchitsdata={yourchitsdata} ></MychitsCard>
                 }}
 
 

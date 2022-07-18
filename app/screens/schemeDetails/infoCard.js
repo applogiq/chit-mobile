@@ -4,10 +4,11 @@ import React from 'react';
 import { Text, View, StyleSheet, useWindowDimensions } from 'react-native';
 /**************************************** Import components ***********************************************************/
 
-const InfoCard = () => {
+const InfoCard = ({ data }) => {
     const { height, width } = useWindowDimensions();
-
+    console.log(data, "infocard")
     const font = useWindowDimensions().fontScale;
+    const pendingMonths = data?.total_month - data?.paid_month
     return (
         <View style={[styles.container, { height: height * (19 / 100), width: "100%" }]}>
             <View style={styles.divs}>
@@ -16,15 +17,15 @@ const InfoCard = () => {
             </View>
             <View style={[styles.divs]}>
                 <Text style={[styles.titleOne, { alignSelf: "flex-end" }]} >Total Amount</Text>
-                <Text style={[styles.titleTwo, { alignSelf: "flex-end" }]} >₹15,0000</Text>
+                <Text style={[styles.titleTwo, { alignSelf: "flex-end" }]} >₹{data?.total_amount}</Text>
             </View>
             <View style={styles.divs}>
                 <Text style={styles.titleOne} >Pending Months</Text>
-                <Text style={styles.titleTwo} >06</Text>
+                <Text style={styles.titleTwo} >{pendingMonths}</Text>
             </View>
             <View style={[styles.divs]}>
                 <Text style={[styles.titleOne, { alignSelf: "flex-end" }]} >Total Grams</Text>
-                <Text style={[styles.titleTwo, { alignSelf: "flex-end" }]} >1.025 gms</Text>
+                <Text style={[styles.titleTwo, { alignSelf: "flex-end" }]} >{data?.collected_weight}gms</Text>
             </View>
         </View>
     )

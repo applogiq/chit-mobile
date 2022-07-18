@@ -1,5 +1,5 @@
 /**************************************** Import Packages ***********************************************************/
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Text,
     View,
@@ -15,15 +15,17 @@ import ChitInfoForm from './infoForm';
 import SchemeTransactions from './transactions';
 
 
-const SchemeDetails = props => {
-
+const SchemeDetails = ({ navigation, route }) => {
+    const { item, transactions } = route.params;
     const font = useWindowDimensions().fontScale;
     const { height, width } = useWindowDimensions();
     //for responsiveness
 
     const OnBackpress = () => {
-        props.navigation.navigate('Chits');
+        navigation.navigate('Chits');
     }
+    console.log("route params", transactions)
+
     return (
         <View style={{ flex: 1 }}>
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false} >
@@ -42,13 +44,13 @@ const SchemeDetails = props => {
                     </Text>
                 </View>
                 <View style={{ marginTop: "5%" }}>
-                    <InfoCard></InfoCard>
+                    <InfoCard data={item}></InfoCard>
                 </View>
                 <View style={{ marginTop: "3%" }}>
-                    <ChitInfoForm></ChitInfoForm>
+                    <ChitInfoForm data={item}></ChitInfoForm>
                 </View>
                 <View style={{ marginTop: "3%" }}>
-                    <SchemeTransactions></SchemeTransactions>
+                    <SchemeTransactions data={transactions} ></SchemeTransactions>
                 </View>
             </ScrollView>
             <View style={styles.footer} >

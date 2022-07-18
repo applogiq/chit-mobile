@@ -4,27 +4,28 @@ import React from 'react';
 import { Text, View, StyleSheet, useWindowDimensions } from 'react-native';
 /**************************************** Import components ***********************************************************/
 
-const ChitInfoForm = () => {
+const ChitInfoForm = ({ data }) => {
     const { height, width } = useWindowDimensions();
 
     const font = useWindowDimensions().fontScale;
+    const dueDate = data?.due_date.substring(0, 10)
     return (
         <View style={[styles.container, { height: height * (50 / 100) }]}>
             <View>
                 <Text style={styles.titleOne}>Beneficiary Name</Text>
-                <Text style={styles.titleTwo}>Karthik kannan</Text>
+                <Text style={styles.titleTwo}>{data?.name}</Text>
             </View>
             <View>
                 <Text style={styles.titleOne}>Total Months</Text>
-                <Text style={styles.titleTwo}>15 Months</Text>
+                <Text style={styles.titleTwo}>{data?.total_month} Months</Text>
             </View>
             <View>
                 <Text style={styles.titleOne}>Membership No</Text>
-                <Text style={styles.titleTwo}>08534682</Text>
+                <Text style={styles.titleTwo}>{data?.membership_id}</Text>
             </View>
             <View>
                 <Text style={styles.titleOne}>Group Code</Text>
-                <Text style={styles.titleTwo}>GAV0210</Text>
+                <Text style={styles.titleTwo}>{data?.group_code}</Text>
             </View>
             <View>
                 <Text style={styles.titleOne}>Branch</Text>
@@ -32,11 +33,11 @@ const ChitInfoForm = () => {
             </View>
             <View>
                 <Text style={styles.titleOne}>Monthly Installment</Text>
-                <Text style={styles.titleTwo}>₹1500</Text>
+                <Text style={styles.titleTwo}>₹{data?.monthly_installment}</Text>
             </View>
             <View>
                 <Text style={styles.titleOne}>Next Due</Text>
-                <Text style={styles.titleTwo}>May 20,2022</Text>
+                <Text style={styles.titleTwo}>{dueDate}</Text>
             </View>
 
         </View>

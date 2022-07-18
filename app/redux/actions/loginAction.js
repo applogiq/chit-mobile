@@ -27,6 +27,7 @@ export const LoginUser = data =>
       if (res) {
         const loggedUser = res.records;
         const token = res;
+
         setAsyncValue('@loggedUser', loggedUser);
         setAsyncValue('@token', token);
         dispatch(LoginUsersSuccess(res));
