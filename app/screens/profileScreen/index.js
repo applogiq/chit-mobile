@@ -6,15 +6,24 @@ import {
   StyleSheet,
   useWindowDimensions,
   Image,
-  TouchableOpacity, Modal, Pressable
+  TouchableOpacity, Modal, Pressable,
+  Platform,
+  PermissionsAndroid,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 /**************************************** Import components ***********************************************************/
 import { LogoutUser } from '../../redux/actions';
 import { connect, useSelector } from 'react-redux';
+import {
+  launchCamera,
+  launchImageLibrary
+} from 'react-native-image-picker';
+import { IMAGES } from '../../common/images';
+
 
 const ProfileScreen = props => {
   const [modalVisible, setModalVisible] = useState(false)
+  const [filePath, setFilePath] = useState(IMAGES.profile_avatar);
   const [userDetails, setUserDetails] = useState({ "name": "-" })
   const font = useWindowDimensions().fontScale;
   const { height, width } = useWindowDimensions();
@@ -37,12 +46,129 @@ const ProfileScreen = props => {
       props.navigation.navigate('LoginScreen')
     })
   }
-  console.log("ppppppppppppppppppp", userDetails)
+  const requestCameraPermission = async () => {
+    if (Platform.OS === 'android') {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.CAMERA,
+          {
+            title: 'Camera Permission',
+            message: 'App needs camera permission',
+          },
+        );
+        // If CAMERA Permission is granted
+        return granted === PermissionsAndroid.RESULTS.GRANTED;
+      } catch (err) {
+        console.warn(err);
+        return false;
+      }
+    } else return true;
+  };
+
+  const requestExternalWritePermission = async () => {
+    if (Platform.OS === 'android') {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+          {
+            title: 'External Storage Write Permission',
+            message: 'App needs write permission',
+          },
+        );
+        // If WRITE_EXTERNAL_STORAGE Permission is granted
+        return granted === PermissionsAndroid.RESULTS.GRANTED;
+      } catch (err) {
+        console.warn(err);
+        alert('Write permission err', err);
+      }
+      return false;
+    } else return true;
+  };
+
+  const captureImage = async () => {
+    let options = {
+      mediaType: 'photo',
+      maxWidth: 300,
+      maxHeight: 550,
+      quality: 1,
+
+
+      saveToPhotos: true,
+    };
+    let isCameraPermitted = await requestCameraPermission();
+    let isStoragePermitted = await requestExternalWritePermission();
+    if (isCameraPermitted && isStoragePermitted) {
+      launchCamera(options, (response) => {
+        console.log('Response = ', response);
+
+        if (response.didCancel) {
+
+          return;
+        } else if (response.errorCode == 'camera_unavailable') {
+          alert('Camera not available on device');
+          return;
+        } else if (response.errorCode == 'permission') {
+          alert('Permission not satisfied');
+          return;
+        } else if (response.errorCode == 'others') {
+          alert(response.errorMessage);
+          return;
+        }
+        console.log('base64 -> ', response.base64);
+        console.log('uri -> ', response.uri);
+        console.log('width -> ', response.width);
+        console.log('height -> ', response.height);
+        console.log('fileSize -> ', response.fileSize);
+        console.log('type -> ', response.type);
+        console.log('fileName -> ', response.fileName);
+        response?.assets.map(item => setFilePath({ "uri": item.uri }))
+      });
+    }
+  };
+
+  const chooseFile = () => {
+    let options = {
+      mediaType: 'photo',
+      maxWidth: 300,
+      maxHeight: 550,
+      quality: 1,
+    };
+    launchImageLibrary(options, (response) => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+
+        return;
+      } else if (response.errorCode == 'camera_unavailable') {
+        alert('Camera not available on device');
+        return;
+      } else if (response.errorCode == 'permission') {
+        alert('Permission not satisfied');
+        return;
+      } else if (response.errorCode == 'others') {
+        alert(response.errorMessage);
+        return;
+      }
+      console.log('base64 -> ', response.base64);
+      console.log('uri -> ', response.uri);
+      console.log('width -> ', response.width);
+      console.log('height -> ', response.height);
+      console.log('fileSize -> ', response.fileSize);
+      console.log('type -> ', response.type);
+      console.log('fileName -> ', response.fileName);
+
+      response?.assets.map(item => setFilePath({ "uri": item.uri }))
+    });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={[styles.headerText, { fontSize: font * 21 }]}>Profile</Text>
       </View>
+
+
+
       <View
         style={{
           height: height * (20 / 100),
@@ -52,10 +178,15 @@ const ProfileScreen = props => {
         }}>
         <Image
           resizeMode="contain"
-          source={{
-            uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR04ZndPl3TMJ4GMG8UeiY8XGh8ifpnPGHTbw&usqp=CAU',
-          }}
+          source={filePath}
           style={styles.image}></Image>
+        <Pressable onPress={() => captureImage()} >
+          <Image
+            resizeMode="contain"
+            source={IMAGES.image_edit}
+            style={{ height: 25, width: 25, marginTop: "-4%", marginLeft: "20%", }}></Image>
+        </Pressable>
+
       </View>
       <View style={{ height: '40%' }}>
         <Text style={[styles.tableTitles, { fontSize: font * 16 }]}>
@@ -194,6 +325,7 @@ const ProfileScreen = props => {
           </View>
         </View>
       </Modal>
+
     </View>
   );
 };

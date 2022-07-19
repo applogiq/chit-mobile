@@ -102,7 +102,7 @@ const Transactions = () => {
       </View>
 
       <ScrollView style={{ marginTop: "5%", marginBottom: "10%" }} showsVerticalScrollIndicator={false}>
-        {transactions.length > 0 ?
+        {transactions[0] != undefined ?
           <View><SchemeTransactions hidetitle={true} data={transactions}
           ></SchemeTransactions></View> : <View style={{ height: 200, width: "100%", alignItems: "center", justifyContent: "center" }}><Text style={{ fontSize: 25, fontFamily: "SourceSansPro-SemiBold", color: "#9D6939" }}>no records found</Text></View>
         }

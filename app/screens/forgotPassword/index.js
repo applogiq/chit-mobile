@@ -13,7 +13,7 @@ import { useDispatch, useSelector, connect } from 'react-redux';
 import { IMAGES } from '../../common/images';
 import { PostOtp } from '../../redux/actions';
 import { verifyOtpfunc } from '../../redux/actions';
-
+import ModalComponent from '../../components/Modal/modalComponent';
 import InputField from '../../components/Input/inputComponent';
 import Button from '../../components/Button/buttonComponent';
 import OTPTextView from 'react-native-otp-textinput';
@@ -31,7 +31,8 @@ const ForgotPassword = props => {
   const [otploading, setOtploading] = useState(false);
   const [otpdisabled, setOtpdisabled] = useState(true);
   const [userotp, setUserotp] = useState('');
-
+  const [modalVisible, setModalvisible] = useState(false)
+  const [modaltext, setModaltext] = useState("")
   const [resetloading, setResetloading] = useState(false);
   const [resetdisabled, setResetDisabled] = useState(true);
   const [resetpassword, setResetpassword] = useState('');
@@ -73,13 +74,26 @@ const ForgotPassword = props => {
   const onresetpassword = () => {
     if (resetcpassword === resetpassword) {
       if (isValidPassword(resetpassword)) {
+        console.log({
+          "mobile_number": userphone,
+          "otp": userotp,
+          "password": resetpassword
+        }, "objjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj")
         dispatch(verifyOtpfunc({
           "mobile_number": userphone,
-          "otp": 100509,
+          "otp": userotp,
           "password": resetpassword
         })).then((resp) => {
-          console.log(resp, "resetttttttttttttttttttt")
-          props.navigation.navigate('LoginScreen');
+          if (resp.success) {
+            setModaltext("Password changed successfully")
+            setModalvisible(!modalVisible)
+          } else {
+            setModaltext("Something went wrong")
+            setModalvisible(!modalVisible)
+          }
+
+
+
           setScreen('initial');
           setUserphone('');
           setUserotp('');
@@ -102,7 +116,10 @@ const ForgotPassword = props => {
   }
 
 
-
+  const handleModal = () => {
+    setModalvisible(!modalVisible)
+    props.navigation.navigate('LoginScreen');
+  }
 
 
   return (
@@ -218,7 +235,10 @@ const ForgotPassword = props => {
             parentstyles={{ marginTop: height * (4 / 100) }}></Button>
         )}
       </View>
-
+      <ModalComponent
+        textData={modaltext}
+        modalVisible={modalVisible}
+        onmodalPress={handleModal}></ModalComponent>
     </View>
   );
 };
