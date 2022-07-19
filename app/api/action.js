@@ -86,6 +86,32 @@ export const postDataApi = async (requestUrl, params) => {
     });
 };
 
+export const postOtpApi = async (requestUrl, params) => {
+
+  return fetch(`${hostConfig.API_URL}${requestUrl}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+
+      cors: 'no-cors',
+    },
+    body: JSON.stringify(params),
+  })
+    .then(async response => {
+      const data = responseStatusHandler(response);
+      return data;
+    })
+
+    .then(result => {
+      if (!result.error) return result.json();
+      else return result;
+    })
+
+    .catch(err => {
+      errorHandler(err);
+    });
+};
 /** ****************************** View Api *********************************** */
 export const viewDataByApi = async (requestUrl) =>
   fetch(`${hostConfig.API_URL}${requestUrl}`, {
@@ -117,7 +143,7 @@ export const putDataApi = async (requestUrl, params) => {
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      Token: await token(),
+
     },
     body: JSON.stringify(params),
   })
@@ -137,24 +163,23 @@ export const putDataApi = async (requestUrl, params) => {
 };
 
 /** ****************************** Change password Api *********************************** */
-export const changePasswordDataApi = (
+export const changePasswordDataApi = async (
   requestUrl,
-  params,
-  id,
-  changePasswordToken,
+  params
+
 ) => {
-  return fetch(`${hostConfig.API_URL}${requestUrl}/${id}`, {
+  return fetch(`${hostConfig.API_URL}${requestUrl}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      Authorization: `Bearer ${changePasswordToken}`,
+
     },
     body: JSON.stringify(params),
   })
     .then(response => responseStatusHandler(response))
     .then(result =>
-      result.status === 200 || result.status === 201 || result.status === 400
+      result.status_code === 200 || result.status_code === 201 || result.status_code === 400
         ? result.json()
         : result,
     )
@@ -359,3 +384,31 @@ export const postJoinChitApi = async (requestUrl, params) => {
       errorHandler(err);
     });
 };
+
+export const FilterTransactions = (async (requestUrl, userparams, startdate, enddate) => {
+  const fcm = await token();
+
+  return fetch(`${hostConfig.API_URL}${requestUrl}${userparams}?from_date=${startdate}&to_date=${enddate}`, {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${fcm}`,
+
+    },
+
+  }).then((response) => { return responseStatusHandler(response) })
+    .then((result) => {
+      if (!result.error) {
+        return result.json()
+      } else {
+        return result
+      }
+    }
+    )
+    .catch((error) => {
+      errorHandler(error);
+    });
+
+});
+

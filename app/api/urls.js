@@ -10,7 +10,11 @@ const URL_CONSTANTS = {
   newChits: 'api/v1/scheme-mobile/',
   joinChit: 'api/v1/user-join-request',
   postOtp: 'api/v1/user-generate-otp',
-  filterTransactions: 'api/v1/payment-history/'
+  filterTransactions: 'api/v1/payment-history/',
+  changePassword: 'api/v1/user-change-password',
+  verifyOtp: 'api/v1/user-forgot-password',
+
+
 };
 
 export { URL_CONSTANTS };

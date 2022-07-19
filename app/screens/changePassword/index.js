@@ -9,14 +9,21 @@ import {
   TouchableOpacity,
   Pressable,
 } from 'react-native';
+import { useDispatch, useSelector, connect } from 'react-redux';
 /**************************************** Import components ***********************************************************/
 import { IMAGES } from '../../common/images';
 import InputField from '../../components/Input/inputComponent';
+import { changePasswordfunc } from "../../redux/actions";
 import Button from '../../components/Button/buttonComponent';
 import OTPTextView from 'react-native-otp-textinput';
+import ModalComponent from '../../components/Modal/modalComponent';
 import { isValidPassword } from '../../utils/validator';
 
-const ChangePassword = props => {
+const ChangePassword = ({ navigation, route }) => {
+  const { id } = route.params;
+  const dispatch = useDispatch()
+  const [modalVisible, setModalVisible] = useState(false)
+  const [modalText, setModaltext] = useState("")
   const { height, width } = useWindowDimensions();
   //For responsiveness
   const [loading, setLoading] = useState(false);
@@ -44,11 +51,30 @@ const ChangePassword = props => {
     if (oldpassword !== '') {
       if (newpassword === confirmpassword) {
         if (isValidPassword(newpassword)) {
-          props.navigation.navigate('ProfileScreen');
-          setOldpassword('');
-          setNewpassword('');
-          setConfirmpassword('');
-          setError('');
+
+          dispatch(changePasswordfunc({
+            "user_id": id,
+            "old_password": oldpassword,
+            "new_password": newpassword
+          })).then((resp) => {
+            console.log(resp, "change password ...............")
+
+            if (resp?.message == "password changed") {
+              setModaltext("Password updated successfully");
+              setModalVisible(!modalVisible);
+
+              setOldpassword('');
+              setNewpassword('');
+              setConfirmpassword('');
+              setError('');
+            } else {
+              setModalVisible(!modalVisible);
+              setModaltext("Something went wrong");
+            }
+
+
+          })
+
         } else {
           setError(
             'PLease choose a password which contains atleast one capital,one lowercase letter and a special character',
@@ -61,6 +87,10 @@ const ChangePassword = props => {
       setError('Please enter your old password');
     }
   };
+  const handleModal = () => {
+    setModalVisible(!modalVisible)
+    navigation.navigate('HomeScreen');
+  }
 
   return (
     <View style={styles.container}>
@@ -72,7 +102,7 @@ const ChangePassword = props => {
             alignItems: 'flex-start',
             justifyContent: 'center',
           }}
-          onPress={() => props.navigation.navigate('HomeScreen')}>
+          onPress={() => navigation.navigate('HomeScreen')}>
           <Image
             resizeMode="stretch"
             style={[
@@ -93,14 +123,14 @@ const ChangePassword = props => {
           placeholder={''}
           title={'Old password'}
           value={oldpassword}
-          maxchars={10}></InputField>
+          maxchars={15}></InputField>
         <InputField
           showicon={true}
           parentCallback={handleInputnewpassword}
           placeholder={''}
           title={'New password'}
           value={newpassword}
-          maxchars={10}></InputField>
+          maxchars={15}></InputField>
 
         <InputField
           parentCallback={handleInputconfirmpassword}
@@ -108,7 +138,7 @@ const ChangePassword = props => {
           title={'Confirm password'}
           value={confirmpassword}
           showicon={true}
-          maxchars={10}></InputField>
+          maxchars={15}></InputField>
       </View>
       <Text style={styles.error}>{error}</Text>
       <View style={{ flex: 1, justifyContent: 'flex-end' }}>
@@ -127,6 +157,10 @@ const ChangePassword = props => {
           disabled={disabled}
           parentstyles={{ marginTop: height * (4 / 100) }}></Button>
       </View>
+      <ModalComponent
+        textData={modalText}
+        modalVisible={modalVisible}
+        onmodalPress={handleModal}></ModalComponent>
     </View>
   );
 };

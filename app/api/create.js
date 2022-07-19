@@ -1,5 +1,5 @@
 /** ****************************** Import libs *********************************** */
-import { postDataApi } from './action';
+import { postDataApi, putDataApi, postOtpApi } from './action';
 
 import { postJoinChitApi } from './action';
 import { URL_CONSTANTS } from './urls';
@@ -10,7 +10,11 @@ export const postLogoutRequestData = params =>
   postDataApi(URL_CONSTANTS.logout, params);
 export const postJoinChit = params =>
   postJoinChitApi(URL_CONSTANTS.joinChit, params);
-
+export const changePassword = params =>
+  putDataApi(URL_CONSTANTS.changePassword, params);
 
 export const postOtp = params =>
-  postDataApi(URL_CONSTANTS.postOtp, params);
+  postOtpApi(URL_CONSTANTS.postOtp, params);
+
+export const verifyOtp = params =>
+  putDataApi(URL_CONSTANTS.verifyOtp, params);

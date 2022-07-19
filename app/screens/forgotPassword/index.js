@@ -12,6 +12,8 @@ import { useDispatch, useSelector, connect } from 'react-redux';
 /**************************************** Import components ***********************************************************/
 import { IMAGES } from '../../common/images';
 import { PostOtp } from '../../redux/actions';
+import { verifyOtpfunc } from '../../redux/actions';
+
 import InputField from '../../components/Input/inputComponent';
 import Button from '../../components/Button/buttonComponent';
 import OTPTextView from 'react-native-otp-textinput';
@@ -55,10 +57,10 @@ const ForgotPassword = props => {
   const handleInputconfirmpassword = childData => {
     setResetcpassword(childData);
   };
-  const ongetOtp = () => {
+  const ongpostOtp = () => {
     dispatch(PostOtp({
-      "user_id": "11",
-      "mobile_number": "7604988997"
+
+      "mobile_number": userphone
     })).then((resp) => {
       console.log(resp, "otp uscscscscssc")
       setScreen('otp');
@@ -71,13 +73,21 @@ const ForgotPassword = props => {
   const onresetpassword = () => {
     if (resetcpassword === resetpassword) {
       if (isValidPassword(resetpassword)) {
-        props.navigation.navigate('LoginScreen');
-        setScreen('initial');
-        setUserphone('');
-        setUserotp('');
-        setResetpassword('');
-        setResetcpassword('');
-        setReseterror('');
+        dispatch(verifyOtpfunc({
+          "mobile_number": userphone,
+          "otp": 100509,
+          "password": resetpassword
+        })).then((resp) => {
+          console.log(resp, "resetttttttttttttttttttt")
+          props.navigation.navigate('LoginScreen');
+          setScreen('initial');
+          setUserphone('');
+          setUserotp('');
+          setResetpassword('');
+          setResetcpassword('');
+          setReseterror('');
+        })
+
       } else {
         setReseterror(
           'PLease choose a password which contains atleast one capital,one lowercase letter and a special character',
@@ -90,6 +100,11 @@ const ForgotPassword = props => {
   const OnBackpress = () => {
     props.navigation.navigate('LoginScreen');
   }
+
+
+
+
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -156,12 +171,14 @@ const ForgotPassword = props => {
           <InputField
             parentCallback={handleInputpassword}
             placeholder={''}
+            showicon={true}
             title={'New password'}
             value={resetpassword}></InputField>
           <InputField
             errormessage={reseterror}
             parentCallback={handleInputconfirmpassword}
             placeholder={''}
+            showicon={true}
             title={'Confirm password'}
             value={resetcpassword}></InputField>
         </View>
@@ -171,7 +188,7 @@ const ForgotPassword = props => {
         {screen == 'initial' ? (
           <Button
             enabled={userphone.length == 10 ? true : false}
-            onpressparam={ongetOtp}
+            onpressparam={ongpostOtp}
             title={'Get OTP'}
             type={'large'}
             loading={loading}
@@ -201,6 +218,7 @@ const ForgotPassword = props => {
             parentstyles={{ marginTop: height * (4 / 100) }}></Button>
         )}
       </View>
+
     </View>
   );
 };

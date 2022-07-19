@@ -37,6 +37,7 @@ const ProfileScreen = props => {
       props.navigation.navigate('LoginScreen')
     })
   }
+  console.log("ppppppppppppppppppp", userDetails)
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -133,7 +134,11 @@ const ProfileScreen = props => {
 
             <View style={styles.cardItems}>
               <TouchableOpacity
-                onPress={() => props.navigation.navigate('ChangePassword')}>
+                onPress={() => props.navigation.navigate("ChangePassword", {
+                  id: userDetails?.id,
+
+
+                })}>
                 <Text
                   style={[
                     styles.title,
