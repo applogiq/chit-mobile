@@ -125,7 +125,7 @@ const ForgotPassword = props => {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <TouchableOpacity onPress={() => OnBackpress()}>
+        <TouchableOpacity style={{ height: height * (3.5 / 100), width: width * (3.5 / 100), marginTop: height * (1.5 / 100) }} onPress={() => OnBackpress()}>
           <Image
             resizeMode="stretch"
             style={[
@@ -134,7 +134,7 @@ const ForgotPassword = props => {
             ]}
             source={IMAGES.back_icon}></Image>
         </TouchableOpacity>
-        <Text style={[styles.headerText, { fontSize: font * 19 }]}>
+        <Text style={[styles.headerText, { fontSize: font * 22 }]}>
           {screen == 'initial'
             ? 'Forgot Password'
             : screen == 'otp'
@@ -143,7 +143,7 @@ const ForgotPassword = props => {
         </Text>
       </View>
       <View style={styles.subTextcontainer}>
-        <Text style={[styles.subText, { fontSize: font * 12 }]}>
+        <Text style={[styles.subText, { fontSize: font * 13 }]}>
           {screen == 'initial'
             ? descriptionone
             : screen == 'otp'
@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
     paddingLeft: 11,
     paddingRight: 11,
   },
-  headerContainer: { flexDirection: 'row', alignItems: 'center', marginTop: 40 },
+  headerContainer: { flexDirection: 'row', alignItems: 'center', marginTop: 20 },
   backIcon: {},
   headerText: {
     fontFamily: 'SourceSansPro-SemiBold',

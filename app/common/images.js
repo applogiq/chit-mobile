@@ -20,6 +20,6 @@ export const IMAGES = {
   chev_left: require('../assets/images/chev_left.png'),
   chev_right: require('../assets/images/chev_right.png'),
   diamond_metal: require('../assets/images/diamondMetal.png'),
-  profile_avatar: require('../assets/images/profileAvatar.jpg'),
+  profile_avatar: require('../assets/images/profileAvatar.png'),
   image_edit: require('../assets/images/imageEdit.png'),
 };

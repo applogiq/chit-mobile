@@ -97,7 +97,7 @@ const ChangePassword = ({ navigation, route }) => {
       <View style={styles.headerContainer}>
         <Pressable
           style={{
-            height: height * (2 / 100),
+            height: height * (3.5 / 100),
             width: height * (2 / 100),
             alignItems: 'flex-start',
             justifyContent: 'center',

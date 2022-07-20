@@ -94,7 +94,8 @@ const CalendarComponent = ({ start, end, setdates, handlemodal }) => {
 
                         previousTitle="<"
                         nextTitle=">"
-                        todayBackgroundColor="#e6ffe6"
+
+                        todayBackgroundColor="rgba(213, 186, 143, 1)"
                         selectedRangeStartTextStyle={{ color: "white" }}
                         scaleFactor={375}
                         selectedRangeEndTextStyle={{ color: "white" }}

@@ -67,6 +67,18 @@ const ChitsScreen = ({ navigation }) => {
   const handleModal = () => {
     setModalvisible(!modalVisible);
   };
+
+
+
+  const modify = (param) => {
+    function check(val, index) {
+      return index != param
+    }
+    const result = newChitsdata.filter(check)
+    setnewChitsdata(result)
+
+  }
+
   return (
     <View style={styles.container}>
       <Text style={[styles.headerText, { fontSize: font * 21 }]}>Chits</Text>
@@ -74,7 +86,9 @@ const ChitsScreen = ({ navigation }) => {
         <TopBar screenName={screen} onClick={onPress} ></TopBar>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <MyChitCardSlider handlemodal={handleModal} userdata={userDetails} yourchitsdata={yourChitsdata} screen={screen} newchitsdata={newChitsdata} onButton={onClick}></MyChitCardSlider>
+        {yourChitsdata.length < 1 && screen == "My Chits" ? <Text style={[styles.cardTitle, { fontSize: font * 20, alignSelf: "center", marginTop: "14%", marginBottom: "7%" }]} >You have not joined any chits yet</Text> : <View></View>}
+        {newChitsdata.length < 1 && screen == "New Plans" ? <Text style={[styles.cardTitle, { fontSize: font * 20, alignSelf: "center", marginTop: "14%", marginBottom: "7%" }]} >Sorry there is no new chits available now</Text> : <View></View>}
+        <MyChitCardSlider modify={modify} handlemodal={handleModal} userdata={userDetails} yourchitsdata={yourChitsdata} screen={screen} newchitsdata={newChitsdata} onButton={onClick}></MyChitCardSlider>
       </ScrollView>
       <ModalComponent
         textData={"Join Request Submitted Successfully"}

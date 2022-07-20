@@ -31,7 +31,7 @@ const LoginScreen = props => {
   const [passworderror, setPassworderror] = useState('');
   const [modaltext, setModaltext] = useState('');
   const [loading, setLoading] = useState(false);
-  const [loader, setLoader] = useState(false);
+  const [loader, setLoader] = useState(true);
 
   const [disabled, setDisabled] = useState(true);
 
@@ -139,6 +139,7 @@ const LoginScreen = props => {
   return (
     <ScrollView style={[styles.container]}>
       <View style={{ height: height, width: width }}>
+
         <ImageBackground
           source={IMAGES.login_background}
           resizeMode="cover"
@@ -151,6 +152,7 @@ const LoginScreen = props => {
               paddingRight: width * (3 / 100),
             },
           ]}>
+
           <View
             style={[styles.titleContainer, { marginTop: height * (35 / 100) }]}>
             <Text
@@ -185,7 +187,7 @@ const LoginScreen = props => {
               value={userpassword}
               showicon={true}
               errormessage={passworderror}
-              maxchars={15}></InputField>
+              maxchars={25}></InputField>
           </View>
           <View style={{ alignSelf: 'flex-end', marginTop: height * (1 / 100) }}>
             <TouchableOpacity
@@ -213,20 +215,7 @@ const LoginScreen = props => {
         textData={modaltext}
         modalVisible={modalVisible}
         onmodalPress={handleModal}></ModalComponent>
-      <Modal
-        animationType="none"
-        transparent={true}
-        visible={loader}
-        onRequestClose={() => {
 
-          setLoader(!loader);
-        }}
-        style={styles.loader}>
-        <View style={styles.loadContainer}>
-          <ActivityIndicator size="large" color="rgba(213, 186, 143, 1)" />
-        </View>
-
-      </Modal>
 
     </ScrollView>
   );

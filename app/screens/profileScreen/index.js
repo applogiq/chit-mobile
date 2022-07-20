@@ -8,12 +8,15 @@ import {
   Image,
   TouchableOpacity, Modal, Pressable,
   Platform,
-  PermissionsAndroid,
+  PermissionsAndroid
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ImgToBase64 from 'react-native-image-base64';
 /**************************************** Import components ***********************************************************/
 import { LogoutUser } from '../../redux/actions';
-import { connect, useSelector } from 'react-redux';
+import { Postprofile } from '../../redux/actions';
+
+import { connect, useSelector, useDispatch } from 'react-redux';
 import {
   launchCamera,
   launchImageLibrary
@@ -22,8 +25,11 @@ import { IMAGES } from '../../common/images';
 
 
 const ProfileScreen = props => {
+  const dispatch = useDispatch()
+
   const [modalVisible, setModalVisible] = useState(false)
-  const [filePath, setFilePath] = useState(IMAGES.profile_avatar);
+  const [modal, setModal] = useState(false)
+  const [filePath, setFilePath] = useState("");
   const [userDetails, setUserDetails] = useState({ "name": "-" })
   const font = useWindowDimensions().fontScale;
   const { height, width } = useWindowDimensions();
@@ -34,6 +40,7 @@ const ProfileScreen = props => {
       const loggedUser = JSON.parse(result);
 
       setUserDetails(loggedUser)
+      setFilePath(loggedUser.profile_image)
     });
   }, [])
   const onLogout = () => {
@@ -91,6 +98,9 @@ const ProfileScreen = props => {
       maxWidth: 300,
       maxHeight: 550,
       quality: 1,
+      videoQuality: 'low',
+      durationLimit: 30, //Video max duration in seconds
+      saveToPhotos: true,
 
 
       saveToPhotos: true,
@@ -114,14 +124,42 @@ const ProfileScreen = props => {
           alert(response.errorMessage);
           return;
         }
-        console.log('base64 -> ', response.base64);
+        console.log('base64v -> ', response.base64);
         console.log('uri -> ', response.uri);
         console.log('width -> ', response.width);
         console.log('height -> ', response.height);
         console.log('fileSize -> ', response.fileSize);
         console.log('type -> ', response.type);
         console.log('fileName -> ', response.fileName);
-        response?.assets.map(item => setFilePath({ "uri": item.uri }))
+        response?.assets.map((item) => {
+          setFilePath(item.uri), ImgToBase64.getBase64String(item.uri)
+            .then(base64String =>
+              dispatch(Postprofile(userDetails?.id, {
+                "name": "",
+                "mobile_number": "",
+                "country": "",
+                "state": "",
+                "city": "",
+                "pincode": "",
+                "verification_document": "",
+                "scheme_id": "",
+                "is_approved": 0,
+                "is_active": 0,
+                "is_delete": 0,
+                "profile_image": base64String
+              })).then((resp) => {
+
+
+
+
+
+              })
+
+            )
+            .catch(err => console.log("base64 errrrrr"))
+        })
+
+
       });
     }
   };
@@ -158,8 +196,11 @@ const ProfileScreen = props => {
       console.log('fileName -> ', response.fileName);
 
       response?.assets.map(item => setFilePath({ "uri": item.uri }))
+      console.log(response, "imagepick posttttttttttttttttt")
     });
   };
+
+
 
   return (
     <View style={styles.container}>
@@ -178,13 +219,17 @@ const ProfileScreen = props => {
         }}>
         <Image
           resizeMode="contain"
-          source={filePath}
+          source={{ uri: filePath, }}
           style={styles.image}></Image>
-        <Pressable onPress={() => captureImage()} >
+
+        <Pressable
+          onPress={() => captureImage()}
+        >
           <Image
             resizeMode="contain"
             source={IMAGES.image_edit}
             style={{ height: 25, width: 25, marginTop: "-4%", marginLeft: "20%", }}></Image>
+
         </Pressable>
 
       </View>
@@ -325,7 +370,19 @@ const ProfileScreen = props => {
           </View>
         </View>
       </Modal>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modal}
+        onRequestClose={() => {
 
+          setModal(!modal);
+        }}
+      >
+        <View style={{ flex: 1, backgroundColor: "grey", }}>
+
+        </View>
+      </Modal>
     </View>
   );
 };

@@ -27,7 +27,7 @@ const MetalsCard = ({ item }) => {
         {
           height: height * (21 / 100),
           width: width * (27 / 100),
-          marginBottom: '3%', marginLeft: width * (4 / 100),
+          marginBottom: '6%', marginLeft: width * (4 / 100), marginRight: width * (1 / 100)
         },
       ]}>
       <Text style={[styles.metalName, { fontSize: font * 13 }]}>
@@ -92,7 +92,7 @@ const MetalsCardSlider = ({ gold, silver, diamond }) => {
 
   ];
   return (
-    <View style={{ paddingLeft: "-4%", }} >
+    <View style={{ paddingLeft: "-4%", backgroundColor: "red" }} >
       <FlatList
         data={Data}
         keyExtractor={item => item.id}

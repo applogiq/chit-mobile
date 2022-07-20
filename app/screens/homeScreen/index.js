@@ -14,7 +14,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { useDispatch, useSelector, connect } from 'react-redux';
-import { getMetals } from '../../redux/actions';
+import { getMetals, yourchitsFailure } from '../../redux/actions';
 import { getYourchits } from '../../redux/actions';
 import { getRecenttransactions } from '../../redux/actions';
 
@@ -89,6 +89,8 @@ const HomeScreen = () => {
 
   }
 
+  console.log(typeof yourChitsdata, "1???....uymffthhhhhhhhhhhhhhhhhhhhhhhhhhh")
+  console.log(typeof recentTransactions, "2???...gnrrsgggsgnnnnnnnnnnnnnnnnnnnnnn.")
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View
@@ -153,6 +155,7 @@ const HomeScreen = () => {
           Your Chits
         </Text>
         <View style={styles.top}>
+          {yourChitsdata.length < 1 ? <Text style={[styles.cardTitle, { fontSize: font * 20, alignSelf: "center", marginTop: "7%", marginBottom: "7%" }]} >You have not yet joined any chits</Text> : <View></View>}
           <YourChitCardSlider data={yourChitsdata}></YourChitCardSlider>
         </View>
       </View>
@@ -181,6 +184,8 @@ const HomeScreen = () => {
             View All
           </Text>
         </View>
+        {typeof recentTransactions == "undefined" ? <Text style={[styles.cardTitle, { fontSize: font * 20, alignSelf: "center", marginTop: "14%", marginBottom: "7%" }]} >Your recent transactions will appear here</Text> : <View></View>}
+        {recentTransactions?.length < 1 ? <Text style={[styles.cardTitle, { fontSize: font * 20, alignSelf: "center", marginTop: "14%", marginBottom: "7%" }]} >Your recent transactions will appear here</Text> : <View></View>}
         <View
           style={[
             styles.top,

@@ -13,7 +13,7 @@ const InfoCard = ({ data }) => {
         <View style={[styles.container, { height: height * (19 / 100), width: "100%" }]}>
             <View style={styles.divs}>
                 <Text style={styles.titleOne} >Scheme Name</Text>
-                <Text style={styles.titleTwo} >Premium Gold</Text>
+                <Text style={styles.titleTwo} >{data?.scheme_name}</Text>
             </View>
             <View style={[styles.divs]}>
                 <Text style={[styles.titleOne, { alignSelf: "flex-end" }]} >Total Amount</Text>

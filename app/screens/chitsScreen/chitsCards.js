@@ -12,7 +12,7 @@ const Data = [
     { id: 4 }
 ]
 //change this to real data
-const MychitsCard = ({ screenName, onpress, data, userdata, handlemodal }) => {
+const MychitsCard = ({ screenName, onpress, data, userdata, handlemodal, idx, modify }) => {
     const dispatch = useDispatch()
     const { height, width } = useWindowDimensions();
     //for responsiveness
@@ -31,10 +31,12 @@ const MychitsCard = ({ screenName, onpress, data, userdata, handlemodal }) => {
         })).then((resp) => {
             if (resp?.message == "success") {
                 handlemodal()
+                modify(idx)
             }
 
         })
     }
+
 
     const pendingMonths = data?.total_month - data?.paid_month
     return (
@@ -43,7 +45,7 @@ const MychitsCard = ({ screenName, onpress, data, userdata, handlemodal }) => {
                 <View style={styles.boxSeperator}>
                     <View style={styles.flexB}>
                         <Text style={styles.textOne}>Chit name</Text>
-                        <Text style={styles.textTwo}>Premium Gold</Text>
+                        <Text style={styles.textTwo}>{data?.scheme_name}</Text>
                     </View>
                     <View style={styles.flexB}>
                         <Text style={[styles.textOne, { alignSelf: "flex-end", }]}>
@@ -113,7 +115,7 @@ const styles = StyleSheet.create({
     textTop: { fontFamily: "SourceSansPro-Regular", fontWeight: "400", lineHeight: 21, color: "rgba(65, 39, 15, 0.8)" },
     textBottom: { fontFamily: "SourceSansPro-SemiBold", fontWeight: "600", lineHeight: 21, color: "rgba(65, 39, 15, 0.8)" },
     buttonContainer: { height: "35%", width: "100%", alignItems: "center", justifyContent: "center" },
-    buttonView: { height: "60%", width: "80%", backgroundColor: "rgba(213, 186, 143, 1)", borderRadius: 3, marginTop: "5%", alignItems: "center", justifyContent: "center" },
+    buttonView: { height: "66%", width: "80%", backgroundColor: "rgba(213, 186, 143, 1)", borderRadius: 6, marginTop: "5%", alignItems: "center", justifyContent: "center" },
     buttonTitle: { color: "white", fontFamily: "SourceSansPro-SemiBold" },
     boxSeperator: { height: "65%", width: "100%", flexDirection: "row", flexWrap: "wrap", alignContent: "space-between" },
     textOne: { fontFamily: "SourceSansPro-Regular", fontWeight: "400", lineHeight: 21, color: "rgba(65, 39, 15, 0.8)" },
@@ -124,7 +126,7 @@ const separatorItem = () => {
     return <View style={styles.separatorView} />;
 };
 //mainslider component
-const MyChitCardSlider = ({ screen, onButton, yourchitsdata, newchitsdata, userdata, handlemodal }) => {
+const MyChitCardSlider = ({ screen, onButton, yourchitsdata, newchitsdata, userdata, handlemodal, modify }) => {
     const data = screen === "My Chits" ? yourchitsdata : screen === "New Plans" ? newchitsdata : null
     return (
         <View>
@@ -137,9 +139,9 @@ const MyChitCardSlider = ({ screen, onButton, yourchitsdata, newchitsdata, userd
 
                 ItemSeparatorComponent={separatorItem}
                 showsHorizontalScrollIndicator={false}
-                renderItem={({ item }) => {
+                renderItem={({ item, index }) => {
 
-                    return <MychitsCard handlemodal={handlemodal} userdata={userdata} data={item} screenName={screen} onpress={onButton} yourchitsdata={yourchitsdata} ></MychitsCard>
+                    return <MychitsCard modify={modify} idx={index} handlemodal={handlemodal} userdata={userdata} data={item} screenName={screen} onpress={onButton} yourchitsdata={yourchitsdata} ></MychitsCard>
                 }}
 
 

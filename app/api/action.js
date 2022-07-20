@@ -137,15 +137,18 @@ export const viewDataByApi = async (requestUrl) =>
     });
 
 /** ****************************** Update Api *********************************** */
-export const putDataApi = async (requestUrl, params) => {
-  return fetch(`${hostConfig.API_URL}${requestUrl}`, {
+export const putDataApi = async (requestUrl, userparams, data) => {
+  const fcm = await token();
+  console.log(`${hostConfig.API_URL}${requestUrl}${userparams}`, data, "putdata apiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
+  return fetch(`${hostConfig.API_URL}${requestUrl}${userparams}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
+      'Authorization': `Bearer ${fcm}`,
 
     },
-    body: JSON.stringify(params),
+    body: JSON.stringify(data),
   })
     .then(response => {
       return responseStatusHandler(response);

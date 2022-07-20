@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   datescontainers: { flexDirection: "row", justifyContent: "space-between", marginTop: "1.5%" },
   dateText: {
     color: "rgba(65, 39, 15, 0.8)",
-    fontFamily: "SourceSansPro-SemiBold", fontWeight: "600", lineHeight: 21, fontSize: 12, marginLeft: 10
+    fontFamily: "SourceSansPro-SemiBold", fontWeight: "600", lineHeight: 21, fontSize: 14, marginLeft: 10
   },
   centeredView: {
     flex: 1,

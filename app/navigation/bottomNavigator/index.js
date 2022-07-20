@@ -15,6 +15,7 @@ import HomeScreen from '../../screens/homeScreen';
 import ChitsScreen from '../../screens/chitsScreen';
 import Transactions from '../../screens/transactionsScreen';
 import ProfileScreen from '../../screens/profileScreen';
+import loginScreen from '../../screens/loginScreen';
 import { IMAGES } from '../../common/images';
 
 const Tab = createBottomTabNavigator();
@@ -36,7 +37,7 @@ const BottomNavigator = () => {
           tabBarStyle: {
             shadowOffset: {
               width: 50,
-              height: 12,
+              height: 10,
             },
             shadowColor: 'black',
             shadowOpacity: 1.0,
@@ -47,9 +48,9 @@ const BottomNavigator = () => {
             backgroundColor: '#F7F6F2',
             position: 'absolute',
             bottom: 0,
-            padding: '2%',
+            padding: '0%',
             width: '100%',
-            height: Platform.OS === 'ios' ? '10%' : '9%',
+            height: Platform.OS === 'ios' ? '10%' : '10%',
             zIndex: 0,
             borderTopLeftRadius: height * (3 / 100),
             borderTopRightRadius: height * (3 / 100),
@@ -182,6 +183,7 @@ const BottomNavigator = () => {
           component={ProfileScreen}
           options={{ title: '' }}
         />
+
       </Tab.Navigator>
     </>
   );

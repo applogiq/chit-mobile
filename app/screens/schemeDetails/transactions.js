@@ -18,11 +18,12 @@ const SchemeTransactions = ({ hidetitle, data }) => {
 
     const font = useWindowDimensions().fontScale;
     const { height, width } = useWindowDimensions();
+    console.log(data, "transactionsssssss evwedy89wdv")
     return (
         <View style={styles.container}>
             {hidetitle ? <View></View> : <Text style={styles.title}>Transactions</Text>}
-
-
+            {data == undefined ? <Text style={[styles.cardTitle, { fontSize: font * 15, alignSelf: "center", marginTop: "14%", marginBottom: "7%" }]} >No records found</Text> : null}
+            {typeof data === "object" ? data.length < 1 ? <Text style={[styles.cardTitle, { fontSize: font * 15, alignSelf: "center", marginTop: "14%", marginBottom: "7%" }]} >No records found</Text> : null : null}
             <FlatList
                 data={data}
                 keyExtractor={item => item.id}
@@ -113,6 +114,6 @@ const styles = StyleSheet.create({
 
         width: "100%", backgroundColor: "white", borderRadius: 7, paddingTop: 17, paddingLeft: 17, paddingBottom: 17
     },
-    title: { fontFamily: "SourceSansPro-SemiBold", fontWeight: "600", lineHeight: 21, color: "rgba(65, 39, 15, 0.8)", fontSize: 17 }
+    title: { fontFamily: "SourceSansPro-SemiBold", fontWeight: "600", lineHeight: 21, color: "rgba(65, 39, 15, 0.8)", fontSize: 17, marginBottom: "2%" }
 });
 export default SchemeTransactions;

@@ -1,7 +1,7 @@
 const environmentList = [
-  'http://192.168.29.234:5000/', //local       = 0
-  'https://staging-api.in/', // develop    = 1
-  'https://api-chit.applogiq.org/', //production  = 2
+  'http://192.168.29.234:6080/', //local       = 0
+  'https://api-chit.applogiq.org/', // develop    = 1
+  '', //production  = 2
 
 ];
 

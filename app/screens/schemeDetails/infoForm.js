@@ -9,6 +9,7 @@ const ChitInfoForm = ({ data }) => {
 
     const font = useWindowDimensions().fontScale;
     const dueDate = data?.due_date.substring(0, 10)
+    console.log(data, "infor formmmmmmmmmm")
     return (
         <View style={[styles.container, { height: height * (50 / 100) }]}>
             <View>
@@ -29,7 +30,7 @@ const ChitInfoForm = ({ data }) => {
             </View>
             <View>
                 <Text style={styles.titleOne}>Branch</Text>
-                <Text style={styles.titleTwo}>Tirupur</Text>
+                <Text style={styles.titleTwo}>{data?.scheme_branch}</Text>
             </View>
             <View>
                 <Text style={styles.titleOne}>Monthly Installment</Text>
