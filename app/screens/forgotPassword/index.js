@@ -6,7 +6,7 @@ import {
   StyleSheet,
   useWindowDimensions,
   Image,
-  TouchableOpacity,
+  TouchableOpacity, Modal, Pressable
 } from 'react-native';
 import { useDispatch, useSelector, connect } from 'react-redux';
 /**************************************** Import components ***********************************************************/
@@ -235,10 +235,31 @@ const ForgotPassword = props => {
             parentstyles={{ marginTop: height * (4 / 100) }}></Button>
         )}
       </View>
-      <ModalComponent
+      {/* <ModalComponent
         textData={modaltext}
         modalVisible={modalVisible}
-        onmodalPress={handleModal}></ModalComponent>
+        onmodalPress={handleModal}></ModalComponent> */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+
+          setModalvisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>{modaltext}</Text>
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => handleModal()}
+            >
+              <Text style={styles.textStyle}>Ok</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -268,5 +289,46 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginBottom: 7,
   },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "rgba(213, 186, 143, 1)",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center"
+  }
 });
 export default ForgotPassword;

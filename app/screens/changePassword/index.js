@@ -7,7 +7,7 @@ import {
   useWindowDimensions,
   Image,
   TouchableOpacity,
-  Pressable,
+  Pressable, Modal
 } from 'react-native';
 import { useDispatch, useSelector, connect } from 'react-redux';
 /**************************************** Import components ***********************************************************/
@@ -23,6 +23,7 @@ const ChangePassword = ({ navigation, route }) => {
   const { id } = route.params;
   const dispatch = useDispatch()
   const [modalVisible, setModalVisible] = useState(false)
+  const [modalVisible2, setModalVisible2] = useState(false)
   const [modalText, setModaltext] = useState("")
   const { height, width } = useWindowDimensions();
   //For responsiveness
@@ -52,28 +53,7 @@ const ChangePassword = ({ navigation, route }) => {
       if (newpassword === confirmpassword) {
         if (isValidPassword(newpassword)) {
 
-          dispatch(changePasswordfunc({
-            "user_id": id,
-            "old_password": oldpassword,
-            "new_password": newpassword
-          })).then((resp) => {
-            console.log(resp, "change password ...............")
-
-            if (resp?.message == "password changed") {
-              setModaltext("Password updated successfully");
-              setModalVisible(!modalVisible);
-
-              setOldpassword('');
-              setNewpassword('');
-              setConfirmpassword('');
-              setError('');
-            } else {
-              setModalVisible(!modalVisible);
-              setModaltext("Something went wrong");
-            }
-
-
-          })
+          setModalVisible(!modalVisible)
 
         } else {
           setError(
@@ -91,7 +71,36 @@ const ChangePassword = ({ navigation, route }) => {
     setModalVisible(!modalVisible)
     navigation.navigate('HomeScreen');
   }
+  const handleModal2 = () => {
+    setModalVisible2(!modalVisible2)
+    navigation.navigate('HomeScreen');
+  }
+  const onChagePassword = () => {
+    dispatch(changePasswordfunc({
+      "user_id": id,
+      "old_password": oldpassword,
+      "new_password": newpassword
+    })).then((resp) => {
+      console.log(resp, "change password ...............")
 
+      if (resp?.message == "password changed") {
+        setModaltext("Password updated successfully");
+        setModalVisible(!modalVisible);
+        setModalVisible2(!modalVisible2);
+        setOldpassword('');
+        setNewpassword('');
+        setConfirmpassword('');
+        setError('');
+      } else {
+        setModalVisible(!modalVisible);
+        setModaltext("Something went wrong");
+        setModalVisible2(!modalVisible2);
+
+      }
+
+
+    })
+  }
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -157,8 +166,37 @@ const ChangePassword = ({ navigation, route }) => {
           disabled={disabled}
           parentstyles={{ marginTop: height * (4 / 100) }}></Button>
       </View>
-      <ModalComponent
+      {/* <ModalComponent
         textData={modalText}
+        modalVisible={modalVisible2}
+        onmodalPress={handleModal2}></ModalComponent> */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible2}
+        onRequestClose={() => {
+
+          setModalVisible2(!modalVisible2);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>{modalText}</Text>
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => handleModal2()}
+            >
+              <Text style={styles.textStyle}>Ok</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+      <ModalComponent
+        action={() => onChagePassword()}
+        textData1={"Change password"}
+
+        textData3={"Are you sure you want to"}
+        textData4={"Change Password?"}
         modalVisible={modalVisible}
         onmodalPress={handleModal}></ModalComponent>
     </View>
@@ -180,5 +218,46 @@ const styles = StyleSheet.create({
     marginLeft: '5%',
   },
   error: { fontSize: 12, color: 'red' },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "rgba(213, 186, 143, 1)",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center"
+  }
 });
 export default ChangePassword;

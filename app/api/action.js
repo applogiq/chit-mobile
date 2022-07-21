@@ -164,7 +164,33 @@ export const putDataApi = async (requestUrl, userparams, data) => {
       errorHandler(error);
     });
 };
+export const putChangeApi = async (requestUrl, data) => {
+  const fcm = await token();
+  console.log(`${hostConfig.API_URL}${requestUrl}`, data, "putdata apiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
+  return fetch(`${hostConfig.API_URL}${requestUrl}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      'Authorization': `Bearer ${fcm}`,
 
+    },
+    body: JSON.stringify(data),
+  })
+    .then(response => {
+      return responseStatusHandler(response);
+    })
+    .then(result => {
+      return result.status === 200 ||
+        result.status === 201 ||
+        result.status === 400
+        ? result.json()
+        : result;
+    })
+    .catch(error => {
+      errorHandler(error);
+    });
+};
 /** ****************************** Change password Api *********************************** */
 export const changePasswordDataApi = async (
   requestUrl,

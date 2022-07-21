@@ -5,7 +5,7 @@ const environmentList = [
 
 ];
 
-export const env = 0; // Place your environment number here
+export const env = 1; // Place your environment number here
 
 // if idle for this much time go to idle screen
 export const idleTime = 1000 * 60 * 15; // millisec * sec * min * hr * days

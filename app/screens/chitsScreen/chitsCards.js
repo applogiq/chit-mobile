@@ -12,7 +12,7 @@ const Data = [
     { id: 4 }
 ]
 //change this to real data
-const MychitsCard = ({ screenName, onpress, data, userdata, handlemodal, idx, modify }) => {
+const MychitsCard = ({ screenName, onpress, data, userdata, handlemodal, idx, modify, setData }) => {
     const dispatch = useDispatch()
     const { height, width } = useWindowDimensions();
     //for responsiveness
@@ -25,16 +25,8 @@ const MychitsCard = ({ screenName, onpress, data, userdata, handlemodal, idx, mo
 
     }
     const onJoin = () => {
-        dispatch(JoinChit({
-            "email_id": userdata?.email_id,
-            "scheme_id": data?.id
-        })).then((resp) => {
-            if (resp?.message == "success") {
-                handlemodal()
-                modify(idx)
-            }
 
-        })
+        setData(data?.id, idx, data?.name)
     }
 
 
@@ -126,7 +118,7 @@ const separatorItem = () => {
     return <View style={styles.separatorView} />;
 };
 //mainslider component
-const MyChitCardSlider = ({ screen, onButton, yourchitsdata, newchitsdata, userdata, handlemodal, modify }) => {
+const MyChitCardSlider = ({ screen, onButton, yourchitsdata, newchitsdata, userdata, handlemodal, modify, setData }) => {
     const data = screen === "My Chits" ? yourchitsdata : screen === "New Plans" ? newchitsdata : null
     return (
         <View>
@@ -141,7 +133,7 @@ const MyChitCardSlider = ({ screen, onButton, yourchitsdata, newchitsdata, userd
                 showsHorizontalScrollIndicator={false}
                 renderItem={({ item, index }) => {
 
-                    return <MychitsCard modify={modify} idx={index} handlemodal={handlemodal} userdata={userdata} data={item} screenName={screen} onpress={onButton} yourchitsdata={yourchitsdata} ></MychitsCard>
+                    return <MychitsCard setData={setData} modify={modify} idx={index} handlemodal={handlemodal} userdata={userdata} data={item} screenName={screen} onpress={onButton} yourchitsdata={yourchitsdata} ></MychitsCard>
                 }}
 
 

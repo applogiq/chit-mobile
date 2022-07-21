@@ -184,8 +184,8 @@ const HomeScreen = () => {
             View All
           </Text>
         </View>
-        {typeof recentTransactions == "undefined" ? <Text style={[styles.cardTitle, { fontSize: font * 20, alignSelf: "center", marginTop: "14%", marginBottom: "7%" }]} >Your recent transactions will appear here</Text> : <View></View>}
-        {recentTransactions?.length < 1 ? <Text style={[styles.cardTitle, { fontSize: font * 20, alignSelf: "center", marginTop: "14%", marginBottom: "7%" }]} >Your recent transactions will appear here</Text> : <View></View>}
+        {typeof recentTransactions == "undefined" ? <Text style={[styles.cardTitle, { fontSize: font * 20, alignSelf: "center", marginTop: "14%", marginBottom: "7%" }]} >no records found</Text> : <View></View>}
+        {recentTransactions?.length < 1 ? <Text style={[styles.cardTitle, { fontSize: font * 20, alignSelf: "center", marginTop: "14%", marginBottom: "7%" }]} >no records found</Text> : <View></View>}
         <View
           style={[
             styles.top,
