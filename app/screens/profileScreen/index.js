@@ -402,7 +402,7 @@ const ProfileScreen = props => {
       <ModalComponent
         action={() => handleLogout()}
         textData1={"Confirm Logout Action"}
-
+        textData2={"You will loose unsaved data"}
         textData3={"Are you sure you want to"}
         textData4={"Logout?"}
         modalVisible={modalVisible}

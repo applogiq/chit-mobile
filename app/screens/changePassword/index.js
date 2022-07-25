@@ -193,7 +193,7 @@ const ChangePassword = ({ navigation, route }) => {
       </Modal>
       <ModalComponent
         action={() => onChagePassword()}
-        textData1={"Change password"}
+        textData1={"Confirm Change Action"}
 
         textData3={"Are you sure you want to"}
         textData4={"Change Password?"}

@@ -21,9 +21,9 @@ const TopBar = ({ screenName, onClick }) => {
 };
 const styles = StyleSheet.create({
     container: {
-        borderWidth: 2, borderColor: "rgba(213, 186, 143, 0.3)", alignItems: "center", justifyContent: "space-around", borderRadius: 6.56, flexDirection: "row"
+        alignItems: "center", justifyContent: "space-around", borderRadius: 7, flexDirection: "row"
     },
-    buttons: { height: "100%", width: "50%", alignItems: "center", justifyContent: "center" },
+    buttons: { height: "100%", width: "50%", alignItems: "center", justifyContent: "center", borderRadius: 7 },
     buttonTitle: {
         color: "rgba(65, 39, 15, 0.6)", fontFamily: 'SourceSansPro-SemiBold',
         fontSize: 17,
