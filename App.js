@@ -12,19 +12,22 @@
 /**************************************** Import Packages ***********************************************************/
 import 'react-native-gesture-handler';
 import React from 'react';
-import {View} from 'react-native';
-import {Provider} from 'react-redux';
+import { View, ActivityIndicator, Text } from 'react-native';
+import { Provider } from 'react-redux';
 import store from './app/redux/store';
-import {NavigationContainer} from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 /**************************************** Import Components ***********************************************************/
 import MainStackNavigator from './app/navigation/stackNavigator';
 
 const App = () => {
   return (
     <Provider store={store}>
-      <NavigationContainer>
+
+
+      <NavigationContainer  >
         <MainStackNavigator></MainStackNavigator>
       </NavigationContainer>
+
     </Provider>
   );
 };

@@ -102,7 +102,7 @@ const Transactions = () => {
       </View>
 
       <ScrollView style={{ marginTop: "5%", marginBottom: "10%" }} showsVerticalScrollIndicator={false}>
-        {transactions.length > 0 ?
+        {transactions[0] != undefined ?
           <View><SchemeTransactions hidetitle={true} data={transactions}
           ></SchemeTransactions></View> : <View style={{ height: 200, width: "100%", alignItems: "center", justifyContent: "center" }}><Text style={{ fontSize: 25, fontFamily: "SourceSansPro-SemiBold", color: "#9D6939" }}>no records found</Text></View>
         }
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   datescontainers: { flexDirection: "row", justifyContent: "space-between", marginTop: "1.5%" },
   dateText: {
     color: "rgba(65, 39, 15, 0.8)",
-    fontFamily: "SourceSansPro-SemiBold", fontWeight: "600", lineHeight: 21, fontSize: 12, marginLeft: 10
+    fontFamily: "SourceSansPro-SemiBold", fontWeight: "600", lineHeight: 21, fontSize: 14, marginLeft: 10
   },
   centeredView: {
     flex: 1,

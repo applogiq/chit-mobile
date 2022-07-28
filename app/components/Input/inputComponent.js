@@ -71,7 +71,7 @@ const InputField = ({
             marginTop: height * (5.5 / 100),
             marginLeft: width * (85 / 100),
           }}>
-          <Pressable onPress={iconpress}>
+          <Pressable style={{ height: 25, width: 25 }} onPress={iconpress}>
             <Image
               style={[styles.eyeicon]}
               source={pressed ? IMAGES.eye_open : IMAGES.eye_closed}></Image>

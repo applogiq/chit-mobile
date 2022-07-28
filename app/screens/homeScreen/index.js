@@ -14,7 +14,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { useDispatch, useSelector, connect } from 'react-redux';
-import { getMetals } from '../../redux/actions';
+import { getMetals, yourchitsFailure } from '../../redux/actions';
 import { getYourchits } from '../../redux/actions';
 import { getRecenttransactions } from '../../redux/actions';
 
@@ -23,11 +23,13 @@ import { getRecenttransactions } from '../../redux/actions';
 import { IMAGES } from '../../common/images';
 import YourChitCardSlider from '../../components/YourchitsCard/yourchitsCard';
 import MetalsCardSlider from '../../components/Metalscard/meatlsCard';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   const dispatch = useDispatch()
   const [goldPrice, setgoldPrice] = useState(0)
+  const [filePath, setFilePath] = useState("");
   const [silverPrice, setsilverPrice] = useState(0)
   const [diamondPrice, setdiamondPrice] = useState(0)
   const [yourChitsdata, setyourChitsdata] = useState([])
@@ -76,6 +78,7 @@ const HomeScreen = () => {
 
       const loggedUser = JSON.parse(result);
       setUserDetails(loggedUser)
+      setFilePath(loggedUser.profile_image)
       dispatch(getYourchits(loggedUser.id)).then((resp) => {
 
         setyourChitsdata(resp.records)
@@ -89,6 +92,8 @@ const HomeScreen = () => {
 
   }
 
+  console.log(typeof yourChitsdata, "1???....uymffthhhhhhhhhhhhhhhhhhhhhhhhhhh")
+  console.log(typeof recentTransactions, "2???...gnrrsgggsgnnnnnnnnnnnnnnnnnnnnnn.")
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View
@@ -101,9 +106,7 @@ const HomeScreen = () => {
         <View style={styles.headerUpper}>
           <Image
             resizeMode="contain"
-            source={{
-              uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR04ZndPl3TMJ4GMG8UeiY8XGh8ifpnPGHTbw&usqp=CAU',
-            }}
+            source={{ uri: filePath == "" ? 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541' : filePath, }}
             style={{
               height: height * (7 / 100),
               width: height * (7 / 100),
@@ -153,6 +156,7 @@ const HomeScreen = () => {
           Your Chits
         </Text>
         <View style={styles.top}>
+          {yourChitsdata.length < 1 ? <Text style={[styles.cardTitle, { fontSize: font * 20, alignSelf: "center", marginTop: "7%", marginBottom: "7%" }]} >You have not yet joined any chits</Text> : <View></View>}
           <YourChitCardSlider data={yourChitsdata}></YourChitCardSlider>
         </View>
       </View>
@@ -169,18 +173,22 @@ const HomeScreen = () => {
           <Text style={[styles.cardTitle, { fontSize: font * 15 }]}>
             Recent Transactions
           </Text>
-          <Text
-            style={[
-              styles.cardTitle,
-              {
-                fontSize: font * 13,
-                marginLeft: width * (41 / 100),
-                color: 'rgba(65, 39, 15, 0.6)',
-              },
-            ]}>
-            View All
-          </Text>
+          <TouchableOpacity onPress={() => navigation.navigate("Transactions")}>
+            <Text
+              style={[
+                styles.cardTitle,
+                {
+                  fontSize: font * 13,
+                  marginLeft: width * (41 / 100),
+                  color: 'rgba(65, 39, 15, 0.6)',
+                },
+              ]}>
+              View All
+            </Text>
+          </TouchableOpacity>
         </View>
+        {typeof recentTransactions == "undefined" ? <Text style={[styles.cardTitle, { fontSize: font * 20, alignSelf: "center", marginTop: "14%", marginBottom: "7%" }]} >no records found</Text> : <View></View>}
+        {recentTransactions?.length < 1 ? <Text style={[styles.cardTitle, { fontSize: font * 20, alignSelf: "center", marginTop: "14%", marginBottom: "7%" }]} >no records found</Text> : <View></View>}
         <View
           style={[
             styles.top,

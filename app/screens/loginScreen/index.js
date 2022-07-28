@@ -9,7 +9,7 @@ import {
   ImageBackground,
   ScrollView,
   TouchableOpacity,
-  Modal, ActivityIndicator
+  Modal, ActivityIndicator, Pressable
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 /**************************************** Import components ***********************************************************/
@@ -31,7 +31,7 @@ const LoginScreen = props => {
   const [passworderror, setPassworderror] = useState('');
   const [modaltext, setModaltext] = useState('');
   const [loading, setLoading] = useState(false);
-  const [loader, setLoader] = useState(false);
+  const [loader, setLoader] = useState(true);
 
   const [disabled, setDisabled] = useState(true);
 
@@ -139,6 +139,7 @@ const LoginScreen = props => {
   return (
     <ScrollView style={[styles.container]}>
       <View style={{ height: height, width: width }}>
+
         <ImageBackground
           source={IMAGES.login_background}
           resizeMode="cover"
@@ -151,6 +152,7 @@ const LoginScreen = props => {
               paddingRight: width * (3 / 100),
             },
           ]}>
+
           <View
             style={[styles.titleContainer, { marginTop: height * (35 / 100) }]}>
             <Text
@@ -185,7 +187,7 @@ const LoginScreen = props => {
               value={userpassword}
               showicon={true}
               errormessage={passworderror}
-              maxchars={15}></InputField>
+              maxchars={25}></InputField>
           </View>
           <View style={{ alignSelf: 'flex-end', marginTop: height * (1 / 100) }}>
             <TouchableOpacity
@@ -209,23 +211,27 @@ const LoginScreen = props => {
             parentstyles={{ marginTop: height * (4 / 100) }}></Button>
         </ImageBackground>
       </View>
-      <ModalComponent
-        textData={modaltext}
-        modalVisible={modalVisible}
-        onmodalPress={handleModal}></ModalComponent>
+
       <Modal
-        animationType="none"
+        animationType="slide"
         transparent={true}
-        visible={loader}
+        visible={modalVisible}
         onRequestClose={() => {
 
-          setLoader(!loader);
+          setModalvisible(!modalVisible);
         }}
-        style={styles.loader}>
-        <View style={styles.loadContainer}>
-          <ActivityIndicator size="large" color="rgba(213, 186, 143, 1)" />
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>{modaltext}</Text>
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => handleModal()}
+            >
+              <Text style={styles.textStyle}>Ok</Text>
+            </Pressable>
+          </View>
         </View>
-
       </Modal>
 
     </ScrollView>
@@ -247,7 +253,48 @@ const styles = StyleSheet.create({
   },
   titleContainer: {},
   loader: { flex: 1, alignItems: "center", justifyContent: "center" },
-  loadContainer: { alignItems: "center", justifyContent: "center", flex: 1 }
+  loadContainer: { alignItems: "center", justifyContent: "center", flex: 1 },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "rgba(213, 186, 143, 1)",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center"
+  }
 });
 const mapStateToProps = state => ({
 

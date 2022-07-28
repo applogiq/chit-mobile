@@ -10,6 +10,7 @@ import { getYourchits } from '../../redux/actions';
 import { getNewchits } from '../../redux/actions';
 /**************************************** Import components ***********************************************************/
 import TopBar from './topBar';
+import { JoinChit } from "../../redux/actions";
 import ModalComponent from '../../components/Modal/modalComponent';
 import MyChitCardSlider from './chitsCards';
 
@@ -19,6 +20,9 @@ const ChitsScreen = ({ navigation }) => {
   const [yourChitsdata, setyourChitsdata] = useState([])
   const [newChitsdata, setnewChitsdata] = useState([])
   const [userDetails, setUserDetails] = useState("")
+  const [id, setId] = useState("")
+  const [idx, setIdx] = useState("")
+  const [name, setName] = useState("initial")
   const dispatch = useDispatch()
   const font = useWindowDimensions().fontScale;
   const { height, width } = useWindowDimensions();
@@ -67,6 +71,36 @@ const ChitsScreen = ({ navigation }) => {
   const handleModal = () => {
     setModalvisible(!modalVisible);
   };
+
+
+
+  const modify = (param) => {
+    function check(val, index) {
+      return index != param
+    }
+    const result = newChitsdata.filter(check)
+    setnewChitsdata(result)
+
+  }
+  const action = () => {
+    dispatch(JoinChit({
+      "email_id": userDetails?.email_id,
+      "scheme_id": id
+    })).then((resp) => {
+      if (resp?.message == "success") {
+        handleModal()
+        modify(idx)
+      }
+
+    })
+  }
+  const setData = (chitid, chitindex, chitname) => {
+    setId(chitid)
+    setIdx(chitindex)
+    setName(chitname)
+    handleModal()
+  }
+
   return (
     <View style={styles.container}>
       <Text style={[styles.headerText, { fontSize: font * 21 }]}>Chits</Text>
@@ -74,10 +108,16 @@ const ChitsScreen = ({ navigation }) => {
         <TopBar screenName={screen} onClick={onPress} ></TopBar>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <MyChitCardSlider handlemodal={handleModal} userdata={userDetails} yourchitsdata={yourChitsdata} screen={screen} newchitsdata={newChitsdata} onButton={onClick}></MyChitCardSlider>
+        {yourChitsdata.length < 1 && screen == "My Chits" ? <Text style={[styles.cardTitle, { fontSize: font * 20, alignSelf: "center", marginTop: "14%", marginBottom: "7%" }]} >You have not joined any chits yet</Text> : <View></View>}
+        {newChitsdata.length < 1 && screen == "New Plans" ? <Text style={[styles.cardTitle, { fontSize: font * 20, alignSelf: "center", marginTop: "14%", marginBottom: "7%" }]} >Sorry there is no new chits available now</Text> : <View></View>}
+        <MyChitCardSlider setData={setData} modify={modify} handlemodal={handleModal} userdata={userDetails} yourchitsdata={yourChitsdata} screen={screen} newchitsdata={newChitsdata} onButton={onClick}></MyChitCardSlider>
       </ScrollView>
       <ModalComponent
-        textData={"Join Request Submitted Successfully"}
+        action={action}
+        textData1={"New scheme request"}
+        textData2={"You are about to send a request, to join,"}
+        textData3={"a new scheme Are you sure that you want to join"}
+        textData4={`"${name}?"`}
         modalVisible={modalVisible}
         onmodalPress={handleModal}></ModalComponent>
     </View>

@@ -6,14 +6,14 @@ import {
   StyleSheet,
   useWindowDimensions,
   Image,
-  TouchableOpacity,
+  TouchableOpacity, Modal, Pressable
 } from 'react-native';
 import { useDispatch, useSelector, connect } from 'react-redux';
 /**************************************** Import components ***********************************************************/
 import { IMAGES } from '../../common/images';
 import { PostOtp } from '../../redux/actions';
 import { verifyOtpfunc } from '../../redux/actions';
-
+import ModalComponent from '../../components/Modal/modalComponent';
 import InputField from '../../components/Input/inputComponent';
 import Button from '../../components/Button/buttonComponent';
 import OTPTextView from 'react-native-otp-textinput';
@@ -31,7 +31,8 @@ const ForgotPassword = props => {
   const [otploading, setOtploading] = useState(false);
   const [otpdisabled, setOtpdisabled] = useState(true);
   const [userotp, setUserotp] = useState('');
-
+  const [modalVisible, setModalvisible] = useState(false)
+  const [modaltext, setModaltext] = useState("")
   const [resetloading, setResetloading] = useState(false);
   const [resetdisabled, setResetDisabled] = useState(true);
   const [resetpassword, setResetpassword] = useState('');
@@ -73,13 +74,26 @@ const ForgotPassword = props => {
   const onresetpassword = () => {
     if (resetcpassword === resetpassword) {
       if (isValidPassword(resetpassword)) {
+        console.log({
+          "mobile_number": userphone,
+          "otp": userotp,
+          "password": resetpassword
+        }, "objjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj")
         dispatch(verifyOtpfunc({
           "mobile_number": userphone,
-          "otp": 100509,
+          "otp": userotp,
           "password": resetpassword
         })).then((resp) => {
-          console.log(resp, "resetttttttttttttttttttt")
-          props.navigation.navigate('LoginScreen');
+          if (resp.success) {
+            setModaltext("Password changed successfully")
+            setModalvisible(!modalVisible)
+          } else {
+            setModaltext("Something went wrong")
+            setModalvisible(!modalVisible)
+          }
+
+
+
           setScreen('initial');
           setUserphone('');
           setUserotp('');
@@ -102,13 +116,16 @@ const ForgotPassword = props => {
   }
 
 
-
+  const handleModal = () => {
+    setModalvisible(!modalVisible)
+    props.navigation.navigate('LoginScreen');
+  }
 
 
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <TouchableOpacity onPress={() => OnBackpress()}>
+        <TouchableOpacity style={{ height: height * (3.5 / 100), width: width * (3.5 / 100), marginTop: height * (1.5 / 100) }} onPress={() => OnBackpress()}>
           <Image
             resizeMode="stretch"
             style={[
@@ -117,7 +134,7 @@ const ForgotPassword = props => {
             ]}
             source={IMAGES.back_icon}></Image>
         </TouchableOpacity>
-        <Text style={[styles.headerText, { fontSize: font * 19 }]}>
+        <Text style={[styles.headerText, { fontSize: font * 22 }]}>
           {screen == 'initial'
             ? 'Forgot Password'
             : screen == 'otp'
@@ -126,7 +143,7 @@ const ForgotPassword = props => {
         </Text>
       </View>
       <View style={styles.subTextcontainer}>
-        <Text style={[styles.subText, { fontSize: font * 12 }]}>
+        <Text style={[styles.subText, { fontSize: font * 13 }]}>
           {screen == 'initial'
             ? descriptionone
             : screen == 'otp'
@@ -218,7 +235,31 @@ const ForgotPassword = props => {
             parentstyles={{ marginTop: height * (4 / 100) }}></Button>
         )}
       </View>
+      {/* <ModalComponent
+        textData={modaltext}
+        modalVisible={modalVisible}
+        onmodalPress={handleModal}></ModalComponent> */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
 
+          setModalvisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>{modaltext}</Text>
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => handleModal()}
+            >
+              <Text style={styles.textStyle}>Ok</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -229,7 +270,7 @@ const styles = StyleSheet.create({
     paddingLeft: 11,
     paddingRight: 11,
   },
-  headerContainer: { flexDirection: 'row', alignItems: 'center', marginTop: 40 },
+  headerContainer: { flexDirection: 'row', alignItems: 'center', marginTop: 20 },
   backIcon: {},
   headerText: {
     fontFamily: 'SourceSansPro-SemiBold',
@@ -248,5 +289,46 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginBottom: 7,
   },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "rgba(213, 186, 143, 1)",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center"
+  }
 });
 export default ForgotPassword;

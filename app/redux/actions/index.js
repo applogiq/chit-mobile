@@ -11,4 +11,5 @@ export * from './postotpAction';
 export * from './filtertransactionsAction';
 export * from './changeAction';
 export * from './verifyotpAction';
+export * from './postprofileAction';
 

@@ -30,7 +30,7 @@ const SchemeDetails = ({ navigation, route }) => {
         <View style={{ flex: 1 }}>
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false} >
                 <View style={styles.headerContainer}>
-                    <TouchableOpacity onPress={() => OnBackpress()}>
+                    <TouchableOpacity style={{ height: height * (3.5 / 100), width: width * (3.5 / 100), alignItems: "center", justifyContent: "center" }} onPress={() => OnBackpress()}>
                         <Image
                             resizeMode="stretch"
                             style={[
