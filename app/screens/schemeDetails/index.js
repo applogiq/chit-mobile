@@ -13,9 +13,11 @@ import { IMAGES } from '../../common/images';
 import InfoCard from './infoCard';
 import ChitInfoForm from './infoForm';
 import SchemeTransactions from './transactions';
+import { paymentFunction } from '../../utils/payment';
 
 
 const SchemeDetails = ({ navigation, route }) => {
+    const [paymentRes, setpaymentRes] = useState("")
     const { item, transactions } = route.params;
     const font = useWindowDimensions().fontScale;
     const { height, width } = useWindowDimensions();
@@ -25,7 +27,11 @@ const SchemeDetails = ({ navigation, route }) => {
         navigation.navigate('Chits');
     }
     console.log("route params", transactions)
+    const handleRes = (res) => {
+        setpaymentRes(res)
+    }
 
+    console.log(paymentRes, "hhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
     return (
         <View style={{ flex: 1 }}>
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false} >
@@ -54,7 +60,14 @@ const SchemeDetails = ({ navigation, route }) => {
                 </View>
             </ScrollView>
             <View style={styles.footer} >
-                <TouchableOpacity style={styles.fooButton}>
+                <TouchableOpacity onPress={() => paymentFunction({
+                    amount: 411,
+                    orederid: "order_JxXIM1xigYfGhv",
+                    email: "bharath@mail.com",
+                    phone: "6479024327",
+                    name: "bharath",
+                    Resfun: handleRes
+                })} style={styles.fooButton}>
                     <Text style={styles.buttonTitle}>Pay Now</Text>
                 </TouchableOpacity>
             </View>
