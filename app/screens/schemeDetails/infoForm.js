@@ -30,7 +30,7 @@ const ChitInfoForm = ({ data }) => {
             </View>
             <View>
                 <Text style={styles.titleOne}>Branch</Text>
-                <Text style={styles.titleTwo}>{data?.scheme_branch}</Text>
+                <Text style={styles.titleTwo}>{data?.branch_name}</Text>
             </View>
             <View>
                 <Text style={styles.titleOne}>Monthly Installment</Text>

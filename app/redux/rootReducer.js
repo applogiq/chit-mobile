@@ -15,6 +15,7 @@ import filterTransactionsReducer from './reducers/filtertransactionsReducer';
 import changePasswordReducer from './reducers/chageReducer';
 import verifyReducer from './reducers/verifyotpReducer';
 import postprofileReducer from './reducers/postprofileReducer';
+import createpaymentReducer from './reducers/createpaymentReducer';
 
 const rootReducer = combineReducers({
   login: loginReducer,
@@ -29,7 +30,8 @@ const rootReducer = combineReducers({
   filtertransactions: filterTransactionsReducer,
   chanepassword: changePasswordReducer,
   verifyotp: verifyReducer,
-  postprofile: postprofileReducer
+  postprofile: postprofileReducer,
+  createpayment: createpaymentReducer
 
 });
 

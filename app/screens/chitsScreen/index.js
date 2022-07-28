@@ -32,7 +32,7 @@ const ChitsScreen = ({ navigation }) => {
     setScreen(title)
   }
   const onClick = (params) => {
-
+    console.log(params, "oncliqqqqqqqqqqqqqqqqqqqqqqqqqqque")
     dispatch(getSchemetransactions(userDetails.id, params?.scheme_id)).then((resp) => {
       navigation.navigate("Schemedetails", {
         item: params,
@@ -115,8 +115,8 @@ const ChitsScreen = ({ navigation }) => {
       <ModalComponent
         action={action}
         textData1={"New scheme request"}
-        textData2={"You are about to send a request, to join,"}
-        textData3={"a new scheme Are you sure that you want to join"}
+        textData2={"You are about to send a request to join a new scheme ,"}
+        textData3={"Are you sure that you want to join"}
         textData4={`"${name}?"`}
         modalVisible={modalVisible}
         onmodalPress={handleModal}></ModalComponent>

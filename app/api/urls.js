@@ -13,7 +13,9 @@ const URL_CONSTANTS = {
   filterTransactions: 'api/v1/payment-history/',
   changePassword: 'api/v1/user-change-password',
   verifyOtp: 'api/v1/user-forgot-password',
-  updateUser: 'api/v1/user/'
+  updateUser: 'api/v1/user/',
+  createPayment: 'api/v1/payment',
+  verifyPayment: 'api/v1/payment-verification'
 
 
 };

@@ -16,7 +16,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch, useSelector, connect } from 'react-redux';
 import { getMetals, yourchitsFailure } from '../../redux/actions';
 import { getYourchits } from '../../redux/actions';
-import { getRecenttransactions } from '../../redux/actions';
+import { getRecenttransactions, getSchemetransactions } from '../../redux/actions';
 
 
 /**************************************** Import components ***********************************************************/
@@ -27,6 +27,8 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 const HomeScreen = ({ navigation }) => {
+  const recenttransactionsdata = useSelector((state) => state.recenttransactions?.storerecentsResponse?.records);
+
   const dispatch = useDispatch()
   const [goldPrice, setgoldPrice] = useState(0)
   const [filePath, setFilePath] = useState("");
@@ -92,8 +94,19 @@ const HomeScreen = ({ navigation }) => {
 
   }
 
-  console.log(typeof yourChitsdata, "1???....uymffthhhhhhhhhhhhhhhhhhhhhhhhhhh")
-  console.log(typeof recentTransactions, "2???...gnrrsgggsgnnnnnnnnnnnnnnnnnnnnnn.")
+  const onClick = (params) => {
+    console.log(params, "clickkkkkkkkkkkkkkkkkkkkkkkkkk")
+    dispatch(getSchemetransactions(userDetails.id, params?.scheme_id)).then((resp) => {
+      navigation.navigate("Schemedetails", {
+        item: params,
+        transactions: resp.records
+
+      })
+
+    })
+
+  }
+  console.log(recenttransactionsdata, "useselectorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr00000000000000000000000000000000000000000000000000000000000000000000")
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View
@@ -157,7 +170,7 @@ const HomeScreen = ({ navigation }) => {
         </Text>
         <View style={styles.top}>
           {yourChitsdata.length < 1 ? <Text style={[styles.cardTitle, { fontSize: font * 20, alignSelf: "center", marginTop: "7%", marginBottom: "7%" }]} >You have not yet joined any chits</Text> : <View></View>}
-          <YourChitCardSlider data={yourChitsdata}></YourChitCardSlider>
+          <YourChitCardSlider onClick={onClick} data={yourChitsdata}></YourChitCardSlider>
         </View>
       </View>
       <View style={styles.top}>
@@ -187,15 +200,15 @@ const HomeScreen = ({ navigation }) => {
             </Text>
           </TouchableOpacity>
         </View>
-        {typeof recentTransactions == "undefined" ? <Text style={[styles.cardTitle, { fontSize: font * 20, alignSelf: "center", marginTop: "14%", marginBottom: "7%" }]} >no records found</Text> : <View></View>}
-        {recentTransactions?.length < 1 ? <Text style={[styles.cardTitle, { fontSize: font * 20, alignSelf: "center", marginTop: "14%", marginBottom: "7%" }]} >no records found</Text> : <View></View>}
+        {typeof recenttransactionsdata == "undefined" ? <Text style={[styles.cardTitle, { fontSize: font * 20, alignSelf: "center", marginTop: "14%", marginBottom: "7%" }]} >no records found</Text> : <View></View>}
+        {recenttransactionsdata?.length < 1 ? <Text style={[styles.cardTitle, { fontSize: font * 20, alignSelf: "center", marginTop: "14%", marginBottom: "7%" }]} >no records found</Text> : <View></View>}
         <View
           style={[
             styles.top,
             { backgroundColor: 'white', borderTopLeftRadius: 5, borderRadius: 5 },
           ]}>
           <FlatList
-            data={recentTransactions}
+            data={recenttransactionsdata}
             keyExtractor={item => item}
             ItemSeparatorComponent={() => (
               <View
@@ -209,7 +222,7 @@ const HomeScreen = ({ navigation }) => {
             snapToAlignment="center"
             renderItem={({ item }) => {
 
-              console.log(item, "<<<<<<<<<<<<<<<<<<<<<")
+
               return (
                 <View
                   style={{

@@ -11,7 +11,7 @@ const Data = [
   { id: 4 }
 ]
 //change this to real data
-const YourchitsCard = ({ data }) => {
+const YourchitsCard = ({ data, onClick }) => {
   console.log(data, "urchitscardsss")
   const { height, width } = useWindowDimensions();
   //for responsiveness
@@ -23,7 +23,9 @@ const YourchitsCard = ({ data }) => {
 
   // const newdate = new Date(data.due_date)
 
-
+  const onpress = () => {
+    onClick(data)
+  }
   return (
     <View style={[styles.container, { height: height * (20 / 100), width: width * (70 / 100), marginBottom: "3%" }]}>
       <View style={styles.innerContainer}>
@@ -41,7 +43,7 @@ const YourchitsCard = ({ data }) => {
         </View>
         <View style={[styles.nameContainer, { justifyContent: "flex-end", alignItems: "flex-end" }]}>
 
-          <TouchableOpacity style={{ alignItems: "center", justifyContent: "center", height: height * (5 / 100), width: width * (20 / 100), borderRadius: 5, backgroundColor: "rgba(213, 186, 143, 1)" }}>
+          <TouchableOpacity onPress={() => onpress()} style={{ alignItems: "center", justifyContent: "center", height: height * (5 / 100), width: width * (20 / 100), borderRadius: 5, backgroundColor: "rgba(213, 186, 143, 1)" }}>
             <Text style={[styles.titleTwo, { color: "white", fontSize: font * 15 }]}>Pay Now</Text>
           </TouchableOpacity>
         </View>
@@ -71,7 +73,7 @@ const separatorItem = () => {
   return <View style={styles.separatorView} />;
 };
 //mainslider component
-const YourChitCardSlider = ({ data }) => {
+const YourChitCardSlider = ({ data, onClick }) => {
 
   return (
     <View>
@@ -86,7 +88,7 @@ const YourChitCardSlider = ({ data }) => {
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => {
 
-          return <YourchitsCard data={item}></YourchitsCard>
+          return <YourchitsCard data={item} onClick={onClick} ></YourchitsCard>
         }}
 
 

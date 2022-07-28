@@ -441,3 +441,31 @@ export const FilterTransactions = (async (requestUrl, userparams, startdate, end
 
 });
 
+export const postApi = async (requestUrl, params) => {
+  const fcm = await token();
+  console.log(`${hostConfig.API_URL}${requestUrl}`, params, "apiactionsssssssssssssssssssssssss")
+  return fetch(`${hostConfig.API_URL}${requestUrl}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${fcm}`,
+      cors: 'no-cors',
+    },
+    body: JSON.stringify(params),
+  })
+    .then(async response => {
+      const data = responseStatusHandler(response);
+      return data;
+    })
+
+    .then(result => {
+      if (!result.error) return result.json();
+      else return result;
+    })
+
+    .catch(err => {
+      errorHandler(err);
+    });
+};
+

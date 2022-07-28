@@ -436,7 +436,7 @@ const ProfileScreen = props => {
                 style={[styles.button, styles.buttonClose, { marginRight: width * (5 / 100) }]}
 
               >
-                <Text style={styles.textStyle}>Take a picutre now</Text>
+                <Text style={styles.textStyle}>Take a picture now</Text>
               </Pressable>
               <Pressable onPress={() => chooseFile()}
                 style={[styles.button, styles.buttonClose, { marginLeft: width * (5 / 100) }]}
@@ -479,7 +479,7 @@ const styles = StyleSheet.create({
     color: '#9D6939',
     fontWeight: '600',
   },
-  image: { height: "65%", width: "30%", borderRadius: 100, resizeMode: 'contain' },
+  image: { height: "80%", width: "35%", borderRadius: 100, resizeMode: 'contain' },
   tableTitles: {
     fontFamily: 'SourceSansPro-SemiBold',
     fontWeight: '600',

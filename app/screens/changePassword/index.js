@@ -57,7 +57,7 @@ const ChangePassword = ({ navigation, route }) => {
 
         } else {
           setError(
-            'PLease choose a password which contains atleast one capital,one lowercase letter and a special character',
+            'Please choose a password which contains atleast one capital,one lowercase letter and a special character',
           );
         }
       } else {

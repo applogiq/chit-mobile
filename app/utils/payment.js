@@ -20,7 +20,7 @@ export const paymentFunction = async (params) => {
         // handle success
         alert("You transaction was successfull");
         console.log(data, "paymentressssssssssssssssss")
-        params.Resfun(data)
+        params.Resfun(data, params.resp)
 
 
     })

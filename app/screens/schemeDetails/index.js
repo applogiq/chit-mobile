@@ -8,17 +8,24 @@ import {
     Image,
     TouchableOpacity, ScrollView
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 /**************************************** Import components ***********************************************************/
 import { IMAGES } from '../../common/images';
 import InfoCard from './infoCard';
+import { useDispatch } from 'react-redux';
 import ChitInfoForm from './infoForm';
 import SchemeTransactions from './transactions';
 import { paymentFunction } from '../../utils/payment';
+import { getSchemetransactions, getRecenttransactions } from '../../redux/actions';
+import { CreatePayment, VerifyPayment } from '../../redux/actions/createpaymentAction';
 
 
 const SchemeDetails = ({ navigation, route }) => {
+    const dispatch = useDispatch()
     const [paymentRes, setpaymentRes] = useState("")
+
     const { item, transactions } = route.params;
+    const [Transactions, setTransactions] = useState(transactions)
     const font = useWindowDimensions().fontScale;
     const { height, width } = useWindowDimensions();
     //for responsiveness
@@ -26,12 +33,63 @@ const SchemeDetails = ({ navigation, route }) => {
     const OnBackpress = () => {
         navigation.navigate('Chits');
     }
-    console.log("route params", transactions)
-    const handleRes = (res) => {
-        setpaymentRes(res)
+
+    const handleRes = (res, resp) => {
+        if (res.razorpay_order_id) {
+            dispatch(VerifyPayment({
+                "amount": item.monthly_installment,
+                "payment_id": resp?.records?.id,
+                "group_user_id": item.id,
+                "razorpay_order_id": res.razorpay_order_id,
+                "razorpay_payment_id": res.razorpay_payment_id,
+                "razorpay_signature": res.razorpay_signature
+            })).then((respo) => {
+                if (respo?.message == "payment verified") {
+                    dispatch(getSchemetransactions(item.user_id, item.scheme_id,)).then((response) => {
+                        setTransactions(response.records)
+
+                    })
+                    dispatch(getRecenttransactions(item.user_id))
+                }
+
+
+
+            })
+        }
+
+
+    }
+    const onpayNow = () => {
+
+        dispatch(CreatePayment({
+            "amount": item.monthly_installment * 100,
+            "group_user_id": item.id,
+            "scheme_id": item.scheme_id,
+            "user_id": item.user_id
+        })).then(async (resp) => {
+
+            await AsyncStorage.getItem('@loggedUser').then(result => {
+
+                const loggedUser = JSON.parse(result);
+
+                if (resp.details.id != undefined && resp.details.id != null) {
+                    paymentFunction({
+                        amount: item.monthly_installment * 100,
+                        orederid: resp.details.id,
+                        email: loggedUser.email_id,
+                        phone: loggedUser.mobile_number,
+                        name: loggedUser.name,
+                        Resfun: handleRes,
+                        resp: resp
+                    })
+                }
+
+            });
+
+
+        })
     }
 
-    console.log(paymentRes, "hhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
     return (
         <View style={{ flex: 1 }}>
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false} >
@@ -56,18 +114,11 @@ const SchemeDetails = ({ navigation, route }) => {
                     <ChitInfoForm data={item}></ChitInfoForm>
                 </View>
                 <View style={{ marginTop: "3%" }}>
-                    <SchemeTransactions data={transactions} ></SchemeTransactions>
+                    <SchemeTransactions data={Transactions} ></SchemeTransactions>
                 </View>
             </ScrollView>
             <View style={styles.footer} >
-                <TouchableOpacity onPress={() => paymentFunction({
-                    amount: 411,
-                    orederid: "order_JxXIM1xigYfGhv",
-                    email: "bharath@mail.com",
-                    phone: "6479024327",
-                    name: "bharath",
-                    Resfun: handleRes
-                })} style={styles.fooButton}>
+                <TouchableOpacity onPress={() => onpayNow()} style={styles.fooButton}>
                     <Text style={styles.buttonTitle}>Pay Now</Text>
                 </TouchableOpacity>
             </View>

@@ -1,5 +1,5 @@
 /** ****************************** Import libs *********************************** */
-import { postDataApi, putDataApi, postOtpApi, putChangeApi } from './action';
+import { postDataApi, putDataApi, postOtpApi, putChangeApi, postApi } from './action';
 
 import { postJoinChitApi } from './action';
 import { URL_CONSTANTS } from './urls';
@@ -18,3 +18,7 @@ export const postOtp = params =>
 
 export const verifyOtp = params =>
   putDataApi(URL_CONSTANTS.verifyOtp, params);
+export const createPayment = params =>
+  postApi(URL_CONSTANTS.createPayment, params);
+export const verifyPayment = params =>
+  postApi(URL_CONSTANTS.verifyPayment, params);
