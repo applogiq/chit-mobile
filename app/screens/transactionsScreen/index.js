@@ -47,8 +47,8 @@ const Transactions = () => {
 
     const startday = startDate.getDate()
 
-    setendMonth(endday + "/" + endmonth + "/" + endyear)
-    setstartMonth(startday + "/" + startmonth + "/" + startyear)
+    setendMonth(endyear + "-" + endmonth + "-" + endday)
+    setstartMonth(startyear + "-" + startmonth + "-" + startday)
   }
   const setDates = (start, end) => {
     setstartMonth(start)
