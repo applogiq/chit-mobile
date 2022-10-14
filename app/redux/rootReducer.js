@@ -1,5 +1,5 @@
 /** **************************** Import Libs ****************************** */
-import { combineReducers } from 'redux';
+import {combineReducers} from 'redux';
 
 /** **************************** Import Reducers ****************************** */
 import loginReducer from './reducers/loginReducer';
@@ -16,6 +16,7 @@ import changePasswordReducer from './reducers/chageReducer';
 import verifyReducer from './reducers/verifyotpReducer';
 import postprofileReducer from './reducers/postprofileReducer';
 import createpaymentReducer from './reducers/createpaymentReducer';
+import updatestatesReducer from './reducers/updatestatesReducer';
 
 const rootReducer = combineReducers({
   login: loginReducer,
@@ -31,8 +32,8 @@ const rootReducer = combineReducers({
   chanepassword: changePasswordReducer,
   verifyotp: verifyReducer,
   postprofile: postprofileReducer,
-  createpayment: createpaymentReducer
-
+  createpayment: createpaymentReducer,
+  updatestates: updatestatesReducer,
 });
 
 export default rootReducer;

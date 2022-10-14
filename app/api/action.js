@@ -1,6 +1,6 @@
 /* eslint-disable */
 /** ********************************* Import URL ************************************* */
-import { hostConfig } from '../config/index'; // env
+import {hostConfig} from '../config/index'; // env
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /** ****************************** Response Handler *********************************** */
@@ -19,40 +19,40 @@ const responseStatusHandler = async response => {
     case 400:
       return response;
     case 401:
-      return { error: 'Token is missing' };
+      return {error: 'Token is missing'};
     case 402:
-      return { error: 'Payment Required' };
+      return {error: 'Payment Required'};
     case 403:
-      return { error: 'Forbidden' };
+      return {error: 'Forbidden'};
     case 404:
-      return { error: 'Not Found' };
+      return {error: 'Not Found'};
     case 405:
-      return { error: 'Method Not Allowed' };
+      return {error: 'Method Not Allowed'};
     case 406:
-      return { error: 'Not Acceptable' };
+      return {error: 'Not Acceptable'};
     case 408:
-      return { error: 'Request Timeout' };
+      return {error: 'Request Timeout'};
     case 409:
-      return { error: 'Request Already Exist' };
+      return {error: 'Request Already Exist'};
     case 410:
-      return { error: 'permanently deleted from server' };
+      return {error: 'permanently deleted from server'};
     case 500:
-      return { error: 'Internal Server Error' };
+      return {error: 'Internal Server Error'};
     case 501:
-      return { error: 'Not Implemented' };
+      return {error: 'Not Implemented'};
     case 502:
-      return { error: 'Bad Gateway' };
+      return {error: 'Bad Gateway'};
     case 503:
-      return { error: 'Service Unavailable' };
+      return {error: 'Service Unavailable'};
     case 504:
-      return { error: ' Gateway Timeout' };
+      return {error: ' Gateway Timeout'};
     case 511:
-      return { error: ' Network Authentication Required' };
+      return {error: ' Network Authentication Required'};
     case 200:
     case 201:
       return response;
     default:
-      return { error: 'response none' };
+      return {error: 'response none'};
   }
 };
 /** ****************************** Error Handler *********************************** */
@@ -60,7 +60,6 @@ const errorHandler = error => error;
 
 /** ****************************** Create Api *********************************** */
 export const postDataApi = async (requestUrl, params) => {
-  const dss = await token();
   return fetch(`${hostConfig.API_URL}${requestUrl}`, {
     method: 'POST',
     headers: {
@@ -87,7 +86,6 @@ export const postDataApi = async (requestUrl, params) => {
 };
 
 export const postOtpApi = async (requestUrl, params) => {
-
   return fetch(`${hostConfig.API_URL}${requestUrl}`, {
     method: 'POST',
     headers: {
@@ -113,7 +111,7 @@ export const postOtpApi = async (requestUrl, params) => {
     });
 };
 /** ****************************** View Api *********************************** */
-export const viewDataByApi = async (requestUrl) =>
+export const viewDataByApi = async requestUrl =>
   fetch(`${hostConfig.API_URL}${requestUrl}`, {
     method: 'GET',
     headers: {
@@ -139,14 +137,17 @@ export const viewDataByApi = async (requestUrl) =>
 /** ****************************** Update Api *********************************** */
 export const putDataApi = async (requestUrl, userparams, data) => {
   const fcm = await token();
-  console.log(`${hostConfig.API_URL}${requestUrl}${userparams}`, data, "putdata apiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
+  console.log(
+    `${hostConfig.API_URL}${requestUrl}${userparams}`,
+    data,
+    'putdata apiiiiiiiiiiiiiiiiiiiiiiiiiiiii',
+  );
   return fetch(`${hostConfig.API_URL}${requestUrl}${userparams}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      'Authorization': `Bearer ${fcm}`,
-
+      Authorization: `Bearer ${fcm}`,
     },
     body: JSON.stringify(data),
   })
@@ -166,14 +167,17 @@ export const putDataApi = async (requestUrl, userparams, data) => {
 };
 export const putChangeApi = async (requestUrl, data) => {
   const fcm = await token();
-  console.log(`${hostConfig.API_URL}${requestUrl}`, data, "putdata apiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
+  console.log(
+    `${hostConfig.API_URL}${requestUrl}`,
+    data,
+    'putdata apiiiiiiiiiiiiiiiiiiiiiiiiiiiii',
+  );
   return fetch(`${hostConfig.API_URL}${requestUrl}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      'Authorization': `Bearer ${fcm}`,
-
+      Authorization: `Bearer ${fcm}`,
     },
     body: JSON.stringify(data),
   })
@@ -192,23 +196,20 @@ export const putChangeApi = async (requestUrl, data) => {
     });
 };
 /** ****************************** Change password Api *********************************** */
-export const changePasswordDataApi = async (
-  requestUrl,
-  params
-
-) => {
+export const changePasswordDataApi = async (requestUrl, params) => {
   return fetch(`${hostConfig.API_URL}${requestUrl}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-
     },
     body: JSON.stringify(params),
   })
     .then(response => responseStatusHandler(response))
     .then(result =>
-      result.status_code === 200 || result.status_code === 201 || result.status_code === 400
+      result.status_code === 200 ||
+      result.status_code === 201 ||
+      result.status_code === 400
         ? result.json()
         : result,
     )
@@ -240,8 +241,7 @@ export const deleteDataByIdApi = async (requestUrl, id) =>
     });
 /** ****************************** View with query Api *********************************** */
 export const getListByApi = async (requestUrl, params) => {
-  let getParams = "?";
-
+  let getParams = '?';
 
   if (
     params &&
@@ -251,9 +251,6 @@ export const getListByApi = async (requestUrl, params) => {
   ) {
     getParams += `token=${params.token}`;
   }
-
-
-
 
   if (
     params &&
@@ -276,126 +273,127 @@ export const getListByApi = async (requestUrl, params) => {
   if (
     params &&
     params.action !== null &&
-    params.action !== "" &&
+    params.action !== '' &&
     params.action !== undefined
   ) {
     getParams += `&action=${params.action}`;
   }
 
-
   const fcm = await token();
   return fetch(`${hostConfig.API_URL}${requestUrl}${getParams}`, {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
       Token: fcm,
     },
   })
-    .then((response) => { return responseStatusHandler(response) })
-    .then((result) => {
+    .then(response => {
+      return responseStatusHandler(response);
+    })
+    .then(result => {
       if (!result.error) {
-        return result.json()
+        return result.json();
       } else {
-        return result
+        return result;
       }
-    }
-    )
-    .catch((error) => {
+    })
+    .catch(error => {
       errorHandler(error);
     });
 };
 
-
-
-export const getReq = (async (requestUrl) => {
+export const getReq = async requestUrl => {
   const fcm = await token();
 
   return fetch(`${hostConfig.API_URL}${requestUrl}`, {
     method: 'GET',
     headers: {
-      'Accept': 'application/json',
+      Accept: 'application/json',
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${fcm}`,
-
+      Authorization: `Bearer ${fcm}`,
     },
-
-  }).then((response) => { return responseStatusHandler(response) })
-    .then((result) => {
+  })
+    .then(response => {
+      return responseStatusHandler(response);
+    })
+    .then(result => {
       if (!result.error) {
-        return result.json()
+        return result.json();
       } else {
-        return result
+        return result;
       }
-    }
-    )
-    .catch((error) => {
+    })
+    .catch(error => {
       errorHandler(error);
     });
+};
 
-});
-
-export const getReqparam = (async (requestUrl, params) => {
+export const getReqparam = async (requestUrl, params) => {
   const fcm = await token();
 
   return fetch(`${hostConfig.API_URL}${requestUrl}${params}`, {
     method: 'GET',
     headers: {
-      'Accept': 'application/json',
+      Accept: 'application/json',
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${fcm}`,
-
+      Authorization: `Bearer ${fcm}`,
     },
-
-  }).then((response) => { return responseStatusHandler(response) })
-    .then((result) => {
+  })
+    .then(response => {
+      return responseStatusHandler(response);
+    })
+    .then(result => {
       if (!result.error) {
-        return result.json()
+        return result.json();
       } else {
-        return result
+        return result;
       }
-    }
-    )
-    .catch((error) => {
+    })
+    .catch(error => {
       errorHandler(error);
     });
-
-});
-export const getschemeTransactions = (async (requestUrl, userparams, schemeparams) => {
+};
+export const getschemeTransactions = async (
+  requestUrl,
+  userparams,
+  schemeparams,
+) => {
   const fcm = await token();
 
-  return fetch(`${hostConfig.API_URL}${requestUrl}${userparams}/${schemeparams}`, {
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${fcm}`,
-
+  return fetch(
+    `${hostConfig.API_URL}${requestUrl}${userparams}/${schemeparams}`,
+    {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${fcm}`,
+      },
     },
-
-  }).then((response) => { return responseStatusHandler(response) })
-    .then((result) => {
+  )
+    .then(response => {
+      return responseStatusHandler(response);
+    })
+    .then(result => {
       if (!result.error) {
-        return result.json()
+        return result.json();
       } else {
-        return result
+        return result;
       }
-    }
-    )
-    .catch((error) => {
+    })
+    .catch(error => {
       errorHandler(error);
     });
-
-});
+};
 export const postJoinChitApi = async (requestUrl, params) => {
   const fcm = await token();
   return fetch(`${hostConfig.API_URL}${requestUrl}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': `Bearer ${fcm}`,
-
+      Accept: 'application/json',
+      Authorization: `Bearer ${fcm}`,
     },
     body: JSON.stringify(params),
   })
@@ -414,42 +412,53 @@ export const postJoinChitApi = async (requestUrl, params) => {
     });
 };
 
-export const FilterTransactions = (async (requestUrl, userparams, startdate, enddate) => {
+export const FilterTransactions = async (
+  requestUrl,
+  userparams,
+  startdate,
+  enddate,
+) => {
   const fcm = await token();
 
-  return fetch(`${hostConfig.API_URL}${requestUrl}${userparams}?from_date=${startdate}&to_date=${enddate}`, {
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${fcm}`,
-
+  return fetch(
+    `${hostConfig.API_URL}${requestUrl}${userparams}?from_date=${startdate}&to_date=${enddate}`,
+    {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${fcm}`,
+      },
     },
-
-  }).then((response) => { return responseStatusHandler(response) })
-    .then((result) => {
+  )
+    .then(response => {
+      return responseStatusHandler(response);
+    })
+    .then(result => {
       if (!result.error) {
-        return result.json()
+        return result.json();
       } else {
-        return result
+        return result;
       }
-    }
-    )
-    .catch((error) => {
+    })
+    .catch(error => {
       errorHandler(error);
     });
-
-});
+};
 
 export const postApi = async (requestUrl, params) => {
   const fcm = await token();
-  console.log(`${hostConfig.API_URL}${requestUrl}`, params, "apiactionsssssssssssssssssssssssss")
+  console.log(
+    `${hostConfig.API_URL}${requestUrl}`,
+    params,
+    'apiactionsssssssssssssssssssssssss',
+  );
   return fetch(`${hostConfig.API_URL}${requestUrl}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': `Bearer ${fcm}`,
+      Accept: 'application/json',
+      Authorization: `Bearer ${fcm}`,
       cors: 'no-cors',
     },
     body: JSON.stringify(params),
@@ -468,4 +477,3 @@ export const postApi = async (requestUrl, params) => {
       errorHandler(err);
     });
 };
-

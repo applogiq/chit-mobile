@@ -15,9 +15,7 @@ const URL_CONSTANTS = {
   verifyOtp: 'api/v1/user-forgot-password',
   updateUser: 'api/v1/user/',
   createPayment: 'api/v1/payment',
-  verifyPayment: 'api/v1/payment-verification'
-
-
+  verifyPayment: 'api/v1/payment-verification',
 };
 
-export { URL_CONSTANTS };
+export {URL_CONSTANTS};

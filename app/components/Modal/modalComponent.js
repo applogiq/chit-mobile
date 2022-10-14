@@ -8,15 +8,24 @@ import {
   Modal,
   Pressable,
   useWindowDimensions,
-  Image, TouchableOpacity
+  Image,
+  TouchableOpacity,
 } from 'react-native';
 
 /**************************************** Import components ***********************************************************/
 
-import { IMAGES } from '../../common/images';
+import {IMAGES} from '../../common/images';
 
-const ModalComponent = ({ modalVisible, onmodalPress, textData1, action, textData2, textData3, textData4 }) => {
-  const { height, width } = useWindowDimensions();
+const ModalComponent = ({
+  modalVisible,
+  onmodalPress,
+  textData1,
+  action,
+  textData2,
+  textData3,
+  textData4,
+}) => {
+  const {height, width} = useWindowDimensions();
   //For responsiveness
   return (
     <Modal
@@ -32,23 +41,48 @@ const ModalComponent = ({ modalVisible, onmodalPress, textData1, action, textDat
           style={[
             styles.modalView,
             ,
-            { height: height * (30 / 100), width: width * (80 / 100) },
+            {height: height * (30 / 100), width: width * (80 / 100)},
           ]}>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={[styles.modalText, { color: "rgba(65, 39, 15, 0.7)", fontSize: 16 }]} >{textData1}</Text>
+          <View style={{flexDirection: 'row'}}>
+            <Text
+              style={[
+                styles.modalText,
+                {color: 'rgba(65, 39, 15, 0.7)', fontSize: 16},
+              ]}>
+              {textData1}
+            </Text>
             <Pressable onPress={onmodalPress}>
               <Image style={styles.icon} source={IMAGES.close_icon}></Image>
             </Pressable>
-
           </View>
-          <View style={{ height: "0.4%", width: "100%", backgroundColor: "grey", marginTop: "3%", marginBottom: "3%" }} ></View>
+          <View
+            style={{
+              height: '0.4%',
+              width: '100%',
+              backgroundColor: 'grey',
+              marginTop: '3%',
+              marginBottom: '3%',
+            }}></View>
           <View style={styles.textCenter}>
-            <Text style={[styles.modalText, { color: "rgba(65, 39, 15, 0.6)" }]}>{textData2}</Text>
-            <Text style={[styles.modalText, { color: "rgba(65, 39, 15, 0.6)" }]}>{textData3}</Text>
-            <Text style={[styles.modalText, { fontSize: 17 }]}>{textData4}</Text>
+            <Text style={[styles.modalText, {color: 'rgba(65, 39, 15, 0.6)'}]}>
+              {textData2}
+            </Text>
+            <Text style={[styles.modalText, {color: 'rgba(65, 39, 15, 0.6)'}]}>
+              {textData3}
+            </Text>
+            <Text style={[styles.modalText, {fontSize: 17}]}>{textData4}</Text>
           </View>
-          <TouchableOpacity onPress={action} style={{ height: height * (5 / 100), width: width * (70 / 100), backgroundColor: "rgba(213, 186, 143, 1)", borderRadius: 6, alignItems: "center", justifyContent: "center" }}>
-            <Text style={[styles.modalText, { color: "white" }]}>Confirm</Text>
+          <TouchableOpacity
+            onPress={action}
+            style={{
+              height: height * (5 / 100),
+              width: width * (70 / 100),
+              backgroundColor: 'rgba(213, 186, 143, 1)',
+              borderRadius: 6,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Text style={[styles.modalText, {color: 'white'}]}>Confirm</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -61,6 +95,7 @@ const styles = StyleSheet.create({
 
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.3);',
   },
   modalView: {
     backgroundColor: 'white',
@@ -74,7 +109,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-    padding: "5%"
+    padding: '5%',
   },
 
   modalText: {
@@ -85,7 +120,12 @@ const styles = StyleSheet.create({
     lineHeight: 21,
     marginBottom: 5,
   },
-  icon: { height: 15, width: 15, marginLeft: '55%' },
-  textCenter: { alignItems: 'center', justifyContent: 'center', flex: 1, marginTop: "-8%" },
+  icon: {height: 15, width: 15, marginLeft: '55%'},
+  textCenter: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    marginTop: '-8%',
+  },
 });
 export default ModalComponent;

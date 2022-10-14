@@ -2,8 +2,8 @@
 //Bottombar component will be nested here stacknavigator
 //We can add drawer navbar also if we need
 import React from 'react';
-import { ActivityIndicator, View } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {ActivityIndicator, View} from 'react-native';
+import {createStackNavigator} from '@react-navigation/stack';
 import LoginScreen from '../../screens/loginScreen';
 import ForgotPassword from '../../screens/forgotPassword';
 import ChangePassword from '../../screens/changePassword';
@@ -16,15 +16,11 @@ const Stack = createStackNavigator();
 
 const MainStackNavigator = props => {
   return (
-
-
-
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
       }}
       headerShown={false}>
-
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
       <Stack.Screen name="HomeScreen" component={BottomNavigator} />
 
@@ -35,7 +31,6 @@ const MainStackNavigator = props => {
 
       <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
     </Stack.Navigator>
-
   );
 };
 
