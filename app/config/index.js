@@ -2,7 +2,6 @@ const environmentList = [
   'http://192.168.29.234:6080/', //local       = 0
   'https://api-chit.applogiq.org/', // develop    = 1
   '', //production  = 2
-
 ];
 
 export const env = 1; // Place your environment number here

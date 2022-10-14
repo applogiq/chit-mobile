@@ -1,5 +1,5 @@
 /**************************************** Import Packages ***********************************************************/
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   View,
@@ -7,25 +7,26 @@ import {
   useWindowDimensions,
   Image,
   TouchableOpacity,
-  Pressable, Modal
+  Pressable,
+  Modal,
 } from 'react-native';
-import { useDispatch, useSelector, connect } from 'react-redux';
+import {useDispatch, useSelector, connect} from 'react-redux';
 /**************************************** Import components ***********************************************************/
-import { IMAGES } from '../../common/images';
+import {IMAGES} from '../../common/images';
 import InputField from '../../components/Input/inputComponent';
-import { changePasswordfunc } from "../../redux/actions";
+import {changePasswordfunc} from '../../redux/actions';
 import Button from '../../components/Button/buttonComponent';
 import OTPTextView from 'react-native-otp-textinput';
 import ModalComponent from '../../components/Modal/modalComponent';
-import { isValidPassword } from '../../utils/validator';
+import {isValidPassword} from '../../utils/validator';
 
-const ChangePassword = ({ navigation, route }) => {
-  const { id } = route.params;
-  const dispatch = useDispatch()
-  const [modalVisible, setModalVisible] = useState(false)
-  const [modalVisible2, setModalVisible2] = useState(false)
-  const [modalText, setModaltext] = useState("")
-  const { height, width } = useWindowDimensions();
+const ChangePassword = ({navigation, route}) => {
+  const {id} = route.params;
+  const dispatch = useDispatch();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible2, setModalVisible2] = useState(false);
+  const [modalText, setModaltext] = useState('');
+  const {height, width} = useWindowDimensions();
   //For responsiveness
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(true);
@@ -52,12 +53,10 @@ const ChangePassword = ({ navigation, route }) => {
     if (oldpassword !== '') {
       if (newpassword === confirmpassword) {
         if (isValidPassword(newpassword)) {
-
-          setModalVisible(!modalVisible)
-
+          setModalVisible(!modalVisible);
         } else {
           setError(
-            'PLease choose a password which contains atleast one capital,one lowercase letter and a special character',
+            'Please choose a password which contains atleast one capital,one lowercase letter and a special character',
           );
         }
       } else {
@@ -68,23 +67,25 @@ const ChangePassword = ({ navigation, route }) => {
     }
   };
   const handleModal = () => {
-    setModalVisible(!modalVisible)
+    setModalVisible(!modalVisible);
     navigation.navigate('HomeScreen');
-  }
+  };
   const handleModal2 = () => {
-    setModalVisible2(!modalVisible2)
+    setModalVisible2(!modalVisible2);
     navigation.navigate('HomeScreen');
-  }
+  };
   const onChagePassword = () => {
-    dispatch(changePasswordfunc({
-      "user_id": id,
-      "old_password": oldpassword,
-      "new_password": newpassword
-    })).then((resp) => {
-      console.log(resp, "change password ...............")
+    dispatch(
+      changePasswordfunc({
+        user_id: id,
+        old_password: oldpassword,
+        new_password: newpassword,
+      }),
+    ).then(resp => {
+      console.log(resp, 'change password ...............');
 
-      if (resp?.message == "password changed") {
-        setModaltext("Password updated successfully");
+      if (resp?.message == 'password changed') {
+        setModaltext('Password updated successfully');
         setModalVisible(!modalVisible);
         setModalVisible2(!modalVisible2);
         setOldpassword('');
@@ -93,14 +94,11 @@ const ChangePassword = ({ navigation, route }) => {
         setError('');
       } else {
         setModalVisible(!modalVisible);
-        setModaltext("Something went wrong");
+        setModaltext('Something went wrong');
         setModalVisible2(!modalVisible2);
-
       }
-
-
-    })
-  }
+    });
+  };
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -116,23 +114,23 @@ const ChangePassword = ({ navigation, route }) => {
             resizeMode="stretch"
             style={[
               styles.backIcon,
-              { height: height * (2 / 100), width: width * (2 / 100) },
+              {height: height * (2 / 100), width: width * (2 / 100)},
             ]}
             source={IMAGES.back_icon}></Image>
         </Pressable>
-        <Text style={[styles.headerText, { fontSize: font * 19 }]}>
+        <Text style={[styles.headerText, {fontSize: font * 19}]}>
           Change password
         </Text>
       </View>
 
-      <View style={{ marginTop: height * (1 / 100) }}>
+      <View style={{marginTop: height * (1 / 100)}}>
         <InputField
           showicon={true}
           parentCallback={handleInputoldpassword}
           placeholder={''}
           title={'Old password'}
           value={oldpassword}
-          maxchars={15}></InputField>
+          maxchars={25}></InputField>
         <InputField
           showicon={true}
           parentCallback={handleInputnewpassword}
@@ -150,12 +148,12 @@ const ChangePassword = ({ navigation, route }) => {
           maxchars={15}></InputField>
       </View>
       <Text style={styles.error}>{error}</Text>
-      <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+      <View style={{flex: 1, justifyContent: 'flex-end'}}>
         <Button
           enabled={
             newpassword.length > 4 &&
-              confirmpassword.length > 4 &&
-              oldpassword.length > 4
+            confirmpassword.length > 4 &&
+            oldpassword.length > 4
               ? true
               : false
           }
@@ -164,7 +162,7 @@ const ChangePassword = ({ navigation, route }) => {
           type={'large'}
           loading={loading}
           disabled={disabled}
-          parentstyles={{ marginTop: height * (4 / 100) }}></Button>
+          parentstyles={{marginTop: height * (4 / 100)}}></Button>
       </View>
       {/* <ModalComponent
         textData={modalText}
@@ -175,17 +173,14 @@ const ChangePassword = ({ navigation, route }) => {
         transparent={true}
         visible={modalVisible2}
         onRequestClose={() => {
-
           setModalVisible2(!modalVisible2);
-        }}
-      >
+        }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>{modalText}</Text>
             <Pressable
               style={[styles.button, styles.buttonClose]}
-              onPress={() => handleModal2()}
-            >
+              onPress={() => handleModal2()}>
               <Text style={styles.textStyle}>Ok</Text>
             </Pressable>
           </View>
@@ -193,10 +188,9 @@ const ChangePassword = ({ navigation, route }) => {
       </Modal>
       <ModalComponent
         action={() => onChagePassword()}
-        textData1={"Confirm Change Action"}
-
-        textData3={"Are you sure you want to"}
-        textData4={"Change Password?"}
+        textData1={'Confirm Change Action'}
+        textData3={'Are you sure you want to'}
+        textData4={'Change Password?'}
         modalVisible={modalVisible}
         onmodalPress={handleModal}></ModalComponent>
     </View>
@@ -209,7 +203,7 @@ const styles = StyleSheet.create({
     paddingLeft: 11,
     paddingRight: 11,
   },
-  headerContainer: { flexDirection: 'row', alignItems: 'center', marginTop: 40 },
+  headerContainer: {flexDirection: 'row', alignItems: 'center', marginTop: 40},
   backIcon: {},
   headerText: {
     fontFamily: 'SourceSansPro-SemiBold',
@@ -217,47 +211,47 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginLeft: '5%',
   },
-  error: { fontSize: 12, color: 'red' },
+  error: {fontSize: 12, color: 'red'},
   centeredView: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.3);',
   },
   modalView: {
     margin: 20,
-    backgroundColor: "white",
+    backgroundColor: 'white',
     borderRadius: 20,
     padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
+    alignItems: 'center',
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5
+    elevation: 5,
   },
   button: {
     borderRadius: 20,
     padding: 10,
-    elevation: 2
+    elevation: 2,
   },
   buttonOpen: {
-    backgroundColor: "#F194FF",
+    backgroundColor: '#F194FF',
   },
   buttonClose: {
-    backgroundColor: "rgba(213, 186, 143, 1)",
+    backgroundColor: 'rgba(213, 186, 143, 1)',
   },
   textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center"
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   modalText: {
     marginBottom: 15,
-    textAlign: "center"
-  }
+    textAlign: 'center',
+  },
 });
 export default ChangePassword;

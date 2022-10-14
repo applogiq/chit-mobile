@@ -1,27 +1,29 @@
 /**************************************** Import Packages ***********************************************************/
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Text,
   View,
   StyleSheet,
   useWindowDimensions,
   Image,
-  TouchableOpacity, Modal, Pressable
+  TouchableOpacity,
+  Modal,
+  Pressable,
 } from 'react-native';
-import { useDispatch, useSelector, connect } from 'react-redux';
+import {useDispatch, useSelector, connect} from 'react-redux';
 /**************************************** Import components ***********************************************************/
-import { IMAGES } from '../../common/images';
-import { PostOtp } from '../../redux/actions';
-import { verifyOtpfunc } from '../../redux/actions';
+import {IMAGES} from '../../common/images';
+import {PostOtp} from '../../redux/actions';
+import {verifyOtpfunc} from '../../redux/actions';
 import ModalComponent from '../../components/Modal/modalComponent';
 import InputField from '../../components/Input/inputComponent';
 import Button from '../../components/Button/buttonComponent';
 import OTPTextView from 'react-native-otp-textinput';
-import { isValidPassword } from '../../utils/validator';
+import {isValidPassword} from '../../utils/validator';
 
 const ForgotPassword = props => {
-  const dispatch = useDispatch()
-  const { height, width } = useWindowDimensions();
+  const dispatch = useDispatch();
+  const {height, width} = useWindowDimensions();
   //for responsiveness
   const [screen, setScreen] = useState('initial');
   const [loading, setLoading] = useState(false);
@@ -31,8 +33,8 @@ const ForgotPassword = props => {
   const [otploading, setOtploading] = useState(false);
   const [otpdisabled, setOtpdisabled] = useState(true);
   const [userotp, setUserotp] = useState('');
-  const [modalVisible, setModalvisible] = useState(false)
-  const [modaltext, setModaltext] = useState("")
+  const [modalVisible, setModalvisible] = useState(false);
+  const [modaltext, setModaltext] = useState('');
   const [resetloading, setResetloading] = useState(false);
   const [resetdisabled, setResetDisabled] = useState(true);
   const [resetpassword, setResetpassword] = useState('');
@@ -59,14 +61,14 @@ const ForgotPassword = props => {
     setResetcpassword(childData);
   };
   const ongpostOtp = () => {
-    dispatch(PostOtp({
-
-      "mobile_number": userphone
-    })).then((resp) => {
-      console.log(resp, "otp uscscscscssc")
+    dispatch(
+      PostOtp({
+        mobile_number: userphone,
+      }),
+    ).then(resp => {
+      console.log(resp, 'otp uscscscscssc');
       setScreen('otp');
-    })
-
+    });
   };
   const onChangepassword = () => {
     setScreen('reset password');
@@ -74,25 +76,28 @@ const ForgotPassword = props => {
   const onresetpassword = () => {
     if (resetcpassword === resetpassword) {
       if (isValidPassword(resetpassword)) {
-        console.log({
-          "mobile_number": userphone,
-          "otp": userotp,
-          "password": resetpassword
-        }, "objjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj")
-        dispatch(verifyOtpfunc({
-          "mobile_number": userphone,
-          "otp": userotp,
-          "password": resetpassword
-        })).then((resp) => {
+        console.log(
+          {
+            mobile_number: userphone,
+            otp: userotp,
+            password: resetpassword,
+          },
+          'objjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj',
+        );
+        dispatch(
+          verifyOtpfunc({
+            mobile_number: userphone,
+            otp: userotp,
+            password: resetpassword,
+          }),
+        ).then(resp => {
           if (resp.success) {
-            setModaltext("Password changed successfully")
-            setModalvisible(!modalVisible)
+            setModaltext('Password changed successfully');
+            setModalvisible(!modalVisible);
           } else {
-            setModaltext("Something went wrong")
-            setModalvisible(!modalVisible)
+            setModaltext('Something went wrong');
+            setModalvisible(!modalVisible);
           }
-
-
 
           setScreen('initial');
           setUserphone('');
@@ -100,8 +105,7 @@ const ForgotPassword = props => {
           setResetpassword('');
           setResetcpassword('');
           setReseterror('');
-        })
-
+        });
       } else {
         setReseterror(
           'PLease choose a password which contains atleast one capital,one lowercase letter and a special character',
@@ -113,42 +117,69 @@ const ForgotPassword = props => {
   };
   const OnBackpress = () => {
     props.navigation.navigate('LoginScreen');
-  }
-
+  };
 
   const handleModal = () => {
-    setModalvisible(!modalVisible)
+    setModalvisible(!modalVisible);
     props.navigation.navigate('LoginScreen');
-  }
+  };
 
+  const [minutes, setMinutes] = useState(2);
+  const [seconds, setSeconds] = useState(0);
+  useEffect(() => {
+    let myInterval = setInterval(() => {
+      if (seconds > 0) {
+        setSeconds(seconds - 1);
+      }
+      if (seconds === 0) {
+        if (minutes === 0) {
+          clearInterval(myInterval);
+        } else {
+          setMinutes(minutes - 1);
+          setSeconds(59);
+        }
+      }
+    }, 1000);
 
+    return () => {
+      clearInterval(myInterval);
+    };
+  });
+
+  console.log(minutes, seconds);
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <TouchableOpacity style={{ height: height * (3.5 / 100), width: width * (3.5 / 100), marginTop: height * (1.5 / 100) }} onPress={() => OnBackpress()}>
+        <TouchableOpacity
+          style={{
+            height: height * (3.5 / 100),
+            width: width * (3.5 / 100),
+            marginTop: height * (1.5 / 100),
+          }}
+          onPress={() => OnBackpress()}>
           <Image
             resizeMode="stretch"
             style={[
               styles.backIcon,
-              { height: height * (2 / 100), width: width * (2 / 100) },
+              {height: height * (2 / 100), width: width * (2 / 100)},
             ]}
             source={IMAGES.back_icon}></Image>
         </TouchableOpacity>
-        <Text style={[styles.headerText, { fontSize: font * 22 }]}>
+        <Text style={[styles.headerText, {fontSize: font * 22}]}>
           {screen == 'initial'
             ? 'Forgot Password'
             : screen == 'otp'
-              ? 'Forgot Password'
-              : 'Reset Password'}
+            ? 'Forgot Password'
+            : 'Reset Password'}
         </Text>
       </View>
       <View style={styles.subTextcontainer}>
-        <Text style={[styles.subText, { fontSize: font * 13 }]}>
+        <Text style={[styles.subText, {fontSize: font * 13}]}>
           {screen == 'initial'
             ? descriptionone
             : screen == 'otp'
-              ? descriptiontwo
-              : descriptionthree}
+            ? descriptiontwo
+            : descriptionthree}
         </Text>
       </View>
       {screen == 'otp' ? (
@@ -170,7 +201,7 @@ const ForgotPassword = props => {
         </View>
       ) : null}
       {screen == 'initial' ? (
-        <View style={{ marginTop: height * (1 / 100) }}>
+        <View style={{marginTop: height * (1 / 100)}}>
           <InputField
             loading={loading}
             parentCallback={handleInputphone}
@@ -184,7 +215,7 @@ const ForgotPassword = props => {
       ) : null}
 
       {screen == 'reset password' ? (
-        <View style={{ marginTop: height * (1 / 100) }}>
+        <View style={{marginTop: height * (1 / 100)}}>
           <InputField
             parentCallback={handleInputpassword}
             placeholder={''}
@@ -201,7 +232,7 @@ const ForgotPassword = props => {
         </View>
       ) : null}
 
-      <View style={{ marginTop: height * (1 / 100) }}>
+      <View style={{marginTop: height * (1 / 100)}}>
         {screen == 'initial' ? (
           <Button
             enabled={userphone.length == 10 ? true : false}
@@ -210,16 +241,40 @@ const ForgotPassword = props => {
             type={'large'}
             loading={loading}
             disabled={disabled}
-            parentstyles={{ marginTop: height * (4 / 100) }}></Button>
+            parentstyles={{marginTop: height * (4 / 100)}}></Button>
         ) : screen == 'otp' ? (
-          <Button
-            enabled={userotp.length == 6 ? true : false}
-            onpressparam={onChangepassword}
-            title={'Change password'}
-            type={'large'}
-            loading={otploading}
-            disabled={otpdisabled}
-            parentstyles={{ marginTop: height * (4 / 100) }}></Button>
+          <View>
+            <Button
+              enabled={userotp.length == 6 ? true : false}
+              onpressparam={onChangepassword}
+              title={'Change password'}
+              type={'large'}
+              loading={otploading}
+              disabled={otpdisabled}
+              parentstyles={{marginTop: height * (4 / 100)}}></Button>
+            <Text
+              style={{
+                alignSelf: 'center',
+                marginTop: 15,
+                color: 'rgba(65, 39, 15, 0.8)',
+              }}>
+              OTP will expire in {minutes + ':' + seconds}
+            </Text>
+            <TouchableOpacity
+              onPress={() => {
+                setScreen('initial');
+                setMinutes(2);
+                setSeconds(0);
+              }}
+              style={{alignSelf: 'center', marginTop: 15}}>
+              <Text
+                style={{
+                  color: 'rgba(65, 39, 15, 0.8)',
+                }}>
+                Resend OTP
+              </Text>
+            </TouchableOpacity>
+          </View>
         ) : (
           <Button
             enabled={
@@ -232,7 +287,7 @@ const ForgotPassword = props => {
             type={'large'}
             loading={resetloading}
             disabled={resetdisabled}
-            parentstyles={{ marginTop: height * (4 / 100) }}></Button>
+            parentstyles={{marginTop: height * (4 / 100)}}></Button>
         )}
       </View>
       {/* <ModalComponent
@@ -244,17 +299,14 @@ const ForgotPassword = props => {
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
-
           setModalvisible(!modalVisible);
-        }}
-      >
+        }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>{modaltext}</Text>
             <Pressable
               style={[styles.button, styles.buttonClose]}
-              onPress={() => handleModal()}
-            >
+              onPress={() => handleModal()}>
               <Text style={styles.textStyle}>Ok</Text>
             </Pressable>
           </View>
@@ -270,7 +322,7 @@ const styles = StyleSheet.create({
     paddingLeft: 11,
     paddingRight: 11,
   },
-  headerContainer: { flexDirection: 'row', alignItems: 'center', marginTop: 20 },
+  headerContainer: {flexDirection: 'row', alignItems: 'center', marginTop: 20},
   backIcon: {},
   headerText: {
     fontFamily: 'SourceSansPro-SemiBold',
@@ -278,7 +330,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginLeft: '5%',
   },
-  subTextcontainer: { marginTop: '4%' },
+  subTextcontainer: {marginTop: '4%'},
   subText: {
     fontFamily: 'SourceSansPro-SemiBold',
     color: 'rgba(65, 39, 15, 0.8)',
@@ -291,44 +343,44 @@ const styles = StyleSheet.create({
   },
   centeredView: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.3);',
   },
   modalView: {
     margin: 20,
-    backgroundColor: "white",
+    backgroundColor: 'white',
     borderRadius: 20,
     padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
+    alignItems: 'center',
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5
+    elevation: 5,
   },
   button: {
     borderRadius: 20,
     padding: 10,
-    elevation: 2
+    elevation: 2,
   },
   buttonOpen: {
-    backgroundColor: "#F194FF",
+    backgroundColor: '#F194FF',
   },
   buttonClose: {
-    backgroundColor: "rgba(213, 186, 143, 1)",
+    backgroundColor: 'rgba(213, 186, 143, 1)',
   },
   textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center"
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   modalText: {
     marginBottom: 15,
-    textAlign: "center"
-  }
+    textAlign: 'center',
+  },
 });
 export default ForgotPassword;

@@ -19,18 +19,19 @@ const CalendarComponent = ({ start, end, setdates, handlemodal }) => {
 
             const newdate = new Date(date)
             const endyear = newdate.getFullYear()
-            const endmonth = newdate.getMonth()
+            const endmonth = newdate.getMonth() + 1
             const endday = newdate.getDate()
 
-            setSelectedEndDate(endday + "/" + endmonth + "/" + endyear);
+            setSelectedEndDate(endyear + "-" + endmonth + "-" + endday)
+
         } else if ((type === 'START_DATE' && date != null)) {
 
             const newdate = new Date(date)
             const startyear = newdate.getFullYear()
-            const startmonth = newdate.getMonth()
+            const startmonth = newdate.getMonth() + 1
             const startday = newdate.getDate()
 
-            setSelectedStartDate(startday + "/" + startmonth + "/" + startyear);
+            setSelectedStartDate(startyear + "-" + startmonth + "-" + startday)
 
         }
     };

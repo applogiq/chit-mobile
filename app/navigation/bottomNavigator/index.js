@@ -10,19 +10,19 @@ import {
   Platform,
   useWindowDimensions,
 } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '../../screens/homeScreen';
 import ChitsScreen from '../../screens/chitsScreen';
 import Transactions from '../../screens/transactionsScreen';
 import ProfileScreen from '../../screens/profileScreen';
 import loginScreen from '../../screens/loginScreen';
-import { IMAGES } from '../../common/images';
+import {IMAGES} from '../../common/images';
 
 const Tab = createBottomTabNavigator();
 //Assign createBottomTabNavigator to a variable to use it simply
 
 const BottomNavigator = () => {
-  const { height, width } = useWindowDimensions();
+  const {height, width} = useWindowDimensions();
   //for responsiveness
   const font = useWindowDimensions().fontScale;
   //for responsive text sizes
@@ -32,7 +32,7 @@ const BottomNavigator = () => {
     <>
       <Tab.Navigator
         options={{}}
-        screenOptions={({ route }) => ({
+        screenOptions={({route}) => ({
           headerShown: false,
           tabBarStyle: {
             shadowOffset: {
@@ -54,8 +54,9 @@ const BottomNavigator = () => {
             zIndex: 0,
             borderTopLeftRadius: height * (3 / 100),
             borderTopRightRadius: height * (3 / 100),
+            paddingTop: height * (3 / 100),
           },
-          tabBarIcon: ({ focused, color, size }) => {
+          tabBarIcon: ({focused, color, size}) => {
             let iconName;
             let Type;
             let Size;
@@ -66,19 +67,24 @@ const BottomNavigator = () => {
                   style={{
                     alignItems: 'center',
                     marginLeft: width * (-8 / 100),
+                    marginTop: 0,
                   }}>
                   <Image
                     resizeMode={'contain'}
                     source={focused ? IMAGES.home_color : IMAGES.home}
                     style={{
-                      width: height * (2.5 / 100),
-                      height: height * (2.5 / 100),
+                      width: focused
+                        ? height * (3.5 / 100)
+                        : height * (2.8 / 100),
+                      height: focused
+                        ? height * (3.5 / 100)
+                        : height * (2.8 / 100),
                     }}
                   />
                   <Text
                     style={[
                       focused ? styles.colorText : styles.text,
-                      { fontSize: font * 12 },
+                      {fontSize: font * 12},
                     ]}>
                     {title ? 'Home' : 'Home'}
                   </Text>
@@ -90,20 +96,24 @@ const BottomNavigator = () => {
                   style={{
                     alignItems: 'center',
                     marginLeft: width * (-7 / 100),
+                    marginTop: 0,
                   }}>
                   <Image
                     resizeMode={'contain'}
                     source={focused ? IMAGES.chits_color : IMAGES.chits}
                     style={{
-                      width: height * (3 / 100),
-                      height: height * (3 / 100),
-                      marginTop: height * (0.5 / 100),
+                      width: focused
+                        ? height * (4 / 100)
+                        : height * (2.8 / 100),
+                      height: focused
+                        ? height * (4 / 100)
+                        : height * (2.8 / 100),
                     }}
                   />
                   <Text
                     style={[
                       focused ? styles.colorText : styles.text,
-                      { marginTop: height * (-0.5 / 100), fontSize: font * 12 },
+                      {fontSize: font * 12, marginTop: height * (-0.2 / 100)},
                     ]}>
                     {title ? 'Chits' : 'Chits'}
                   </Text>
@@ -115,22 +125,29 @@ const BottomNavigator = () => {
                 (iconName = focused ? 'heart' : 'heart');
               return (
                 <View
-                  style={{ alignItems: 'center', marginLeft: width * (2 / 100) }}>
+                  style={{
+                    alignItems: 'center',
+                    marginLeft: width * (2 / 100),
+                    marginTop: 0,
+                  }}>
                   <Image
                     resizeMode={'contain'}
                     source={
                       focused ? IMAGES.transactions_color : IMAGES.transactions
                     }
                     style={{
-                      width: height * (2.5 / 100),
-                      height: height * (2.5 / 100),
-                      marginTop: height * (1 / 100),
+                      width: focused
+                        ? height * (3.5 / 100)
+                        : height * (2.8 / 100),
+                      height: focused
+                        ? height * (3.5 / 100)
+                        : height * (2.8 / 100),
                     }}
                   />
                   <Text
                     style={[
                       focused ? styles.colorText : styles.text,
-                      { marginTop: height * (-0.5 / 100), fontSize: font * 12 },
+                      {fontSize: font * 12},
                     ]}>
                     {title ? 'Transactions' : 'Transactions'}
                   </Text>
@@ -142,20 +159,24 @@ const BottomNavigator = () => {
                   style={{
                     alignItems: 'center',
                     marginLeft: width * (10 / 100),
+                    marginTop: 0,
                   }}>
                   <Image
                     resizeMode={'contain'}
                     source={focused ? IMAGES.profile_color : IMAGES.profile}
                     style={{
-                      width: height * (2.5 / 100),
-                      height: height * (2.5 / 100),
-                      marginTop: height * (1 / 100),
+                      width: focused
+                        ? height * (3.5 / 100)
+                        : height * (2.8 / 100),
+                      height: focused
+                        ? height * (3.5 / 100)
+                        : height * (2.8 / 100),
                     }}
                   />
                   <Text
                     style={[
                       focused ? styles.colorText : styles.text,
-                      { fontSize: font * 12 },
+                      {fontSize: font * 12},
                     ]}>
                     {title ? 'Profile' : 'Profile'}
                   </Text>
@@ -167,23 +188,22 @@ const BottomNavigator = () => {
           tabBarInactiveTintColor: 'grey',
         })}
         initialRouteName="Home">
-        <Tab.Screen name="Home" component={HomeScreen} options={{ title: '' }} />
+        <Tab.Screen name="Home" component={HomeScreen} options={{title: ''}} />
         <Tab.Screen
           name="Chits"
           component={ChitsScreen}
-          options={{ title: '' }}
+          options={{title: ''}}
         />
         <Tab.Screen
           name="Transactions"
           component={Transactions}
-          options={{ title: '' }}
+          options={{title: ''}}
         />
         <Tab.Screen
           name="Profile"
           component={ProfileScreen}
-          options={{ title: '' }}
+          options={{title: ''}}
         />
-
       </Tab.Navigator>
     </>
   );

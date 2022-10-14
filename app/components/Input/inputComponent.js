@@ -28,6 +28,7 @@ const InputField = ({
   parentstyles,
   loading,
   inputtype,
+
 }) => {
   const { height, width } = useWindowDimensions();
   const [pressed, setPressed] = useState(showicon ? false : true);

@@ -1,6 +1,6 @@
 //Login screen of the the application
 /**************************************** Import Packages ***********************************************************/
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Text,
   View,
@@ -9,21 +9,27 @@ import {
   ImageBackground,
   ScrollView,
   TouchableOpacity,
-  Modal, ActivityIndicator, Pressable
+  Modal,
+  ActivityIndicator,
+  Pressable,
+  RefreshControl,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
 /**************************************** Import components ***********************************************************/
 import Button from '../../components/Button/buttonComponent';
 import InputField from '../../components/Input/inputComponent';
-import { IMAGES } from '../../common/images';
+import {IMAGES} from '../../common/images';
 import ModalComponent from '../../components/Modal/modalComponent';
-import { LoginUser } from '../../redux/actions';
-import { connect, useSelector } from 'react-redux';
+import {LoginUser} from '../../redux/actions';
+import {updateStates} from '../../redux/actions';
+import {connect, useSelector, useDispatch} from 'react-redux';
 /**************************************** Import common files ***********************************************************/
-import { isEmpty, isValidEmail, isValidPassword } from '../../utils/validator';
+import {isEmpty, isValidEmail, isValidPassword} from '../../utils/validator';
 
-const image = { uri: '' };
+const image = {uri: ''};
 const LoginScreen = props => {
+  const dispatch = useDispatch();
 
   const [useridentity, setUseridentity] = useState('');
   const [userpassword, setUserpassword] = useState('');
@@ -37,7 +43,7 @@ const LoginScreen = props => {
 
   const [modalVisible, setModalvisible] = useState(false);
 
-  const { height, width } = useWindowDimensions();
+  const {height, width} = useWindowDimensions();
 
   const font = useWindowDimensions().fontScale;
   //Get fontscale from and use it to resize fonts
@@ -58,7 +64,7 @@ const LoginScreen = props => {
     setDisabled(true);
 
     setModalvisible(false);
-    setLoader(false)
+    setLoader(false);
   };
 
   const doLoginValidation = () => {
@@ -88,58 +94,63 @@ const LoginScreen = props => {
   };
 
   const onloginPress = () => {
-
     if (doLoginValidation()) {
-      setLoading(true)
-      setLoader(true)
-      props.LoginUser(
-
-        {
-          "email_id": useridentity,
-          "password": userpassword
-        }
-      ).then(response => {
-
-
-        if (response.message == "user logged in") {
-
-          props.navigation.navigate('HomeScreen');
-
-        } else {
-          setModaltext("Please enter valid login credentials")
-          setModalvisible(!modalVisible)
-        }
-
-
-      }
-
-      )
-
-
-
+      setLoading(true);
+      setLoader(true);
+      props
+        .LoginUser({
+          email_id: useridentity,
+          password: userpassword,
+        })
+        .then(response => {
+          if (response.message == 'user logged in') {
+            setModaltext('Successfully logged in to your account');
+            setModalvisible(!modalVisible);
+            setTimeout(() => {
+              setModalvisible(!modalVisible);
+              props.navigation.navigate('HomeScreen');
+            }, 1500);
+          } else {
+            setModaltext('Please enter valid login credentials');
+            setModalvisible(!modalVisible);
+          }
+        });
 
       resetStates();
     }
-
   };
   const handleModal = () => {
     setModalvisible(!modalVisible);
   };
   useEffect(() => {
     AsyncStorage.getItem('@token').then(result => {
-
       const loggedUser = JSON.parse(result);
-      if (loggedUser.token.access_token != undefined || loggedUser.token.access_token != null) {
-        props.navigation.navigate('HomeScreen')
+      if (
+        loggedUser.token.access_token != undefined ||
+        loggedUser.token.access_token != null
+      ) {
+        props.navigation.navigate('HomeScreen');
       }
-
-
     });
-  }, [])
+  }, []);
+  const showToast = () => {
+    Toast.show({
+      type: 'success',
+      text1: 'Login Success',
+      text2: 'You have successfully logged in to your account',
+    });
+  };
+
+  const wait = timeout => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  };
+  const onRefresh = React.useCallback(() => {
+    dispatch(updateStates(true));
+    wait(2000).then(() => dispatch(updateStates(false)));
+  }, []);
   return (
     <ScrollView style={[styles.container]}>
-      <View style={{ height: height, width: width }}>
-
+      <View style={{height: height, width: width}}>
         <ImageBackground
           source={IMAGES.login_background}
           resizeMode="cover"
@@ -152,26 +163,26 @@ const LoginScreen = props => {
               paddingRight: width * (3 / 100),
             },
           ]}>
-
           <View
-            style={[styles.titleContainer, { marginTop: height * (35 / 100) }]}>
+            style={[styles.titleContainer, {marginTop: height * (35 / 100)}]}>
             <Text
               style={[
                 styles.titleText,
-                { fontSize: font * 24, lineHeight: font * 21 },
+                {fontSize: font * 24, lineHeight: font * 21},
               ]}>
               Hello,
             </Text>
             <Text
               style={[
                 styles.titleText,
-                { fontSize: font * 24, lineHeight: font * 21, marginTop: "3%" },
+                {fontSize: font * 24, lineHeight: font * 21, marginTop: '3%'},
               ]}>
               Welcome to Luxury
             </Text>
           </View>
-          <View style={{ marginTop: height * (5 / 100) }}>
+          <View style={{marginTop: height * (5 / 100)}}>
             <InputField
+              data-testid={'email'}
               loading={loading}
               parentCallback={handleInputidentity}
               placeholder={''}
@@ -180,6 +191,7 @@ const LoginScreen = props => {
               errormessage={identityerror}
               maxchars={35}></InputField>
             <InputField
+              data-testid={'password'}
               loading={loading}
               parentCallback={handleInputpassword}
               placeholder={''}
@@ -189,26 +201,28 @@ const LoginScreen = props => {
               errormessage={passworderror}
               maxchars={25}></InputField>
           </View>
-          <View style={{ alignSelf: 'flex-end', marginTop: height * (1 / 100) }}>
+          <View style={{alignSelf: 'flex-end', marginTop: height * (1 / 100)}}>
             <TouchableOpacity
               onPress={() => props.navigation.navigate('ForgotPassword')}>
               <Text
                 style={[
                   styles.forgotText,
-                  { fontSize: font * 11, lineHeight: font * 10 },
+                  {fontSize: font * 11, lineHeight: font * 10},
                 ]}>
                 Forgot Password?
               </Text>
             </TouchableOpacity>
           </View>
+
           <Button
+            data-testid={'login'}
             enabled={useridentity != '' && userpassword != '' ? true : false}
             onpressparam={onloginPress}
             title={'Sign In'}
             type={'large'}
             loading={loading}
             disabled={disabled}
-            parentstyles={{ marginTop: height * (4 / 100) }}></Button>
+            parentstyles={{marginTop: height * (4 / 100)}}></Button>
         </ImageBackground>
       </View>
 
@@ -217,23 +231,19 @@ const LoginScreen = props => {
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
-
           setModalvisible(!modalVisible);
-        }}
-      >
+        }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>{modaltext}</Text>
             <Pressable
               style={[styles.button, styles.buttonClose]}
-              onPress={() => handleModal()}
-            >
+              onPress={() => handleModal()}>
               <Text style={styles.textStyle}>Ok</Text>
             </Pressable>
           </View>
         </View>
       </Modal>
-
     </ScrollView>
   );
 };
@@ -252,53 +262,52 @@ const styles = StyleSheet.create({
     color: 'rgba(65, 39, 15, 0.8)',
   },
   titleContainer: {},
-  loader: { flex: 1, alignItems: "center", justifyContent: "center" },
-  loadContainer: { alignItems: "center", justifyContent: "center", flex: 1 },
+  loader: {flex: 1, alignItems: 'center', justifyContent: 'center'},
+  loadContainer: {alignItems: 'center', justifyContent: 'center', flex: 1},
   centeredView: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    backgroundColor: 'rgba(0, 0, 0, 0.3);',
   },
   modalView: {
     margin: 20,
-    backgroundColor: "white",
+    backgroundColor: 'white',
     borderRadius: 20,
     padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
+    alignItems: 'center',
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5
+    elevation: 5,
   },
   button: {
     borderRadius: 20,
     padding: 10,
-    elevation: 2
+    elevation: 2,
   },
   buttonOpen: {
-    backgroundColor: "#F194FF",
+    backgroundColor: '#F194FF',
   },
   buttonClose: {
-    backgroundColor: "rgba(213, 186, 143, 1)",
+    backgroundColor: 'rgba(213, 186, 143, 1)',
   },
   textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center"
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   modalText: {
     marginBottom: 15,
-    textAlign: "center"
-  }
+    textAlign: 'center',
+  },
 });
-const mapStateToProps = state => ({
-
-});
+const mapStateToProps = state => ({});
 const mapDispatchToProps = dispatch => ({
   LoginUser: data => dispatch(LoginUser(data)),
 });
