@@ -33,7 +33,6 @@ const YourchitsCard = ({data, onClick}) => {
       style={[
         styles.container,
         {
-          height: height * (20 / 100),
           width: width * (70 / 100),
           marginBottom: '3%',
         },

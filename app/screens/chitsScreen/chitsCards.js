@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import {JoinChit} from '../../redux/actions';
 import {useDispatch, useSelector, connect} from 'react-redux';
+import {updateStates} from '../../redux/actions';
 /**************************************** Import components ***********************************************************/
 import getLocalchits from '../../hooks/getfromLocalchits';
 
@@ -30,7 +31,7 @@ const MychitsCard = ({
   setrequested,
 }) => {
   const [middle, setmiddle] = useState(true);
-
+  const dispatch = useDispatch();
   const {height, width} = useWindowDimensions();
   //for responsiveness
 
@@ -43,11 +44,19 @@ const MychitsCard = ({
   const OnClick = () => {
     onpress(data);
   };
-
+  const wait = timeout => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  };
+  const onRefresh = React.useCallback(() => {
+    dispatch(updateStates(true));
+    wait(2000).then(() => dispatch(updateStates(false)));
+  }, []);
   const onJoin = () => {
     setData(data?.id, idx, data?.name, setter);
     setrequested(data?.id);
+    onRefresh();
   };
+
   const setter = () => {
     setmiddle(!middle);
   };
@@ -139,18 +148,11 @@ const MychitsCard = ({
               </TouchableOpacity>
             ) : (
               <View>
-                {requested.includes(data?.id) ? (
-                  <TouchableOpacity
-                    style={[styles.buttonView, {width: width * (70 / 100)}]}>
-                    <Text style={styles.buttonTitle}>Requested</Text>
-                  </TouchableOpacity>
-                ) : (
-                  <TouchableOpacity
-                    onPress={() => onJoin()}
-                    style={[styles.buttonView, {width: width * (70 / 100)}]}>
-                    <Text style={styles.buttonTitle}>Join Now</Text>
-                  </TouchableOpacity>
-                )}
+                <TouchableOpacity
+                  onPress={() => onJoin()}
+                  style={[styles.buttonView, {width: width * (70 / 100)}]}>
+                  <Text style={styles.buttonTitle}>Join Now</Text>
+                </TouchableOpacity>
               </View>
             )}
           </View>

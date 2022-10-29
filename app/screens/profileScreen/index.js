@@ -273,7 +273,7 @@ const ProfileScreen = props => {
           justifyContent: 'center',
         }}>
         <Image
-          resizeMode="contain"
+          resizeMode="cover"
           source={{
             uri:
               filePath == ''
@@ -293,7 +293,7 @@ const ProfileScreen = props => {
               width: 25,
               marginTop: '-4%',
               marginLeft: '20%',
-              borderRadius: 10,
+              borderRadius: 25,
             }}></Image>
         </Pressable>
       </View>
@@ -396,7 +396,7 @@ const ProfileScreen = props => {
         </View>
       </View>
 
-      <View style={{height: '7.5%', marginTop: '12%', alignItems: 'center'}}>
+      <View style={{height: '7.5%', marginTop: '10%', alignItems: 'center'}}>
         <View style={styles.detailsCard}>
           <TouchableOpacity onPress={() => onLogout()}>
             <View
@@ -446,7 +446,6 @@ const ProfileScreen = props => {
       <ModalComponent
         action={() => handleLogout()}
         textData1={'Confirm Logout Action'}
-        textData2={'You will loose unsaved data'}
         textData3={'Are you sure you want to'}
         textData4={'Logout?'}
         modalVisible={modalVisible}
@@ -535,10 +534,9 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   image: {
-    height: '80%',
-    width: '35%',
+    height: '75%',
+    width: '30%',
     borderRadius: 100,
-    resizeMode: 'contain',
   },
   tableTitles: {
     fontFamily: 'SourceSansPro-SemiBold',

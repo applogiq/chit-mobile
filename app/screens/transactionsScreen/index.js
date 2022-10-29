@@ -166,11 +166,7 @@ const Transactions = () => {
           setModalVisible(!modalVisible);
         }}>
         <View style={styles.centeredView}>
-          <View
-            style={[
-              styles.modalView,
-              {height: height * (64 / 100), width: width * (92 / 100)},
-            ]}>
+          <View style={[styles.modalView, {width: width * (92 / 100)}]}>
             <View
               style={{
                 flexDirection: 'row',
