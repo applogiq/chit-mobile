@@ -252,21 +252,42 @@ const ForgotPassword = props => {
               loading={otploading}
               disabled={otpdisabled}
               parentstyles={{marginTop: height * (4 / 100)}}></Button>
-            <Text
-              style={{
-                alignSelf: 'center',
-                marginTop: 15,
-                color: 'rgba(65, 39, 15, 0.8)',
-              }}>
-              OTP will expire in {minutes + ':' + seconds}
-            </Text>
+            {minutes + ':' + seconds == '0:0' ? (
+              <Text
+                style={{
+                  alignSelf: 'center',
+                  marginTop: 15,
+                  color: 'rgba(65, 39, 15, 0.8)',
+                }}>
+                OTP has expired
+              </Text>
+            ) : (
+              <Text
+                style={{
+                  alignSelf: 'center',
+                  marginTop: 15,
+                  color: 'rgba(65, 39, 15, 0.8)',
+                }}>
+                OTP will expire in {minutes + ':' + seconds}
+              </Text>
+            )}
+
             <TouchableOpacity
               onPress={() => {
                 setScreen('initial');
                 setMinutes(2);
                 setSeconds(0);
               }}
-              style={{alignSelf: 'center', marginTop: 15}}>
+              style={{
+                alignSelf: 'center',
+                marginTop: 15,
+                backgroundColor: '#E3D2B7',
+                height: '15%',
+                width: '25%',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: 5,
+              }}>
               <Text
                 style={{
                   color: 'rgba(65, 39, 15, 0.8)',
@@ -332,7 +353,7 @@ const styles = StyleSheet.create({
   },
   subTextcontainer: {marginTop: '4%'},
   subText: {
-    fontFamily: 'SourceSansPro-SemiBold',
+    fontFamily: 'SourceSansPro-Regular',
     color: 'rgba(65, 39, 15, 0.8)',
   },
   otpTitle: {

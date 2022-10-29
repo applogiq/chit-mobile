@@ -118,6 +118,7 @@ const ChitsScreen = ({navigation}) => {
         });
         handler;
         setLocalchits(id);
+        setYourchits();
         console.log(
           'setlocalchitscalled--------------------------------------------',
         );
@@ -145,6 +146,11 @@ const ChitsScreen = ({navigation}) => {
     dispatch(updateStates(true));
     wait(2000).then(() => dispatch(updateStates(false)));
   }, []);
+  const NewchitsData = newChitsdata;
+  console.log(
+    NewchitsData,
+    'no datata..........................................................................................',
+  );
   return (
     <View style={styles.container}>
       <Text style={[styles.headerText, {fontSize: font * 21}]}>Chits</Text>
@@ -207,7 +213,7 @@ const ChitsScreen = ({navigation}) => {
       <ModalComponent
         action={action}
         textData1={'New scheme request'}
-        textData2={'You are about to send a request to join a new scheme ,'}
+        textData2={''}
         textData3={'Are you sure that you want to join'}
         textData4={`"${name}?"`}
         modalVisible={modalVisible}

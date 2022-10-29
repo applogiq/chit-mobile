@@ -29,7 +29,9 @@ const TopBar = ({screenName, onClick}) => {
           styles.buttons,
           {
             backgroundColor:
-              screenName == 'My Chits' ? 'rgba(213, 186, 143, 0.3)' : 'white',
+              screenName == 'My Chits'
+                ? 'rgba(213, 186, 143, 1)'
+                : 'rgba(213, 186, 143, 0.3)',
           },
         ]}>
         <Text style={styles.buttonTitle}>My Chits</Text>
@@ -40,7 +42,9 @@ const TopBar = ({screenName, onClick}) => {
           styles.buttons,
           {
             backgroundColor:
-              screenName == 'New Plans' ? 'rgba(213, 186, 143, 0.3)' : 'white',
+              screenName == 'New Plans'
+                ? 'rgba(213, 186, 143, 1)'
+                : 'rgba(213, 186, 143, 0.3)',
           },
         ]}>
         <Text style={styles.buttonTitle}>New Plans</Text>

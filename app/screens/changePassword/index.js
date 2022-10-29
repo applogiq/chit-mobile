@@ -148,7 +148,7 @@ const ChangePassword = ({navigation, route}) => {
           maxchars={15}></InputField>
       </View>
       <Text style={styles.error}>{error}</Text>
-      <View style={{flex: 1, justifyContent: 'flex-end'}}>
+      <View style={{flex: 1, justifyContent: 'flex-end', marginBottom: 10}}>
         <Button
           enabled={
             newpassword.length > 4 &&

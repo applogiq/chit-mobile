@@ -161,7 +161,7 @@ const HomeScreen = ({navigation}) => {
               width: height * (7 / 100),
               borderRadius: 50,
             }}></Image>
-          <Pressable
+          {/* <Pressable
             style={[
               {
                 height: height * (5 / 100),
@@ -169,16 +169,16 @@ const HomeScreen = ({navigation}) => {
                 marginLeft: width * (68 / 100),
               },
               styles.headerNotifi,
-            ]}>
-            <Image
+            ]}> */}
+          {/* <Image
               resizeMode="contain"
               source={IMAGES.notify}
               style={{
                 height: height * (2 / 100),
                 width: height * (2 / 100),
                 borderRadius: 50,
-              }}></Image>
-          </Pressable>
+              }}></Image> */}
+          {/* </Pressable> */}
         </View>
         <Text
           style={[
@@ -217,7 +217,7 @@ const HomeScreen = ({navigation}) => {
                   marginBottom: '7%',
                 },
               ]}>
-              You have not yet joined any chits
+              You have not joined any chits yet
             </Text>
           ) : (
             <View></View>

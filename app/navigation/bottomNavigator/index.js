@@ -73,12 +73,8 @@ const BottomNavigator = () => {
                     resizeMode={'contain'}
                     source={focused ? IMAGES.home_color : IMAGES.home}
                     style={{
-                      width: focused
-                        ? height * (3.5 / 100)
-                        : height * (2.8 / 100),
-                      height: focused
-                        ? height * (3.5 / 100)
-                        : height * (2.8 / 100),
+                      width: height * (2.8 / 100),
+                      height: height * (2.8 / 100),
                     }}
                   />
                   <Text
@@ -102,12 +98,8 @@ const BottomNavigator = () => {
                     resizeMode={'contain'}
                     source={focused ? IMAGES.chits_color : IMAGES.chits}
                     style={{
-                      width: focused
-                        ? height * (4 / 100)
-                        : height * (2.8 / 100),
-                      height: focused
-                        ? height * (4 / 100)
-                        : height * (2.8 / 100),
+                      width: height * (2.8 / 100),
+                      height: height * (2.8 / 100),
                     }}
                   />
                   <Text
@@ -136,12 +128,8 @@ const BottomNavigator = () => {
                       focused ? IMAGES.transactions_color : IMAGES.transactions
                     }
                     style={{
-                      width: focused
-                        ? height * (3.5 / 100)
-                        : height * (2.8 / 100),
-                      height: focused
-                        ? height * (3.5 / 100)
-                        : height * (2.8 / 100),
+                      width: height * (2.8 / 100),
+                      height: height * (2.8 / 100),
                     }}
                   />
                   <Text
@@ -165,12 +153,8 @@ const BottomNavigator = () => {
                     resizeMode={'contain'}
                     source={focused ? IMAGES.profile_color : IMAGES.profile}
                     style={{
-                      width: focused
-                        ? height * (3.5 / 100)
-                        : height * (2.8 / 100),
-                      height: focused
-                        ? height * (3.5 / 100)
-                        : height * (2.8 / 100),
+                      width: height * (2.8 / 100),
+                      height: height * (2.8 / 100),
                     }}
                   />
                   <Text

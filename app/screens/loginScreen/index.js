@@ -96,7 +96,7 @@ const LoginScreen = props => {
   const onloginPress = () => {
     if (doLoginValidation()) {
       setLoading(true);
-      setLoader(true);
+
       props
         .LoginUser({
           email_id: useridentity,
@@ -104,12 +104,14 @@ const LoginScreen = props => {
         })
         .then(response => {
           if (response.message == 'user logged in') {
-            setModaltext('Successfully logged in to your account');
+            setModaltext('Login Successful');
             setModalvisible(!modalVisible);
             setTimeout(() => {
-              setModalvisible(!modalVisible);
               props.navigation.navigate('HomeScreen');
             }, 1500);
+            setTimeout(() => {
+              setModalvisible(!modalVisible);
+            }, 500);
           } else {
             setModaltext('Please enter valid login credentials');
             setModalvisible(!modalVisible);
@@ -153,7 +155,7 @@ const LoginScreen = props => {
       <View style={{height: height, width: width}}>
         <ImageBackground
           source={IMAGES.login_background}
-          resizeMode="cover"
+          resizeMode="contain"
           style={[
             styles.image,
             {
@@ -186,7 +188,7 @@ const LoginScreen = props => {
               loading={loading}
               parentCallback={handleInputidentity}
               placeholder={''}
-              title={'Email Address or Phone number'}
+              title={'Email Address'}
               value={useridentity}
               errormessage={identityerror}
               maxchars={35}></InputField>
@@ -201,14 +203,11 @@ const LoginScreen = props => {
               errormessage={passworderror}
               maxchars={25}></InputField>
           </View>
-          <View style={{alignSelf: 'flex-end', marginTop: height * (1 / 100)}}>
+          <View
+            style={{alignSelf: 'flex-end', marginTop: height * (1.5 / 100)}}>
             <TouchableOpacity
               onPress={() => props.navigation.navigate('ForgotPassword')}>
-              <Text
-                style={[
-                  styles.forgotText,
-                  {fontSize: font * 11, lineHeight: font * 10},
-                ]}>
+              <Text style={[styles.forgotText, {fontSize: font * 13}]}>
                 Forgot Password?
               </Text>
             </TouchableOpacity>
@@ -218,7 +217,7 @@ const LoginScreen = props => {
             data-testid={'login'}
             enabled={useridentity != '' && userpassword != '' ? true : false}
             onpressparam={onloginPress}
-            title={'Sign In'}
+            title={'Log In'}
             type={'large'}
             loading={loading}
             disabled={disabled}
