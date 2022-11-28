@@ -10,6 +10,7 @@ import ChangePassword from '../../screens/changePassword';
 import ProfileScreen from '../../screens/profileScreen';
 import BottomNavigator from '../bottomNavigator';
 import SchemeDetails from '../../screens/schemeDetails';
+import NotificationScreen from '../../screens/notificationScreen';
 
 const Stack = createStackNavigator();
 //Assign createStackNavigator to a variable to use it simply
@@ -30,6 +31,8 @@ const MainStackNavigator = props => {
       <Stack.Screen name="Schemedetails" component={SchemeDetails} />
 
       <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+      <Stack.Screen name="NotificationScreen" component={NotificationScreen} />
+      
     </Stack.Navigator>
   );
 };
