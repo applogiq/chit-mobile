@@ -56,8 +56,8 @@ const Transactions = () => {
 
     const startday = startDate.getDate();
 
-    setendMonth(endyear + '-' + endmonth + '-' + endday);
-    setstartMonth(startyear + '-' + startmonth + '-' + startday);
+    setendMonth(endday + '/' + endmonth + '/' + endyear);
+    setstartMonth(startday + '/' + startmonth + '/' + startyear);
   };
   const setDates = (start, end) => {
     setstartMonth(start);
@@ -131,7 +131,7 @@ const Transactions = () => {
         refreshControl={
           <RefreshControl refreshing={statechange} onRefresh={onRefresh} />
         }
-        style={{marginTop: '5%', marginBottom: '10%'}}
+        style={{marginTop: '5%', marginBottom: '20%'}}
         showsVerticalScrollIndicator={false}>
         {transactions[0] != undefined ? (
           <View>

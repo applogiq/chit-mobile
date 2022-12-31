@@ -1,29 +1,29 @@
 //This is an boilerplate file
 /**************************************** Import Packages ***********************************************************/
-import React, {useState, useEffect} from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  useWindowDimensions,
-  ScrollView,
-  Modal,
-  RefreshControl,
-  Alert,
-} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, {useEffect, useState} from 'react';
+import {
+  Alert,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import {Toast} from 'react-native-toast-message/lib/src/Toast';
-import {useDispatch, useSelector, connect} from 'react-redux';
-import {getSchemetransactions} from '../../redux/actions';
-import {getYourchits} from '../../redux/actions';
-import {getNewchits} from '../../redux/actions';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  getNewchits,
+  getSchemetransactions,
+  getYourchits,
+} from '../../redux/actions';
 /**************************************** Import components ***********************************************************/
-import TopBar from './topBar';
-import {JoinChit} from '../../redux/actions';
 import ModalComponent from '../../components/Modal/modalComponent';
-import MyChitCardSlider from './chitsCards';
 import setLocalchits from '../../hooks/savetoLocal';
-import {updateStates} from '../../redux/actions';
+import {JoinChit, updateStates} from '../../redux/actions';
+import MyChitCardSlider from './chitsCards';
+import TopBar from './topBar';
 
 const ChitsScreen = ({navigation}) => {
   const statechange = useSelector(state => state.updatestates?.states);

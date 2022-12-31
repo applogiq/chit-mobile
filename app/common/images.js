@@ -22,4 +22,6 @@ export const IMAGES = {
   diamond_metal: require('../assets/images/diamondMetal.png'),
   profile_avatar: require('../assets/images/profileAvatar.png'),
   offline: require('../assets/images/offlinenotice.png'),
+  Dot:require('../assets/images/Dot.png'),
+  whiteDot:require('../assets/images/whiteDot.png')
 };
