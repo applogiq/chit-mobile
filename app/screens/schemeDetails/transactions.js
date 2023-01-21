@@ -21,7 +21,7 @@ const SchemeTransactions = ({hidetitle, data, item}) => {
   const onPressless = () => {
     setDatas(data?.slice(0, 5));
   };
-
+console.log(Datas, ':::::::::::::::::::::::::::::::::::::::::::DATAS')
   const font = useWindowDimensions().fontScale;
   const {height, width} = useWindowDimensions();
   console.log(data, 'transactionsssssss evwedy89wdv');
