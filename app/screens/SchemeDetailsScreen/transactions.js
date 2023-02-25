@@ -13,21 +13,16 @@ import {
 import {monthArray} from '../../utils/formatDate';
 /**************************************** Import components ***********************************************************/
 
-const SchemeTransactions = ({hidetitle, data, item}) => {
-  const [Datas, setDatas] = useState(true);
-  const onPress = () => {
-    setDatas(data);
-  };
-  const onPressless = () => {
-    setDatas(data?.slice(0, 5));
-  };
-  console.log(Datas, ':::::::::::::::::::::::::::::::::::::::::::DATAS');
+const SchemeTransactions = ({data, onPress, transaction, item}) => {
   const font = useWindowDimensions().fontScale;
   const {height, width} = useWindowDimensions();
-  console.log(data, 'transactionsssssss evwedy89wdv');
+  const [Datas, setDatas] = useState(true);
+  //   const onPress = () => {
+  //     setDatas(data);
+  //   };
   return (
     <View style={styles.container}>
-      {hidetitle ? <View /> : <Text style={styles.title}>Transactions</Text>}
+      {transaction ? <Text style={styles.title}>Transactions</Text> : null}
       {data == undefined ? (
         <Text
           style={[
@@ -59,7 +54,7 @@ const SchemeTransactions = ({hidetitle, data, item}) => {
         ) : null
       ) : null}
       <FlatList
-        data={Datas}
+        data={transaction ? Datas : data}
         keyExtractor={item => item.id}
         ItemSeparatorComponent={() => (
           <View
@@ -144,16 +139,14 @@ const SchemeTransactions = ({hidetitle, data, item}) => {
           );
         }}
       />
-
-      {data?.length >= 4 && Datas?.length != data.length ? (
-        <TouchableOpacity onPress={onPress}>
-          <Text style={styles.button}>View more</Text>
-        </TouchableOpacity>
-      ) : null}
-      {data?.length > 6 && Datas?.length == data?.length ? (
-        <TouchableOpacity onPress={onPressless}>
-          <Text style={styles.button}>View less</Text>
-        </TouchableOpacity>
+      {transaction ? (
+        <View>
+          {data?.length >= 2 ? (
+            <TouchableOpacity onPress={onPress}>
+              <Text style={styles.button}>View more</Text>
+            </TouchableOpacity>
+          ) : null}
+        </View>
       ) : null}
     </View>
   );

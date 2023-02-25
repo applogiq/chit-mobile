@@ -163,7 +163,8 @@ const ForgotPassword = props => {
               styles.backIcon,
               {height: height * (2 / 100), width: width * (2 / 100)},
             ]}
-            source={IMAGES.back_icon}></Image>
+            source={IMAGES.back_icon}
+          />
         </TouchableOpacity>
         <Text style={[styles.headerText, {fontSize: font * 22}]}>
           {screen == 'initial'
@@ -210,7 +211,8 @@ const ForgotPassword = props => {
             value={userphone}
             errormessage={userphoneerror}
             maxchars={10}
-            inputtype={'numeric'}></InputField>
+            inputtype={'numeric'}
+          />
         </View>
       ) : null}
 
@@ -221,14 +223,16 @@ const ForgotPassword = props => {
             placeholder={''}
             showicon={true}
             title={'New password'}
-            value={resetpassword}></InputField>
+            value={resetpassword}
+          />
           <InputField
             errormessage={reseterror}
             parentCallback={handleInputconfirmpassword}
             placeholder={''}
             showicon={true}
             title={'Confirm password'}
-            value={resetcpassword}></InputField>
+            value={resetcpassword}
+          />
         </View>
       ) : null}
 
@@ -241,7 +245,8 @@ const ForgotPassword = props => {
             type={'large'}
             loading={loading}
             disabled={disabled}
-            parentstyles={{marginTop: height * (4 / 100)}}></Button>
+            parentstyles={{marginTop: height * (4 / 100)}}
+          />
         ) : screen == 'otp' ? (
           <View>
             <Button
@@ -251,7 +256,8 @@ const ForgotPassword = props => {
               type={'large'}
               loading={otploading}
               disabled={otpdisabled}
-              parentstyles={{marginTop: height * (4 / 100)}}></Button>
+              parentstyles={{marginTop: height * (4 / 100)}}
+            />
             {minutes + ':' + seconds == '0:0' ? (
               <Text
                 style={{
@@ -308,7 +314,8 @@ const ForgotPassword = props => {
             type={'large'}
             loading={resetloading}
             disabled={resetdisabled}
-            parentstyles={{marginTop: height * (4 / 100)}}></Button>
+            parentstyles={{marginTop: height * (4 / 100)}}
+          />
         )}
       </View>
       {/* <ModalComponent

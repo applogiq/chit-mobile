@@ -144,8 +144,9 @@ const YourChitCardSlider = ({data, onClick}) => {
         ItemSeparatorComponent={separatorItem}
         showsHorizontalScrollIndicator={false}
         renderItem={({item}) => {
-          return <YourchitsCard data={item} onClick={onClick}></YourchitsCard>;
-        }}></FlatList>
+          return <YourchitsCard data={item} onClick={onClick} />;
+        }}
+      />
     </View>
   );
 };

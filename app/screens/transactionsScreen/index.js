@@ -121,7 +121,8 @@ const Transactions = () => {
               ]}>
               <Image
                 style={{height: 16, width: 16, resizeMode: 'contain'}}
-                source={IMAGES.filter}></Image>
+                source={IMAGES.filter}
+              />
             </View>
           </Pressable>
         </View>
@@ -135,9 +136,7 @@ const Transactions = () => {
         showsVerticalScrollIndicator={false}>
         {transactions[0] != undefined ? (
           <View>
-            <SchemeTransactions
-              hidetitle={true}
-              data={transactions}></SchemeTransactions>
+            <SchemeTransactions hidetitle={true} data={transactions} />
           </View>
         ) : (
           <View
@@ -178,14 +177,15 @@ const Transactions = () => {
                 Filter
               </Text>
               <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
-                <Image style={styles.close} source={IMAGES.close_icon}></Image>
+                <Image style={styles.close} source={IMAGES.close_icon} />
               </TouchableOpacity>
             </View>
             <CalendarComponent
               handlemodal={handleModal}
               setdates={setDates}
               start={startMonth}
-              end={endMonth}></CalendarComponent>
+              end={endMonth}
+            />
           </View>
         </View>
       </Modal>

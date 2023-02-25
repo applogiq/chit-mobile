@@ -1,6 +1,6 @@
 //This is the homescreen
 /**************************************** Import Packages ***********************************************************/
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Text,
   View,
@@ -17,20 +17,20 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { useDispatch, useSelector, connect } from 'react-redux';
-import { getMetals, updateStates, yourchitsFailure } from '../../redux/actions';
-import { getYourchits } from '../../redux/actions';
+import {useDispatch, useSelector, connect} from 'react-redux';
+import {getMetals, updateStates, yourchitsFailure} from '../../redux/actions';
+import {getYourchits} from '../../redux/actions';
 import {
   getRecenttransactions,
   getSchemetransactions,
 } from '../../redux/actions';
 
 /**************************************** Import components ***********************************************************/
-import { IMAGES } from '../../common/images';
+import {IMAGES} from '../../common/images';
 import YourChitCardSlider from '../../components/YourchitsCard/yourchitsCard';
 import MetalsCardSlider from '../../components/Metalscard/meatlsCard';
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({navigation}) => {
   const statechange = useSelector(state => state.updatestates?.states);
 
   const recenttransactionsdata = useSelector(
@@ -62,7 +62,7 @@ const HomeScreen = ({ navigation }) => {
   const [userDetails, setUserDetails] = useState('');
 
   const font = useWindowDimensions().fontScale;
-  const { height, width } = useWindowDimensions();
+  const {height, width} = useWindowDimensions();
   //For adding responsiveness
 
   useEffect(() => {
@@ -125,13 +125,13 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <ScrollView
-    contentContainerStyle={{ height:'180%'}}
+      contentContainerStyle={{height: '180%'}}
       refreshControl={
         <RefreshControl refreshing={statechange} onRefresh={onRefresh} />
       }
       style={styles.container}
       showsVerticalScrollIndicator={false}>
-      <StatusBar backgroundColor={'#F7F6F2'} barStyle={"dark-content"} />
+      <StatusBar backgroundColor={'#F7F6F2'} barStyle={'dark-content'} />
       <View
         style={{
           height: height * (18 / 100),
@@ -152,9 +152,10 @@ const HomeScreen = ({ navigation }) => {
               height: height * (7 / 100),
               width: height * (7 / 100),
               borderRadius: 50,
-            }}></Image>
+            }}
+          />
           <Pressable
-           onPress={()=>navigation.navigate('NotificationScreen')}
+            onPress={() => navigation.navigate('NotificationScreen')}
             style={[
               {
                 height: height * (5 / 100),
@@ -168,9 +169,10 @@ const HomeScreen = ({ navigation }) => {
               source={IMAGES.notify}
               style={{
                 height: height * (3.5 / 100),
-                width: height * (3.5/ 100),
+                width: height * (3.5 / 100),
                 borderRadius: 50,
-              }}></Image>
+              }}
+            />
           </Pressable>
         </View>
         <Text
@@ -188,14 +190,14 @@ const HomeScreen = ({ navigation }) => {
         <Text
           style={[
             styles.titleText,
-            { fontSize: font * 24, lineHeight: font * 21 },
+            {fontSize: font * 24, lineHeight: font * 21},
           ]}>
           Welcome to Luxury
         </Text>
       </View>
 
       <View style={{}}>
-        <Text style={[styles.cardTitle, { fontSize: font * 15, marginLeft: 15 }]}>
+        <Text style={[styles.cardTitle, {fontSize: font * 15, marginLeft: 15}]}>
           Your Chits
         </Text>
         <View style={styles.top}>
@@ -213,30 +215,29 @@ const HomeScreen = ({ navigation }) => {
               You have not joined any chits yet
             </Text>
           ) : (
-            <View></View>
+            <View />
           )}
-          <YourChitCardSlider
-            onClick={onClick}
-            data={yourChitsdata}></YourChitCardSlider>
+          <YourChitCardSlider onClick={onClick} data={yourChitsdata} />
         </View>
       </View>
       <View style={styles.top}>
-        <Text style={[styles.cardTitle, { fontSize: font * 15, marginLeft: 15 }]}>
+        <Text style={[styles.cardTitle, {fontSize: font * 15, marginLeft: 15}]}>
           Today's Prices
         </Text>
         <View style={[styles.top]}>
           <MetalsCardSlider
             gold={goldPrice}
             silver={silverPrice}
-            diamond={diamondPrice}></MetalsCardSlider>
+            diamond={diamondPrice}
+          />
         </View>
       </View>
-      <View style={[styles.top, { paddingLeft: 15, paddingRight: 15 }]}>
-        <View style={{ flexDirection: 'row' }}>
-          <Text style={[styles.cardTitle, { fontSize: font * 15 }]}>
+      <View style={[styles.top, {paddingLeft: 15, paddingRight: 15}]}>
+        <View style={{flexDirection: 'row'}}>
+          <Text style={[styles.cardTitle, {fontSize: font * 15}]}>
             Recent Transactions
           </Text>
-          <TouchableOpacity onPress={()=>navigation.navigate('Transactions')}>
+          <TouchableOpacity onPress={() => navigation.navigate('Transactions')}>
             <Text
               style={[
                 styles.cardTitle,
@@ -248,9 +249,9 @@ const HomeScreen = ({ navigation }) => {
               ]}>
               View All
             </Text>
-            </TouchableOpacity>
+          </TouchableOpacity>
         </View>
-        {typeof recenttransactionsdata == 'undefined' ? (
+        {typeof recenttransactionsdata === 'undefined' ? (
           <Text
             style={[
               styles.cardTitle,
@@ -264,7 +265,7 @@ const HomeScreen = ({ navigation }) => {
             No Records Found
           </Text>
         ) : (
-          <View></View>
+          <View />
         )}
         {recenttransactionsdata?.length < 1 ? (
           <Text
@@ -280,12 +281,12 @@ const HomeScreen = ({ navigation }) => {
             no records found
           </Text>
         ) : (
-          <View></View>
+          <View />
         )}
         <View
           style={[
             styles.top,
-            { backgroundColor: 'white', borderTopLeftRadius: 5, borderRadius: 5 },
+            {backgroundColor: 'white', borderTopLeftRadius: 5, borderRadius: 5},
           ]}>
           <FlatList
             data={recenttransactionsdata}
@@ -296,11 +297,12 @@ const HomeScreen = ({ navigation }) => {
                   height: 1,
                   backgroundColor: '#41270F1A',
                   width: '100%',
-                }}></View>
+                }}
+              />
             )}
             scrollEnabled={true}
             snapToAlignment="center"
-            renderItem={({ item }) => {
+            renderItem={({item}) => {
               return (
                 <View
                   style={{
@@ -310,7 +312,12 @@ const HomeScreen = ({ navigation }) => {
                     paddingRight: '3%',
                     paddingLeft: '3%',
                   }}>
-                  <View style={{flexDirection: 'row', alignItems:'center', justifyContent:'space-between' }}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                    }}>
                     <Text
                       style={{
                         fontSize: font * 14,
@@ -331,7 +338,7 @@ const HomeScreen = ({ navigation }) => {
                       ₹{item?.amount / 100}
                     </Text>
                   </View>
-                  <View style={{ flexDirection: 'row', marginTop: '3%' }}>
+                  <View style={{flexDirection: 'row', marginTop: '3%'}}>
                     <Text
                       style={{
                         fontSize: font * 13,
@@ -365,7 +372,8 @@ const HomeScreen = ({ navigation }) => {
                   </View>
                 </View>
               );
-            }}></FlatList>
+            }}
+          />
         </View>
       </View>
     </ScrollView>
@@ -382,7 +390,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Belleza-Regular',
     fontWeight: '400',
     color: '#9D6939',
-    marginTop:5
+    marginTop: 5,
   },
   cardTitle: {
     lineHeight: 24,
@@ -390,14 +398,14 @@ const styles = StyleSheet.create({
     color: 'rgba(65, 39, 15, 0.6)',
     fontWeight: '600',
   },
-  headerUpper: { flexDirection: 'row', width: '100%', alignItems: 'center' },
+  headerUpper: {flexDirection: 'row', width: '100%', alignItems: 'center'},
   headerNotifi: {
     borderRadius: 5,
     backgroundColor: 'rgba(213, 186, 143, 0.3)',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  top: { marginTop: 10 },
+  top: {marginTop: 10},
 });
 
 export default HomeScreen;

@@ -74,7 +74,8 @@ const CalendarComponent = ({start, end, setdates, handlemodal}) => {
             <Image
               resizeMode="contain"
               style={{height: 15, width: 15}}
-              source={IMAGES.calendar}></Image>
+              source={IMAGES.calendar}
+            />
           </View>
         </View>
         <View>
@@ -99,7 +100,8 @@ const CalendarComponent = ({start, end, setdates, handlemodal}) => {
             <Image
               resizeMode="contain"
               style={{height: 15, width: 15}}
-              source={IMAGES.calendar}></Image>
+              source={IMAGES.calendar}
+            />
           </View>
         </View>
       </View>
@@ -151,13 +153,15 @@ const CalendarComponent = ({start, end, setdates, handlemodal}) => {
               <Image
                 resizeMode="contain"
                 style={{height: 15, width: 15}}
-                source={IMAGES.chev_left}></Image>
+                source={IMAGES.chev_left}
+              />
             }
             nextComponent={
               <Image
                 resizeMode="contain"
                 style={{height: 15, width: 15}}
-                source={IMAGES.chev_right}></Image>
+                source={IMAGES.chev_right}
+              />
             }
           />
         </View>

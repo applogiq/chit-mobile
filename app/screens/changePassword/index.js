@@ -116,7 +116,8 @@ const ChangePassword = ({navigation, route}) => {
               styles.backIcon,
               {height: height * (2 / 100), width: width * (2 / 100)},
             ]}
-            source={IMAGES.back_icon}></Image>
+            source={IMAGES.back_icon}
+          />
         </Pressable>
         <Text style={[styles.headerText, {fontSize: font * 19}]}>
           Change password
@@ -130,14 +131,16 @@ const ChangePassword = ({navigation, route}) => {
           placeholder={''}
           title={'Old password'}
           value={oldpassword}
-          maxchars={25}></InputField>
+          maxchars={25}
+        />
         <InputField
           showicon={true}
           parentCallback={handleInputnewpassword}
           placeholder={''}
           title={'New password'}
           value={newpassword}
-          maxchars={15}></InputField>
+          maxchars={15}
+        />
 
         <InputField
           parentCallback={handleInputconfirmpassword}
@@ -145,7 +148,8 @@ const ChangePassword = ({navigation, route}) => {
           title={'Confirm password'}
           value={confirmpassword}
           showicon={true}
-          maxchars={15}></InputField>
+          maxchars={15}
+        />
       </View>
       <Text style={styles.error}>{error}</Text>
       <View style={{flex: 1, justifyContent: 'flex-end', marginBottom: 10}}>
@@ -162,7 +166,8 @@ const ChangePassword = ({navigation, route}) => {
           type={'large'}
           loading={loading}
           disabled={disabled}
-          parentstyles={{marginTop: height * (4 / 100)}}></Button>
+          parentstyles={{marginTop: height * (4 / 100)}}
+        />
       </View>
       {/* <ModalComponent
         textData={modalText}
@@ -192,7 +197,8 @@ const ChangePassword = ({navigation, route}) => {
         textData3={'Are you sure you want to'}
         textData4={'Change Password?'}
         modalVisible={modalVisible}
-        onmodalPress={handleModal}></ModalComponent>
+        onmodalPress={handleModal}
+      />
     </View>
   );
 };

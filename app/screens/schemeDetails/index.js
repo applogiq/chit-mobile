@@ -140,20 +140,21 @@ const SchemeDetails = ({navigation, route}) => {
                 styles.backIcon,
                 {height: height * (2 / 100), width: width * (2 / 100)},
               ]}
-              source={IMAGES.back_icon}></Image>
+              source={IMAGES.back_icon}
+            />
           </TouchableOpacity>
           <Text style={[styles.headerText, {fontSize: font * 22}]}>
             Scheme Details
           </Text>
         </View>
         <View style={{marginTop: '5%'}}>
-          <InfoCard pendingMonths={pendingMonths} data={item}></InfoCard>
+          <InfoCard pendingMonths={pendingMonths} data={item} />
         </View>
         <View style={{marginTop: '3%'}}>
-          <ChitInfoForm data={item}></ChitInfoForm>
+          <ChitInfoForm data={item} />
         </View>
         <View style={{marginTop: '3%'}}>
-          <SchemeTransactions data={Transactions}></SchemeTransactions>
+          <SchemeTransactions data={Transactions} />
         </View>
       </ScrollView>
       <View style={styles.footer}>

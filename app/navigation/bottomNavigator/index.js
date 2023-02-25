@@ -1,22 +1,20 @@
 //Bottombar component will be nested in stacknavigator
 
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import * as React from 'react';
 import {
-  Dimensions,
   Image,
-  View,
+  Platform,
   StyleSheet,
   Text,
-  Platform,
   useWindowDimensions,
+  View,
 } from 'react-native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import HomeScreen from '../../screens/homeScreen';
-import ChitsScreen from '../../screens/chitsScreen';
-import Transactions from '../../screens/transactionsScreen';
-import ProfileScreen from '../../screens/profileScreen';
-import loginScreen from '../../screens/loginScreen';
 import {IMAGES} from '../../common/images';
+import ChitsScreen from '../../screens/chitsScreen';
+import HomeScreen from '../../screens/homeScreen';
+import ProfileScreen from '../../screens/profileScreen';
+import Transactions from '../../screens/transactionsScreen';
 
 const Tab = createBottomTabNavigator();
 //Assign createBottomTabNavigator to a variable to use it simply

@@ -66,7 +66,7 @@ const MychitsCard = ({
   // let state = requested.includes(data?.id);
 
   return data?.is_approved === 'approved' ? (
-    <View></View>
+    <View />
   ) : (
     <View
       style={[
@@ -289,9 +289,11 @@ const MyChitCardSlider = ({
               data={item}
               screenName={screen}
               onpress={onButton}
-              yourchitsdata={yourchitsdata}></MychitsCard>
+              yourchitsdata={yourchitsdata}
+            />
           );
-        }}></FlatList>
+        }}
+      />
     </View>
   );
 };

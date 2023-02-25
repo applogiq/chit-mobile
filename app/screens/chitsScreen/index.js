@@ -47,7 +47,11 @@ const ChitsScreen = ({navigation}) => {
     console.log(params, 'oncliqqqqqqqqqqqqqqqqqqqqqqqqqqque');
     dispatch(getSchemetransactions(userDetails.id, params?.scheme_id)).then(
       resp => {
-        navigation.navigate('Schemedetails', {
+        // navigation.navigate('Schemedetails', {
+        //   item: params,
+        //   transactions: resp.records,
+        // });
+        navigation.navigate('SchemedetailsScreen', {
           item: params,
           transactions: resp.records,
         });
@@ -159,7 +163,7 @@ const ChitsScreen = ({navigation}) => {
           marginTop: height * (2 / 100),
           marginBottom: height * (2 / 100),
         }}>
-        <TopBar screenName={screen} onClick={onPress}></TopBar>
+        <TopBar screenName={screen} onClick={onPress} />
       </View>
       <ScrollView
         refreshControl={
@@ -168,6 +172,9 @@ const ChitsScreen = ({navigation}) => {
         showsVerticalScrollIndicator={false}>
         {yourChitsdata.length < 1 && screen == 'My Chits' ? (
           <Text
+            onPress={() => {
+              navigation.navigate('SchemedetailsScreen');
+            }}
             style={[
               styles.cardTitle,
               {
@@ -180,7 +187,7 @@ const ChitsScreen = ({navigation}) => {
             You have not joined any chits yet
           </Text>
         ) : (
-          <View></View>
+          <View />
         )}
         {newChitsdata.length < 1 && screen == 'New Plans' ? (
           <Text
@@ -196,7 +203,7 @@ const ChitsScreen = ({navigation}) => {
             Sorry there is no new chits available now
           </Text>
         ) : (
-          <View></View>
+          <View />
         )}
         <MyChitCardSlider
           setrequested={setrequested}
@@ -208,7 +215,8 @@ const ChitsScreen = ({navigation}) => {
           yourchitsdata={yourChitsdata}
           screen={screen}
           newchitsdata={newChitsdata}
-          onButton={onClick}></MyChitCardSlider>
+          onButton={onClick}
+        />
       </ScrollView>
       <ModalComponent
         action={action}
@@ -217,7 +225,8 @@ const ChitsScreen = ({navigation}) => {
         textData3={'Are you sure that you want to join'}
         textData4={`"${name}?"`}
         modalVisible={modalVisible}
-        onmodalPress={handleModal}></ModalComponent>
+        onmodalPress={handleModal}
+      />
     </View>
   );
 };

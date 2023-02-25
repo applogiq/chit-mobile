@@ -10,12 +10,11 @@ import {
   FlatList,
 } from 'react-native';
 /**************************************** Import components ***********************************************************/
-import { IMAGES } from '../../common/images';
-
+import {IMAGES} from '../../common/images';
 
 //Change this to to real time data
-const MetalsCard = ({ item }) => {
-  const { height, width } = useWindowDimensions();
+const MetalsCard = ({item}) => {
+  const {height, width} = useWindowDimensions();
   //Get window size for responsiveness
   const font = useWindowDimensions().fontScale;
   //Get fontscale from and use it to resize fonts
@@ -27,14 +26,17 @@ const MetalsCard = ({ item }) => {
         {
           height: height * (21 / 100),
           width: width * (27 / 100),
-          marginBottom: '6%', marginLeft: width * (4 / 100), marginRight: width * (1 / 100)
+          marginBottom: '6%',
+          marginLeft: width * (4 / 100),
+          marginRight: width * (1 / 100),
         },
       ]}>
-      <Text style={[styles.metalName, { fontSize: font * 13 }]}>
+      <Text style={[styles.metalName, {fontSize: font * 13}]}>
         {item.metalName}
       </Text>
-      <Image style={styles.image} source={item.src}></Image>
-      <Text style={[styles.metalName, { fontSize: font * 13, marginTop: '-12%' }]}>
+      <Image style={styles.image} source={item.src} />
+      <Text
+        style={[styles.metalName, {fontSize: font * 13, marginTop: '-12%'}]}>
         {item.weight}
       </Text>
       <Text
@@ -66,9 +68,8 @@ const styles = StyleSheet.create({
     paddingTop: '5%',
     paddingBottom: '4%',
     justifyContent: 'space-between',
-
   },
-  image: { height: '55%', width: '75%', resizeMode: 'contain', marginTop: '-5%' },
+  image: {height: '55%', width: '75%', resizeMode: 'contain', marginTop: '-5%'},
   metalName: {
     fontFamily: 'SourceSansPro-Regular',
     fontWeight: '400',
@@ -83,28 +84,53 @@ const separatorItem = () => {
   return <View style={styles.separatorView} />;
 };
 //Mainslider componenet
-const MetalsCardSlider = ({ gold, silver, diamond }) => {
-  console.log(gold, silver, diamond, "{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{")
+const MetalsCardSlider = ({gold, silver, diamond}) => {
+  console.log(gold, silver, diamond, '{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{');
   const Data = [
-    { id: 1, src: IMAGES.gold_metal, metalName: 'Gold', weight: '8 Grams', price: gold },
-    { id: 2, src: IMAGES.silver_metal, metalName: 'Silver', weight: '8 Grams', price: silver },
-    { id: 3, src: IMAGES.diamond_metal, metalName: 'Diamond', weight: '1 Carat', price: diamond },
-
+    {
+      id: 1,
+      src: IMAGES.gold_metal,
+      metalName: 'Gold',
+      weight: '8 Grams',
+      price: gold,
+    },
+    {
+      id: 2,
+      src: IMAGES.silver_metal,
+      metalName: 'Silver',
+      weight: '8 Grams',
+      price: silver,
+    },
+    {
+      id: 3,
+      src: IMAGES.diamond_metal,
+      metalName: 'Diamond',
+      weight: '1 Carat',
+      price: diamond,
+    },
   ];
   return (
-    <View style={{ paddingLeft: "-4%", backgroundColor: "red" }} >
+    <View style={{paddingLeft: '-4%', backgroundColor: 'red'}}>
       <FlatList
         data={Data}
         keyExtractor={item => item.id}
         horizontal
-        style={{ backgroundColor: '#F7F6F2', }}
+        style={{backgroundColor: '#F7F6F2'}}
         scrollEnabled={true}
         snapToAlignment="center"
         ItemSeparatorComponent={separatorItem}
         showsHorizontalScrollIndicator={false}
-        renderItem={({ item }) => {
-          return <MetalsCard gold={gold} silver={silver} diamond={diamond} item={item}></MetalsCard>;
-        }}></FlatList>
+        renderItem={({item}) => {
+          return (
+            <MetalsCard
+              gold={gold}
+              silver={silver}
+              diamond={diamond}
+              item={item}
+            />
+          );
+        }}
+      />
     </View>
   );
 };
