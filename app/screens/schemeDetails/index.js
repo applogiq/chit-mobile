@@ -1,49 +1,49 @@
 /**************************************** Import Packages ***********************************************************/
-import React, {useState, useEffect} from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  useWindowDimensions,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-  RefreshControl,
-} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, {useState} from 'react';
+import {
+  Image,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import {updateStates} from '../../redux/actions';
 /**************************************** Import components ***********************************************************/
 import {IMAGES} from '../../common/images';
 
-import InfoCard from './infoCard';
 import {useDispatch, useSelector} from 'react-redux';
-import ChitInfoForm from './infoForm';
-import SchemeTransactions from './transactions';
-import {paymentFunction} from '../../utils/payment';
 import {
-  getSchemetransactions,
   getRecenttransactions,
+  getSchemetransactions,
 } from '../../redux/actions';
 import {
   CreatePayment,
   VerifyPayment,
 } from '../../redux/actions/createpaymentAction';
+import {paymentFunction} from '../../utils/payment';
+import InfoCard from './infoCard';
+import ChitInfoForm from './infoForm';
+import SchemeTransactions from './transactions';
 
 const SchemeDetails = ({navigation, route}) => {
   const statechange = useSelector(state => state.updatestates?.states);
   const dispatch = useDispatch();
-  const [paymentRes, setpaymentRes] = useState('');
   const [disabled, setDisabled] = useState(false);
   const {item, transactions} = route.params;
   const [Transactions, setTransactions] = useState(transactions);
   const font = useWindowDimensions().fontScale;
   const {height, width} = useWindowDimensions();
+  const pendingMonths = item?.total_month - item?.paid_month;
   //for responsiveness
 
   const OnBackpress = () => {
     navigation.navigate('Chits');
   };
-
+  console.log(pendingMonths, '::::::::::::::::::::');
   const handleRes = (res, resp) => {
     if (res.razorpay_order_id) {
       dispatch(
@@ -140,20 +140,21 @@ const SchemeDetails = ({navigation, route}) => {
                 styles.backIcon,
                 {height: height * (2 / 100), width: width * (2 / 100)},
               ]}
-              source={IMAGES.back_icon}></Image>
+              source={IMAGES.back_icon}
+            />
           </TouchableOpacity>
           <Text style={[styles.headerText, {fontSize: font * 22}]}>
             Scheme Details
           </Text>
         </View>
         <View style={{marginTop: '5%'}}>
-          <InfoCard data={item}></InfoCard>
+          <InfoCard pendingMonths={pendingMonths} data={item} />
         </View>
         <View style={{marginTop: '3%'}}>
-          <ChitInfoForm data={item}></ChitInfoForm>
+          <ChitInfoForm data={item} />
         </View>
         <View style={{marginTop: '3%'}}>
-          <SchemeTransactions data={Transactions}></SchemeTransactions>
+          <SchemeTransactions data={Transactions} />
         </View>
       </ScrollView>
       <View style={styles.footer}>
@@ -170,22 +171,24 @@ const SchemeDetails = ({navigation, route}) => {
           </TouchableOpacity>
         )} */}
 
-        {due > present && duetenure < 432000000 ? (
+        {due > present && duetenure < 432000000 && pendingMonths === '0' ? (
           <TouchableOpacity
-            disabled={disabled}
+            disabled={disabled && pendingMonths === '0' ? true : false}
             onPress={() => onpayNow()}
             style={styles.fooButton}>
             <Text style={styles.buttonTitle}>Pay upcoming due</Text>
           </TouchableOpacity>
         ) : due < present ? (
           <TouchableOpacity
-            disabled={disabled}
+            disabled={disabled && pendingMonths === '0' ? true : false}
             onPress={() => onpayNow()}
             style={styles.fooButton}>
             <Text style={styles.buttonTitle}>Pay overdue</Text>
           </TouchableOpacity>
         ) : due > present && duetenure > 432000000 ? (
-          <TouchableOpacity disabled={disabled} style={styles.fooButton}>
+          <TouchableOpacity
+            disabled={disabled && pendingMonths === 0 ? true : false}
+            style={styles.fooButton}>
             <Text style={styles.buttonTitle}>No Pending Dues</Text>
           </TouchableOpacity>
         ) : null}

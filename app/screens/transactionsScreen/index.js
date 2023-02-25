@@ -56,8 +56,8 @@ const Transactions = () => {
 
     const startday = startDate.getDate();
 
-    setendMonth(endyear + '-' + endmonth + '-' + endday);
-    setstartMonth(startyear + '-' + startmonth + '-' + startday);
+    setendMonth(endday + '/' + endmonth + '/' + endyear);
+    setstartMonth(startday + '/' + startmonth + '/' + startyear);
   };
   const setDates = (start, end) => {
     setstartMonth(start);
@@ -121,7 +121,8 @@ const Transactions = () => {
               ]}>
               <Image
                 style={{height: 16, width: 16, resizeMode: 'contain'}}
-                source={IMAGES.filter}></Image>
+                source={IMAGES.filter}
+              />
             </View>
           </Pressable>
         </View>
@@ -131,13 +132,11 @@ const Transactions = () => {
         refreshControl={
           <RefreshControl refreshing={statechange} onRefresh={onRefresh} />
         }
-        style={{marginTop: '5%', marginBottom: '10%'}}
+        style={{marginTop: '5%', marginBottom: '20%'}}
         showsVerticalScrollIndicator={false}>
         {transactions[0] != undefined ? (
           <View>
-            <SchemeTransactions
-              hidetitle={true}
-              data={transactions}></SchemeTransactions>
+            <SchemeTransactions hidetitle={true} data={transactions} />
           </View>
         ) : (
           <View
@@ -178,14 +177,15 @@ const Transactions = () => {
                 Filter
               </Text>
               <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
-                <Image style={styles.close} source={IMAGES.close_icon}></Image>
+                <Image style={styles.close} source={IMAGES.close_icon} />
               </TouchableOpacity>
             </View>
             <CalendarComponent
               handlemodal={handleModal}
               setdates={setDates}
               start={startMonth}
-              end={endMonth}></CalendarComponent>
+              end={endMonth}
+            />
           </View>
         </View>
       </Modal>

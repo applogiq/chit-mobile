@@ -1,37 +1,33 @@
 //This is an boilerplate file
 /**************************************** Import Packages ***********************************************************/
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   View,
   StyleSheet,
   FlatList,
   useWindowDimensions,
+  TouchableOpacity,
+  Button,
 } from 'react-native';
+import {monthArray} from '../../utils/formatDate';
 /**************************************** Import components ***********************************************************/
 
-const SchemeTransactions = ({hidetitle, data}) => {
-  const Data = [
-    {id: 1},
-    {id: 2},
-    {id: 3},
-    {id: 4},
-    {id: 5},
-    {id: 6},
-    {id: 7},
-    {id: 8},
-  ];
-
+const SchemeTransactions = ({hidetitle, data, item}) => {
+  const [Datas, setDatas] = useState(true);
+  const onPress = () => {
+    setDatas(data);
+  };
+  const onPressless = () => {
+    setDatas(data?.slice(0, 5));
+  };
+  console.log(Datas, ':::::::::::::::::::::::::::::::::::::::::::DATAS');
   const font = useWindowDimensions().fontScale;
   const {height, width} = useWindowDimensions();
   console.log(data, 'transactionsssssss evwedy89wdv');
   return (
     <View style={styles.container}>
-      {hidetitle ? (
-        <View></View>
-      ) : (
-        <Text style={styles.title}>Transactions</Text>
-      )}
+      {hidetitle ? <View /> : <Text style={styles.title}>Transactions</Text>}
       {data == undefined ? (
         <Text
           style={[
@@ -63,43 +59,47 @@ const SchemeTransactions = ({hidetitle, data}) => {
         ) : null
       ) : null}
       <FlatList
-        data={data}
+        data={Datas}
         keyExtractor={item => item.id}
         ItemSeparatorComponent={() => (
           <View
             style={{
-              height: 0.5,
-              backgroundColor: 'grey',
-              width: '100%',
-              marginLeft: '-5%',
-            }}></View>
+              height: 1,
+              backgroundColor: '#41270F1A',
+            }}
+          />
         )}
         scrollEnabled={true}
         snapToAlignment="center"
         renderItem={({item}) => {
           const date = item?.created_at.substring(0, 10);
+          const NewDate = new Date(date);
+          const month = monthArray[NewDate.getMonth()];
+          const DateFormat = `${NewDate.getDate()} ${month} ${NewDate.getFullYear()}`;
+          console.log(DateFormat, month);
           return (
             <View
               style={{
-                height: height * (10 / 100),
-                width: '100%',
-                paddingTop: '2%',
-                paddingRight: '3%',
-                paddingLeft: '1%',
+                padding: 16,
               }}>
-              <View style={{flexDirection: 'row'}}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}>
                 <Text
                   style={{
-                    fontSize: font * 14,
+                    fontSize: font * 16,
                     color: 'rgba(65, 39, 15, 0.8)',
                     fontWeight: '600',
                     fontFamily: 'SourceSansPro-SemiBold',
                   }}>
-                  {date}
+                  {DateFormat}
                 </Text>
                 <Text
                   style={{
-                    fontSize: font * 14,
+                    fontSize: font * 16,
                     color: 'rgba(65, 39, 15, 0.8)',
                     fontWeight: '600',
                     fontFamily: 'SourceSansPro-SemiBold',
@@ -111,7 +111,7 @@ const SchemeTransactions = ({hidetitle, data}) => {
               <View style={{flexDirection: 'row', marginTop: '3%'}}>
                 <Text
                   style={{
-                    fontSize: font * 13,
+                    fontSize: font * 14,
                     color: 'rgba(65, 39, 15, 0.5)',
                     fontWeight: '600',
                     fontFamily: 'SourceSansPro-SemiBold',
@@ -142,17 +142,27 @@ const SchemeTransactions = ({hidetitle, data}) => {
               </View>
             </View>
           );
-        }}></FlatList>
+        }}
+      />
+
+      {data?.length >= 4 && Datas?.length != data.length ? (
+        <TouchableOpacity onPress={onPress}>
+          <Text style={styles.button}>View more</Text>
+        </TouchableOpacity>
+      ) : null}
+      {data?.length > 6 && Datas?.length == data?.length ? (
+        <TouchableOpacity onPress={onPressless}>
+          <Text style={styles.button}>View less</Text>
+        </TouchableOpacity>
+      ) : null}
     </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
     backgroundColor: 'white',
     borderRadius: 7,
     paddingTop: 17,
-    paddingLeft: 17,
     paddingBottom: 17,
   },
   title: {
@@ -162,6 +172,18 @@ const styles = StyleSheet.create({
     color: 'rgba(65, 39, 15, 0.8)',
     fontSize: 17,
     marginBottom: '2%',
+  },
+  footerText: {
+    alignSelf: 'center',
+    fontWeight: '600',
+  },
+  button: {
+    fontFamily: 'SourceSansPro-Regular',
+    fontWeight: '400',
+    fontSize: 16,
+    lineHeight: 21,
+    color: '#41270FCC',
+    textAlign: 'center',
   },
 });
 export default SchemeTransactions;

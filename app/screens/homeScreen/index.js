@@ -13,6 +13,7 @@ import {
   BackHandler,
   TouchableOpacity,
   RefreshControl,
+  StatusBar,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -59,17 +60,6 @@ const HomeScreen = ({navigation}) => {
   const [yourChitsdata, setyourChitsdata] = useState([]);
   const [recentTransactions, setrecentTransactions] = useState([]);
   const [userDetails, setUserDetails] = useState('');
-  const Data = [
-    {id: 1},
-    {id: 2},
-    {id: 3},
-    {id: 4},
-    {id: 5},
-    {id: 6},
-    {id: 7},
-    {id: 8},
-  ];
-  //change this to real data
 
   const font = useWindowDimensions().fontScale;
   const {height, width} = useWindowDimensions();
@@ -135,11 +125,13 @@ const HomeScreen = ({navigation}) => {
 
   return (
     <ScrollView
+      contentContainerStyle={{height: '180%'}}
       refreshControl={
         <RefreshControl refreshing={statechange} onRefresh={onRefresh} />
       }
       style={styles.container}
       showsVerticalScrollIndicator={false}>
+      <StatusBar backgroundColor={'#F7F6F2'} barStyle={'dark-content'} />
       <View
         style={{
           height: height * (18 / 100),
@@ -160,8 +152,10 @@ const HomeScreen = ({navigation}) => {
               height: height * (7 / 100),
               width: height * (7 / 100),
               borderRadius: 50,
-            }}></Image>
-          {/* <Pressable
+            }}
+          />
+          <Pressable
+            onPress={() => navigation.navigate('NotificationScreen')}
             style={[
               {
                 height: height * (5 / 100),
@@ -169,16 +163,17 @@ const HomeScreen = ({navigation}) => {
                 marginLeft: width * (68 / 100),
               },
               styles.headerNotifi,
-            ]}> */}
-          {/* <Image
+            ]}>
+            <Image
               resizeMode="contain"
               source={IMAGES.notify}
               style={{
-                height: height * (2 / 100),
-                width: height * (2 / 100),
+                height: height * (3.5 / 100),
+                width: height * (3.5 / 100),
                 borderRadius: 50,
-              }}></Image> */}
-          {/* </Pressable> */}
+              }}
+            />
+          </Pressable>
         </View>
         <Text
           style={[
@@ -206,7 +201,7 @@ const HomeScreen = ({navigation}) => {
           Your Chits
         </Text>
         <View style={styles.top}>
-          {yourChitsdata.length < 1 ? (
+          {yourChitsdata?.length < 1 ? (
             <Text
               style={[
                 styles.cardTitle,
@@ -220,11 +215,9 @@ const HomeScreen = ({navigation}) => {
               You have not joined any chits yet
             </Text>
           ) : (
-            <View></View>
+            <View />
           )}
-          <YourChitCardSlider
-            onClick={onClick}
-            data={yourChitsdata}></YourChitCardSlider>
+          <YourChitCardSlider onClick={onClick} data={yourChitsdata} />
         </View>
       </View>
       <View style={styles.top}>
@@ -235,7 +228,8 @@ const HomeScreen = ({navigation}) => {
           <MetalsCardSlider
             gold={goldPrice}
             silver={silverPrice}
-            diamond={diamondPrice}></MetalsCardSlider>
+            diamond={diamondPrice}
+          />
         </View>
       </View>
       <View style={[styles.top, {paddingLeft: 15, paddingRight: 15}]}>
@@ -257,7 +251,7 @@ const HomeScreen = ({navigation}) => {
             </Text>
           </TouchableOpacity>
         </View>
-        {typeof recenttransactionsdata == 'undefined' ? (
+        {typeof recenttransactionsdata === 'undefined' ? (
           <Text
             style={[
               styles.cardTitle,
@@ -271,7 +265,7 @@ const HomeScreen = ({navigation}) => {
             No Records Found
           </Text>
         ) : (
-          <View></View>
+          <View />
         )}
         {recenttransactionsdata?.length < 1 ? (
           <Text
@@ -287,7 +281,7 @@ const HomeScreen = ({navigation}) => {
             no records found
           </Text>
         ) : (
-          <View></View>
+          <View />
         )}
         <View
           style={[
@@ -300,10 +294,11 @@ const HomeScreen = ({navigation}) => {
             ItemSeparatorComponent={() => (
               <View
                 style={{
-                  height: 0.5,
-                  backgroundColor: 'grey',
+                  height: 1,
+                  backgroundColor: '#41270F1A',
                   width: '100%',
-                }}></View>
+                }}
+              />
             )}
             scrollEnabled={true}
             snapToAlignment="center"
@@ -312,12 +307,17 @@ const HomeScreen = ({navigation}) => {
                 <View
                   style={{
                     height: height * (10 / 100),
-                    width: '100%',
+                    padding: 10,
                     paddingTop: '4%',
                     paddingRight: '3%',
                     paddingLeft: '3%',
                   }}>
-                  <View style={{flexDirection: 'row'}}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                    }}>
                     <Text
                       style={{
                         fontSize: font * 14,
@@ -372,7 +372,8 @@ const HomeScreen = ({navigation}) => {
                   </View>
                 </View>
               );
-            }}></FlatList>
+            }}
+          />
         </View>
       </View>
     </ScrollView>
@@ -389,6 +390,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Belleza-Regular',
     fontWeight: '400',
     color: '#9D6939',
+    marginTop: 5,
   },
   cardTitle: {
     lineHeight: 24,

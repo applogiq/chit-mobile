@@ -13,6 +13,7 @@ import {
   ActivityIndicator,
   Pressable,
   RefreshControl,
+  Keyboard,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
@@ -151,7 +152,7 @@ const LoginScreen = props => {
     wait(2000).then(() => dispatch(updateStates(false)));
   }, []);
   return (
-    <ScrollView style={[styles.container]}>
+    <ScrollView showsVerticalScrollIndicator={false} style={[styles.container]}>
       <View style={{height: height, width: width}}>
         <ImageBackground
           source={IMAGES.login_background}
@@ -167,18 +168,10 @@ const LoginScreen = props => {
           ]}>
           <View
             style={[styles.titleContainer, {marginTop: height * (35 / 100)}]}>
-            <Text
-              style={[
-                styles.titleText,
-                {fontSize: font * 24, lineHeight: font * 21},
-              ]}>
+            <Text style={[styles.titleText, {fontSize: 28, lineHeight: 36}]}>
               Hello,
             </Text>
-            <Text
-              style={[
-                styles.titleText,
-                {fontSize: font * 24, lineHeight: font * 21, marginTop: '3%'},
-              ]}>
+            <Text style={[styles.titleText, {fontSize: 28, lineHeight: 36}]}>
               Welcome to Luxury
             </Text>
           </View>
@@ -188,20 +181,37 @@ const LoginScreen = props => {
               loading={loading}
               parentCallback={handleInputidentity}
               placeholder={''}
+              Ref={input => {
+                firstTextInput = input;
+              }}
+              onSubmitediting={() => {
+                secondTextInput.focus();
+              }}
+              autoFocus={true}
+              returnKeyType={'next'}
               title={'Email Address'}
               value={useridentity}
               errormessage={identityerror}
-              maxchars={35}></InputField>
+              maxchars={35}
+            />
             <InputField
               data-testid={'password'}
               loading={loading}
               parentCallback={handleInputpassword}
               placeholder={''}
+              Ref={input => {
+                secondTextInput = input;
+              }}
+              onSubmitediting={() => {
+                thirdTextInput.focus();
+              }}
+              returnKeyType={'next'}
               title={'password'}
               value={userpassword}
               showicon={true}
               errormessage={passworderror}
-              maxchars={25}></InputField>
+              maxchars={25}
+            />
           </View>
           <View
             style={{alignSelf: 'flex-end', marginTop: height * (1.5 / 100)}}>
@@ -221,7 +231,8 @@ const LoginScreen = props => {
             type={'large'}
             loading={loading}
             disabled={disabled}
-            parentstyles={{marginTop: height * (4 / 100)}}></Button>
+            parentstyles={{marginTop: height * (4 / 100)}}
+          />
         </ImageBackground>
       </View>
 

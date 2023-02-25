@@ -75,7 +75,9 @@ const ProfileScreen = props => {
         console.warn(err);
         return false;
       }
-    } else return true;
+    } else {
+      return true;
+    }
   };
 
   const requestExternalWritePermission = async () => {
@@ -95,7 +97,9 @@ const ProfileScreen = props => {
         alert('Write permission err', err);
       }
       return false;
-    } else return true;
+    } else {
+      return true;
+    }
   };
 
   const captureImage = async () => {
@@ -280,7 +284,8 @@ const ProfileScreen = props => {
                 ? 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541'
                 : pfimage,
           }}
-          style={styles.image}></Image>
+          style={styles.image}
+        />
 
         <Pressable onPress={() => setModalVisible2(!modalVisible2)}>
           <Image
@@ -294,7 +299,8 @@ const ProfileScreen = props => {
               marginTop: '-4%',
               marginLeft: '20%',
               borderRadius: 25,
-            }}></Image>
+            }}
+          />
         </Pressable>
       </View>
       <View style={{height: '40%'}}>
@@ -449,7 +455,8 @@ const ProfileScreen = props => {
         textData3={'Are you sure you want to'}
         textData4={'Logout?'}
         modalVisible={modalVisible}
-        onmodalPress={onLogout}></ModalComponent>
+        onmodalPress={onLogout}
+      />
       <Modal
         animationType="slide"
         transparent={true}
@@ -510,7 +517,7 @@ const ProfileScreen = props => {
         onRequestClose={() => {
           setModal(!modal);
         }}>
-        <View style={{flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.3);'}}></View>
+        <View style={{flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.3);'}} />
       </Modal>
     </View>
   );

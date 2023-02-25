@@ -52,7 +52,7 @@ const ModalComponent = ({
               {textData1}
             </Text>
             <Pressable onPress={onmodalPress}>
-              <Image style={styles.icon} source={IMAGES.close_icon}></Image>
+              <Image style={styles.icon} source={IMAGES.close_icon} />
             </Pressable>
           </View>
           <View
@@ -62,7 +62,8 @@ const ModalComponent = ({
               backgroundColor: 'grey',
               marginTop: '3%',
               marginBottom: '3%',
-            }}></View>
+            }}
+          />
           <View style={styles.textCenter}>
             <Text style={[styles.modalText, {color: 'rgba(65, 39, 15, 0.6)'}]}>
               {textData2}

@@ -2,17 +2,15 @@
 /**************************************** Import Packages ***********************************************************/
 import React from 'react';
 import {
-  Text,
-  View,
-  StyleSheet,
-  useWindowDimensions,
   Animated,
   Pressable,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
 } from 'react-native';
 /**************************************** Import components ***********************************************************/
 
 const TopBar = ({screenName, onClick}) => {
-  const font = useWindowDimensions().fontScale;
   const {height, width} = useWindowDimensions();
   const onpress = data => {
     onClick(data);
@@ -28,10 +26,7 @@ const TopBar = ({screenName, onClick}) => {
         style={[
           styles.buttons,
           {
-            backgroundColor:
-              screenName == 'My Chits'
-                ? 'rgba(213, 186, 143, 1)'
-                : 'rgba(213, 186, 143, 0.3)',
+            backgroundColor: screenName == 'My Chits' ? 'white' : 'transparent',
           },
         ]}>
         <Text style={styles.buttonTitle}>My Chits</Text>
@@ -42,9 +37,7 @@ const TopBar = ({screenName, onClick}) => {
           styles.buttons,
           {
             backgroundColor:
-              screenName == 'New Plans'
-                ? 'rgba(213, 186, 143, 1)'
-                : 'rgba(213, 186, 143, 0.3)',
+              screenName == 'New Plans' ? 'white' : 'transparent',
           },
         ]}>
         <Text style={styles.buttonTitle}>New Plans</Text>
@@ -58,6 +51,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     borderRadius: 7,
     flexDirection: 'row',
+    backgroundColor: '#D5BA8F4D',
+    borderWidth: 1,
+    borderColor: '#D5BA8F4D',
   },
   buttons: {
     height: '100%',
